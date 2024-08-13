@@ -147,7 +147,9 @@ const Rooms = () => {
                   </TableCell>
                   <TableCell type='td'>{room.date}</TableCell>
                   <TableCell type='td'>{room.students.length}</TableCell>
-                  <TableCell type='td'>{room.status}</TableCell>
+                  <TableCell type='td'>
+                    <span data-status={room.status}>{room.status}</span>
+                  </TableCell>
                 </TableRow>)}
             </TableBody>
           </Table>

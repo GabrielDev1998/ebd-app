@@ -17,6 +17,16 @@
   --bg-5: #121214;
   --bgGradientRight-3: radial-gradient(circle, rgba(20, 13, 26, 0.747), rgba(20, 30, 32, 0.904));
 
+  /* Colors */
+  --red: #FFAC82;
+  --bgRed: #FF563029;
+  --yellow: #FFD666;
+  --bgYellow: #FFAB0029;
+  --green: #77ED8B;
+  --bgGreen: #22C55E29;
+  --blue: #61F3F3;
+  --bgBlue: #00B8D929;
+
   /* colors text */
   --textColor: #8D8D99;
   --textColor-2: #e1e1e6;
@@ -31,7 +41,6 @@
   /* Overlay */
   --overlay: rgba(24, 24, 26, 0.562);
 
-
   /* Shadows */
   --shadow: rgba(0, 0, 0, 0.2) 0px 0px 2px 0px, rgba(0, 0, 0, 0.12) 0px 12px 24px -4px;
 
@@ -40,7 +49,6 @@
 
   /* Buttons */
   --colorTextButton: #fff;
-
 
   --fs-10: .625rem;
   --fs-12: .75rem;
@@ -259,4 +267,32 @@ textarea::placeholder {
   z-index: 99;
   background-color: var(--overlay);
   transition: .3s;
+}
+
+[data-status] {
+  height: 24px;
+  min-width: 24px;
+  line-height: 0;
+  cursor: default;
+  -moz-box-align: center;
+  align-items: center;
+  white-space: nowrap;
+  display: inline-flex;
+  -moz-box-pack: center;
+  justify-content: center;
+  padding: 0px 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 6px;
+  transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-status="Ativada"] {
+  background-color: var(--bgGreen);
+  color: var(--green);
+}
+
+[data-status="Desativada"] {
+  background-color: var(--bgRed);
+  color: var(--red);
 }
