@@ -3,6 +3,8 @@
 import React from 'react';
 import styles from './table.module.css';
 import Image from 'next/image';
+import { Icon } from '@iconify/react/dist/iconify.js';
+import useOutside from '@/hooks/useOutside';
 
 export const Table = ({ children }: React.PropsWithChildren) => {
   return (
@@ -49,11 +51,33 @@ export const TableNotFound = ({
   );
 };
 
-export const TableProfile = ({src, name}: {src: string, name: string}) => {
-  return <div className={styles.profile}>
-    <Image src={src} alt={name} width={40} height={40} 
-    style={{borderRadius: "50%", objectFit: "cover"}} 
-    priority />
-    <p>{name}</p>
-  </div>
-}
+export const TableProfile = ({ src, name }: { src: string; name: string }) => {
+  return (
+    <div className={styles.profile}>
+      <Image
+        src={src}
+        alt={name}
+        width={40}
+        height={40}
+        style={{ borderRadius: '50%', objectFit: 'cover' }}
+        priority
+      />
+      <p>{name}</p>
+    </div>
+  );
+};
+
+export const TableOptions = ({ children }: React.PropsWithChildren) => {
+  const { isOpen, ref, setIsOpen } = useOutside<HTMLDivElement>();
+
+  return (
+    <div className={styles.options}>
+      <button className="icon" onClick={() => setIsOpen(true)}>
+        <Icon icon="ri:more-fill" />
+      </button>
+      <div className={`${styles.list} ${isOpen && styles.active}`} ref={ref}>
+        {children}
+      </div>
+    </div>
+  );
+};

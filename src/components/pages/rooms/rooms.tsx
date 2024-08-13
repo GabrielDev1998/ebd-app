@@ -10,6 +10,7 @@ import {
   TableCell,
   TableHead,
   TableNotFound,
+  TableOptions,
   TableProfile,
   TableRow,
 } from '@/components/table/table';
@@ -24,6 +25,7 @@ import AlertNotification from '@/components/alertNotification/alertNotification'
 import { zodResolver } from '@hookform/resolvers/zod';
 import Global from '@/utils/global';
 import type { StudentsProps } from '../students/formStudent/formStudent';
+import Link from 'next/link';
 
 const schemaFormRoom = z.object({
   name_room: z.string().min(5, {
@@ -41,7 +43,7 @@ type RoomType = {
   date: string;
   students: StudentsProps[];
   status: 'Ativada' | 'Desativada';
-}
+};
 
 const { alertNotification, avatar } = Global();
 
@@ -66,29 +68,34 @@ const Rooms = () => {
 
       // Criar a sala
       const createNewRoom = () => {
-        createDocument({
-         id: '',
-         image: avatar({
-          name: data.name_room,
-          type:"initials"
-         }),
-         faixa_etaria: selectFaixaEtaria,
-         name_room: data.name_room,
-         date: new Date().toLocaleDateString(),
-         students: [],
-         status: 'Ativada',
-        }, () => {
-          setOpenModalRoom(false);
-          alertNotification('success', 'Sala criada com sucesso')
-        });
-      }
+        createDocument(
+          {
+            id: '',
+            image: avatar({
+              name: data.name_room,
+              type: 'initials',
+            }),
+            faixa_etaria: selectFaixaEtaria,
+            name_room: data.name_room,
+            date: new Date().toLocaleDateString(),
+            students: [],
+            status: 'Ativada',
+          },
+          () => {
+            setOpenModalRoom(false);
+            alertNotification('success', 'Sala criada com sucesso');
+          },
+        );
+      };
 
-      const isRoom = dataDocs.every(room => room.name_room.toLowerCase()
-      .trim() !== data.name_room.toLowerCase().trim());
+      const isRoom = dataDocs.every(
+        (room) =>
+          room.name_room.toLowerCase().trim() !==
+          data.name_room.toLowerCase().trim(),
+      );
 
       if (isRoom) createNewRoom();
       else alertNotification('error', 'Já existe uma sala com esse nome');
-
     }
   }
 
@@ -136,21 +143,42 @@ const Rooms = () => {
                 <TableCell type="th">Data de Registro</TableCell>
                 <TableCell type="th">Total de Alunos</TableCell>
                 <TableCell type="th">Status</TableCell>
+                <TableCell type="th"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {!dataDocs.length ? <TableNotFound colSpan={4}/> : 
-                dataDocs.map(room =>
-                <TableRow key={room.id}>
-                  <TableCell type='td'>
-                    <TableProfile name={room.name_room} src={room.image} />
-                  </TableCell>
-                  <TableCell type='td'>{room.date}</TableCell>
-                  <TableCell type='td'>{room.students.length}</TableCell>
-                  <TableCell type='td'>
-                    <span data-status={room.status}>{room.status}</span>
-                  </TableCell>
-                </TableRow>)}
+              {!dataDocs.length ? (
+                <TableNotFound colSpan={4} />
+              ) : (
+                dataDocs.map((room) => (
+                  <TableRow key={room.id}>
+                    <TableCell type="td">
+                      <TableProfile name={room.name_room} src={room.image} />
+                    </TableCell>
+                    <TableCell type="td">{room.date}</TableCell>
+                    <TableCell type="td">{room.students.length}</TableCell>
+                    <TableCell type="td">
+                      <span data-status={room.status}>{room.status}</span>
+                    </TableCell>
+                    <TableCell type="td">
+                      <TableOptions>
+                        <Link href="#">
+                          <Icon icon="solar:trash-bin-trash-bold-duotone" />
+                          Excluir
+                        </Link>
+                        <Link href="/student/edit">
+                          <Icon icon="solar:document-add-bold-duotone" />
+                          Editar
+                        </Link>
+                        <Link href="/students">
+                          <Icon icon="solar:users-group-rounded-bold-duotone" />
+                          Visualizar alunos
+                        </Link>
+                      </TableOptions>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </div>
