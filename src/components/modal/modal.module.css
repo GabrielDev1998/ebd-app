@@ -1,0 +1,56 @@
+.containerModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+
+  background-color: var(--overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  visibility: hidden;
+  opacity: 0;
+  transition: .3s;
+
+  padding: var(--g-20);
+}
+
+.containerModal.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.boxModal {
+  width: 100%;
+  max-width: 550px;
+  background-color: var(--bg-4);
+  padding: var(--g-20);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.boxTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--g-20);
+}
+
+.boxTitle h2 {
+  font-size: var(--fs-18);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.boxModal > div:nth-child(2) {
+  max-width: initial;
+}
+
+.boxModal > div:nth-child(2) form label,
+.boxModal > div:nth-child(2) form input{
+  background-color: var(--bg-4) !important;
+}
+

@@ -1,0 +1,262 @@
+:root {
+  --primary: #8257E5;
+  --secondary: #9956F6;
+
+  --l: 250px;
+  --l-mobile: 100px;
+
+  /* Backgrounds */
+  --bgPrimary: #121214;
+  --bgSecondary: #212124;
+  --bgTertiary: #1A1A1E;
+
+  --bg-1: #212124;
+  --bg-2: #323238;
+  --bg-3: #29292E;
+  --bg-4: #202024;
+  --bg-5: #121214;
+  --bgGradientRight-3: radial-gradient(circle, rgba(20, 13, 26, 0.747), rgba(20, 30, 32, 0.904));
+
+  /* colors text */
+  --textColor: #8D8D99;
+  --textColor-2: #e1e1e6;
+  --textColor-3: #686870;
+
+  /* colors borders */
+  --borderColor: #333333;
+
+  /* radius */
+  --radius-4: 4px;
+
+  /* Overlay */
+  --overlay: rgba(24, 24, 26, 0.562);
+
+
+  /* Shadows */
+  --shadow: rgba(0, 0, 0, 0.2) 0px 0px 2px 0px, rgba(0, 0, 0, 0.12) 0px 12px 24px -4px;
+
+  /*  */
+  --erro: #ff5630;
+
+  /* Buttons */
+  --colorTextButton: #fff;
+
+
+  --fs-10: .625rem;
+  --fs-12: .75rem;
+  --fs-14: .845rem;
+  --fs-16: 1rem;
+  --fs-18: 1.125rem;
+  --fs-24: 1.5rem;
+  --fs-32: 2rem;
+  --fs-40: 2.5rem;
+  --fs-48: 3rem;
+  --fs-56: 3.5rem;
+  --fs-64: 4rem;
+  --fs-68: 4.25rem;
+  --fs-72: 4.5rem;
+  --fs-80: 5rem;
+  --fs-88: 5.5rem;
+  --fs-96: 6rem;
+  --fs-104: 6.5rem;
+
+  --g-5: .313rem;
+  --g-10: .625rem;
+  --g-20: 1.25rem;
+  --g-40: 2.5rem;
+  --g-60: 3.75rem;
+  --g-80: 5rem;
+  --g-100: 6.25rem;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-color: var(--bgPrimary);
+  color: var(--textColor-2);
+}
+
+ul {
+  list-style: none;
+}
+
+a,
+span,
+label {
+  display: block;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-size: 1rem;
+  line-height: 1.2;
+  font-weight: normal;
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--textColor-3);
+  font-size: .845rem;
+  font-weight: 300;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--g-40);
+}
+
+.title-24 {
+  font-size: var(--fs-24);
+  line-height: 24px;
+  font-weight: 600;
+}
+
+.button,
+.button-2 {
+  /* width: -moz-fit-content; */
+  width: fit-content;
+  margin: 0;
+  height: auto !important;
+  padding: .75rem 1.125rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5em;
+  outline: none !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--radius-01);
+  cursor: pointer;
+  line-height: 1;
+  text-decoration: none;
+  border-radius: var(--radius-4);
+  font-family: inherit;
+  font-size: .845rem;
+  font-weight: 700;
+  color: var(--colorTextButton);
+  background-color: var(--primary);
+  transition: opacity .32s ease;
+}
+
+.button:hover,
+.button-2:hover {
+  opacity: .8;
+}
+
+.button-flex button,
+.button-2{
+  padding: 6px 12px !important;
+  height: 40px !important;
+}
+
+
+.button.red {
+  color: #FFAC82 !important;
+  background-color: rgba(255, 54, 4, 0.10);
+  border-color: transparent !important;
+}
+
+.button.red:hover {
+  background-color: rgba(255, 54, 4, 0.16);
+}
+
+
+.button-flex,
+.button-flex-2 {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button-flex-2 {
+  justify-content: space-between;
+}
+
+.button-2 svg,
+.button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.animaLeft {
+  animation: animaLeft .3s ease-in-out forwards;
+}
+
+@keyframes animaLeft {
+  0% {
+    transform: translate3D(-20px, 0, 0);
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  100% {
+    transform: translate3D(0, 0, 0);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (max-width: 960px) {
+  .container {
+    padding: 0 var(--g-20);
+  }
+}
+
+/* Diversos */
+.icon {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-2);
+  outline: none;
+  cursor: pointer;
+  color: var(--textColor);
+  border: 0;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  transition: .3s;
+}
+
+.icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.icon:hover{
+  color: var(--textColor-2);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  background-color: var(--overlay);
+  transition: .3s;
+}

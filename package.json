@@ -1,0 +1,35 @@
+{
+  "name": "app-ebd",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
+    "@iconify/react": "^5.0.2",
+    "firebase": "^10.12.5",
+    "next": "14.2.5",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-google-recaptcha": "^3.1.0",
+    "react-hook-form": "^7.52.2",
+    "sonner": "^1.5.0",
+    "styled-components": "^6.1.12",
+    "sweetalert2": "^11.12.4",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/react-google-recaptcha": "^2.1.9",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
+    "i": "^0.3.7",
+    "typescript": "^5"
+  }
+}

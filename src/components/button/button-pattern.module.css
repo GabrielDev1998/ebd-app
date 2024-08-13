@@ -1,0 +1,31 @@
+.button {
+	/* width: -moz-fit-content; */
+	width: fit-content;
+	margin: 0;
+	padding: .75rem 1.125rem;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: .5em;
+	outline: none !important;
+	border: .125rem solid transparent;
+	border-radius: var(--radius-01);
+	cursor: pointer;
+	line-height: 1;
+	text-decoration: none;
+  border-radius: var(--radius-4);
+	font-family: inherit;
+	font-size: .845rem;
+	font-weight: 700;
+	color: #262626;
+	background-color: #fff;
+	transition: border-color .32s ease,background-color .32s ease;
+}
+
+.button:hover{
+  background: transparent;
+  color: #fff;
+  border-color: currentColor;
+}
+

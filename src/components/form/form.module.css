@@ -1,0 +1,159 @@
+.boxForm {
+  max-width: 450px;
+  width: 100%;;
+}
+
+.boxForm .boxTitle {
+  margin-bottom: var(--g-40);
+}
+
+.boxTitle h2 {
+  font-size: var(--fs-18);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.boxTitle p {
+  margin-top: var(--g-10);
+  font-size: .845rem;
+  color: var(--textColor);
+}
+
+.boxTitle p a {
+  display: inline-block;
+  color: var(--primary);
+}
+
+.boxTitle p a:hover{
+  text-decoration: underline;
+}
+
+.boxForm form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--g-20);
+}
+
+.boxInput {
+  width: 100%;
+  position: relative;
+  background: var(--bg-5);
+  border-radius: 8px;
+}
+
+.columnInput {
+  display: flex;
+  align-items: center;
+  gap: var(--g-20);
+}
+
+.input,
+.boxForm textarea {
+  width: 100%;
+  height: 55px;
+  border-radius: inherit;
+
+  border: 1px solid var(--borderColor);
+  padding: 0 var(--g-20);
+
+  background: inherit;
+  color: var(--textColor-2);
+
+  outline: 2px solid transparent;
+  transition: outline .3s, border .3s;
+ }
+
+ .input:hover,
+ .boxForm textarea:hover{
+  outline-color: var(--primary);
+ }
+
+ .boxForm textarea:focus,
+ .input:focus {
+  outline-color: var(--primary);
+ }
+
+ .boxForm textarea {
+  background: inherit;
+  height: 250px;
+  resize: none;
+  padding: var(--g-20);
+ }
+
+ .label {
+  position: absolute;
+  top: 17px;
+  left: 17px;
+  padding: 3px;
+
+  font-size: var(--fs-12);
+  color: var(--textColor-3);
+  font-weight: 500;
+  line-height: 1.2;
+  transition: .3s;
+  background: inherit;
+  pointer-events: none;
+}
+
+ .input:focus ~ .label{
+  color: var(--textColor-2);
+  top: -10px;
+ }
+
+ .input:valid ~ .label{
+  top: -10px;
+ }
+ 
+ .error {
+  font-size: .845rem;
+  margin-top: var(--g-10);
+  color: var(--erro);
+ }
+
+ .form button {
+  height: 55px;
+	margin: 0;
+	padding: .75rem 1.125rem;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: .5em;
+	outline: none !important;
+  border: 0;
+	border-radius: var(--radius-01);
+	cursor: pointer;
+	line-height: 1;
+	text-decoration: none;
+  border-radius: 8px;
+	font-family: inherit;
+	font-size: 1rem;
+	font-weight: 700;
+	color: var(--colorTextButton);
+	background-color: var(--primary);
+	transition: opacity .32s ease, background-color .32s ease;
+}
+
+.form button:hover{
+  background: var(--secondary) !important;
+  opacity: 1 !important;
+}
+
+.boxForgot {
+  text-align: right;
+}
+
+.boxForgot a {
+  font-size: .845rem;
+  color: var(--textColor-2);
+}
+
+.boxForgot a:hover{
+  text-decoration: underline;
+}
+
+@media (max-width: 960px) {
+  .columnInput{
+    flex-direction: column;
+  }
+}

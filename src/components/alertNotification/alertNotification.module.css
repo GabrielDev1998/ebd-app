@@ -1,0 +1,11 @@
+.alert {
+  position: absolute;
+  top: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.alert > * {
+  pointer-events: initial;
+  box-shadow: none;
+}

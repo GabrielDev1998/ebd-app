@@ -1,0 +1,43 @@
+.formStudent {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: var(--g-20);
+}
+
+.box {
+  background-color: var(--bgPrimary);
+  border-radius: 8px;
+  padding: var(--g-40);
+  border: 1px solid var(--borderColor); 
+  align-self: flex-start;
+}
+
+.form {
+  max-width: initial !important;
+}
+
+.boxProfile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--g-20);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.boxProfile h3 {
+  font-size: var(--fs-18);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+@media (max-width: 1200px) {
+  .formStudent{
+    grid-template-columns: 1fr;
+  }
+
+  .box{
+    padding-left: var(--g-20);
+    padding-right: var(--g-20);
+  }
+}

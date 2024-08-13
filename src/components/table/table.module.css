@@ -1,0 +1,54 @@
+.containerTable {
+  /* border: 1px solid red; */
+}
+
+.boxTable {
+  background-color: var(--bg-1);
+  border-radius: 8px;
+  overflow: auto;
+}
+
+.boxTable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.boxTable table thead {
+  background-color: var(--bg-2);
+}
+
+.boxTable table td,
+.boxTable table th {
+  font-weight: 500;
+  font-size: var(--fs-14);
+  text-align: left;
+  padding: var(--g-20);
+}
+
+.boxTable table th{
+  font-size: var(--fs-12);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.boxTable table tbody tr{
+  border-top: 1px solid var(--borderColor);
+}
+
+.notFound p {
+  text-align: center;
+  height: 250px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--textColor);
+
+  font-size: var(--fs-18);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: var(--g-20);
+}

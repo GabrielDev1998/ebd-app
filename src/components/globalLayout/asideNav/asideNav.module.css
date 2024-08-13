@@ -1,0 +1,131 @@
+.asideNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: var(--l);
+  border-right: 1px solid var(--borderColor);
+
+  transition: width .3s, left .3s;
+  background: var(--bgPrimary);
+}
+
+.asideNav.active {
+  width: var(--l-mobile);
+}
+
+.boxLogo {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--g-20);
+}
+
+.menu {
+  margin-top: var(--g-40);
+  padding: 0 var(--g-10);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--g-10);
+}
+
+.menu .linkMenu.active {
+  background-color: var(--bg-1);
+  color: var(--textColor-2);
+  font-weight: 600;
+}
+
+.menu .linkMenu.active svg {
+  color: var(--primary);
+}
+
+.asideNav.active .menu li a {
+  flex-direction: column;
+  font-size: .625rem;
+
+  height: auto;
+  padding: .625rem;
+
+  gap: var(--g-5);
+}
+
+.asideNav.active .boxLogo {
+  padding: 0;
+  justify-content: center;
+}
+
+.overlayAside {
+  visibility: hidden;
+  opacity: 0;
+}
+
+@media (max-width: 1400px) {
+
+  .asideNav {
+    width: var(--l-mobile);
+    left: 0;
+  }
+
+  .asideNav.active {
+    left: -100px;
+  }
+  
+  .asideNav .boxLogo{
+    padding: 0;
+    justify-content: center;
+  }
+
+  .asideNav .menu li a {
+    flex-direction: column;
+    font-size: .625rem;
+
+    height: auto;
+    padding: .625rem;
+
+    gap: var(--g-5);
+  }
+}
+
+
+@media (max-width: 960px) {
+  .asideNav {
+    width: var(--l) !important;
+    border: 0;
+    z-index: 100 !important;
+    left: -250px;
+    box-shadow: var(--shadow);
+    background-color: var(--bgTertiary);
+  }
+
+  .boxLogo {
+    padding: 0 var(--g-20) !important;
+    justify-content: initial !important;
+  }
+
+  .asideNav .menu li a {
+    flex-direction: initial !important;
+    font-size: var(--fs-14) !important;
+  
+    height: 45px !important;
+    padding: 0 var(--g-10) !important;
+  
+    gap: var(--g-20) !important;
+  }
+
+  .asideNav .menu li a:hover,
+  .asideNav .menu li a.active{
+    background-color: var(--bg-3);
+  }
+
+  /* css com js */
+  .asideNav.active {
+    left: 0;
+  }
+
+  .overlayAside.active {
+    visibility: visible;
+    opacity: 1;
+  } 
+
+}
