@@ -5,15 +5,20 @@
 }
 
 .box {
-  background-color: var(--bgPrimary);
+  background-color: var(--bg-6);
   border-radius: 8px;
   padding: var(--g-40);
-  border: 1px solid var(--borderColor); 
+  /* border: 1px solid var(--borderColor);  */
   align-self: flex-start;
 }
 
 .form {
   max-width: initial !important;
+}
+
+.form label,
+.form input {
+  background-color: var(--bg-6) !important;
 }
 
 .boxProfile {

@@ -4,6 +4,7 @@
   justify-content: flex-end;
 }
 
-.containerRooms {
+.boxRooms {
+  position: relative;
   margin-top: var(--g-20);
 }

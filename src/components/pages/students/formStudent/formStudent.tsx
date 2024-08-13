@@ -12,6 +12,7 @@ import DataBase from '@/firebase/db/database';
 import Global from '@/utils/global';
 import ProfileCustom from '@/components/profileCustom/profileCustom';
 import CustomSelect from '@/components/form/select/custom-select';
+import { RoomType } from '../../rooms/rooms';
 
 const schemaFormStudent = z.object({
   fullName: z.string().min(5, {
@@ -47,8 +48,9 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
   } = useForm<SchemaFormStudent>({
     resolver: zodResolver(schemaFormStudent),
   });
-  const { popup, avatar } = Global();
-  const { createDocument, dataDocs } = DataBase<StudentsProps>('students');
+
+  const { avatar } = Global();
+  const { createDocument, dataDocs } = DataBase<RoomType>('rooms');
   const [profileStudent, setProfileStudent] = React.useState({
     url: '',
     name: '',
@@ -57,38 +59,7 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
   const [selectRooms, setSelectRoom] = React.useState('');
   const [selectOffice, setSelectOffice] = React.useState('');
 
-  // console.log('Renderizou');
-
-  function onChangeForm({
-    fullName,
-    birthDate,
-    neighborhood,
-    numberHouse,
-    phone,
-    street,
-  }: SchemaFormStudent) {
-    if (fullName) {
-      createDocument(
-        {
-          address: {
-            street,
-            neighborhood,
-            numberHouse,
-          },
-          birthDate,
-          fullName,
-          phone,
-        },
-        () => {
-          popup({
-            icon: 'success',
-            title: 'Aluno cadastrado com sucesso!',
-            text: 'Seu cadastro foi realizado com sucesso!',
-          });
-        },
-      );
-    }
-  }
+  console.log('Renderizou');
 
   useEffect(() => {
     watch(({ fullName }) => {
@@ -110,20 +81,6 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
     });
   }, [watch, avatar]);
 
-  React.useEffect(() => {
-    if (type === 'Update') {
-      // Implementar lógica para carregar dados do aluno para o formulário
-      reset({
-        fullName: 'Nome do Aluno',
-        birthDate: 'DD/MM/YYYY',
-        phone: '(11) 9999-9999',
-        street: 'Rua XYZ',
-        neighborhood: 'Bairro ABC',
-        numberHouse: '123',
-      });
-    }
-  }, [type, reset, dataDocs]);
-
   return (
     <div className={styles.formStudent}>
       <div className={styles.box}>
@@ -142,12 +99,13 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
         </div>
       </div>
       <div className={styles.box}>
-        <Form className={styles.form} onSubmit={handleSubmit(onChangeForm)}>
+        <Form className={styles.form}>
           <CustomSelect
             label="Turmas"
             setValue={setSelectRoom}
             value={selectRooms}
-            items={['Tipo 1', 'Tipo 2', 'Tipo 3']}
+            items={dataDocs.map((room) => room.name_room)}
+            style={{ backgroundColor: 'var(--bg-6)' }}
           />
           <Input
             type="text"
@@ -214,6 +172,7 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
               'Músico',
               'Membro',
             ]}
+            style={{ backgroundColor: 'var(--bg-6)' }}
           />
           <div className="button-flex">
             {type === 'Create' && (

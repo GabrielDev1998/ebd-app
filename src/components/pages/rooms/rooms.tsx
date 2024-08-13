@@ -26,6 +26,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Global from '@/utils/global';
 import type { StudentsProps } from '../students/formStudent/formStudent';
 import Link from 'next/link';
+import { Loader } from '@/components/loader/loader';
 
 const schemaFormRoom = z.object({
   name_room: z.string().min(5, {
@@ -35,7 +36,7 @@ const schemaFormRoom = z.object({
 
 type SchemaFormRoom = z.infer<typeof schemaFormRoom>;
 
-type RoomType = {
+export type RoomType = {
   id: string;
   name_room: string;
   faixa_etaria: string;
@@ -48,7 +49,7 @@ type RoomType = {
 const { alertNotification, avatar } = Global();
 
 const Rooms = () => {
-  const { createDocument, dataDocs } = DataBase<RoomType>('rooms');
+  const { createDocument, dataDocs, loading } = DataBase<RoomType>('rooms');
   const [openModalRoom, setOpenModalRoom] = React.useState(false);
   const [selectFaixaEtaria, setSelectFaixaEtaria] = React.useState('');
   const {
@@ -135,7 +136,8 @@ const Rooms = () => {
             Adicionar sala
           </button>
         </div>
-        <div className={styles.containerRooms}>
+        <div className={styles.boxRooms}>
+          {loading && <Loader />}
           <Table>
             <TableHead>
               <TableRow>
