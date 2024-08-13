@@ -16,7 +16,7 @@
   background-color: inherit;
   padding: 3px;
 
-  font-size: var(--fs-12);
+  font-size: var(--fs-14);
   color: var(--textColor-3);
   transition: color .3s, top .3s;
   pointer-events: none;
