@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 400px 1fr;
   gap: var(--g-20);
+  position: relative;
 }
 
 .box {

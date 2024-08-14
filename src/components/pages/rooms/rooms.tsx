@@ -150,7 +150,7 @@ const Rooms = () => {
             </TableHead>
             <TableBody>
               {!dataDocs.length ? (
-                <TableNotFound colSpan={4} />
+                <TableNotFound colSpan={5} />
               ) : (
                 dataDocs.map((room) => (
                   <TableRow key={room.id}>

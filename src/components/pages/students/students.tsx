@@ -16,7 +16,6 @@ import {
 import DataBase from '@/firebase/db/database';
 import { RoomType } from '../rooms/rooms';
 import { useParams } from 'next/navigation';
-import { StudentsProps } from './formStudent/formStudent';
 import Link from 'next/link';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { Loader } from '@/components/loader/loader';
@@ -84,11 +83,13 @@ const Students = () => {
                           <Icon icon="solar:trash-bin-trash-bold-duotone" />
                           Excluir
                         </Link>
-                        <Link href="/student/edit">
+                        <Link
+                          href={`/student/edit/${roomCurrent.id}/${student.id}`}
+                        >
                           <Icon icon="solar:document-add-bold-duotone" />
                           Editar
                         </Link>
-                        <Link href="/student/progress">
+                        <Link href={`/student/progress/${student.id}`}>
                           <Icon icon="solar:cup-star-bold-duotone" />
                           Progresso
                         </Link>

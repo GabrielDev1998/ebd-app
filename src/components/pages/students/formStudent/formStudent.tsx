@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styles from './formStudent.module.css';
 
 import Form from '@/components/form/form';
@@ -14,6 +14,8 @@ import ProfileCustom from '@/components/profileCustom/profileCustom';
 import CustomSelect from '@/components/form/select/custom-select';
 import { RoomType } from '../../rooms/rooms';
 import AlertNotification from '@/components/alertNotification/alertNotification';
+import { useParams } from 'next/navigation';
+import { Loader } from '@/components/loader/loader';
 
 const schemaFormStudent = z.object({
   fullName: z.string().min(5, {
@@ -57,43 +59,43 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
   });
 
   const { avatar, alertNotification, popup } = Global();
-  const { dataDocs, updateData } = DataBase<RoomType>('rooms');
+  const { dataDocs, updateData, loading } = DataBase<RoomType>('rooms');
   const [profileStudent, setProfileStudent] = React.useState({
     url: '',
     name: '',
   });
 
-  const [selectRooms, setSelectRoom] = React.useState('');
+  const [selectRooms, setSelectRooms] = React.useState('');
   const [selectOffice, setSelectOffice] = React.useState('');
+
+  const [roomCurrent, setRoomCurrent] = React.useState<
+    RoomType | null | undefined
+  >(null);
+  const [student, setStudent] = React.useState<
+    StudentsProps | null | undefined
+  >(null);
+  const params: { slug: string[] } = useParams();
 
   // console.log('Renderizou');
 
-  function handleClickFormStudent({
-    birthDate,
-    fullName,
-    neighborhood,
-    numberHouse,
-    phone,
-    street,
-  }: SchemaFormStudent) {
+  function handleClickFormStudent(data: SchemaFormStudent) {
     const idRandom = Math.floor(Math.random() * 1000);
-    const roomCurrent = dataDocs.find((room) => room.name_room === selectRooms);
 
     const addNewStudent = () => {
       const newStudent: StudentsProps = {
         id: idRandom,
-        fullName,
+        fullName: data.fullName,
         address: {
-          street,
-          neighborhood,
-          numberHouse,
+          street: data.street,
+          neighborhood: data.neighborhood,
+          numberHouse: data.numberHouse,
         },
-        birthDate,
-        phone,
+        birthDate: data.birthDate,
+        phone: data.phone,
         room: selectRooms,
         office: selectOffice,
         profile: avatar({
-          name: fullName,
+          name: data.fullName,
           type: 'initials',
         }),
         date_enroll: new Date().toLocaleDateString(),
@@ -135,9 +137,55 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
     };
 
     // Função para atualizar os dados do aluno já matriculado.
-    const updateDataStudent = () => {};
+    const updateDataStudent = () => {
+      if (roomCurrent) {
+        // Atualizar dados do aluno
+        const sendUpdatedData = (dataStudent: StudentsProps[]) => {
+          updateData(
+            roomCurrent.id,
+            {
+              ...roomCurrent,
+              students: dataStudent,
+            },
+            () => {
+              alertNotification(
+                'success',
+                'Dados do aluno atualizados com sucesso',
+              );
+            },
+          );
+        };
 
-    if (fullName) {
+        if (selectRooms !== roomCurrent.name_room) {
+          sendUpdatedData(
+            roomCurrent.students.filter(({ id }) => id !== student?.id),
+          );
+
+          const dataRoom = dataDocs.find(
+            (room) => room.name_room === selectRooms,
+          );
+          if (dataRoom && student) {
+            updateData(dataRoom.id, {
+              ...dataRoom,
+              students: dataRoom.students.map(({ id }) =>
+                id === student.id
+                  ? {
+                      ...student,
+                      ...data,
+                      room: selectRooms,
+                      office: selectOffice,
+                    }
+                  : student,
+              ),
+            });
+          }
+
+          // console.log(student);
+        }
+      }
+    };
+
+    if (data.fullName) {
       if (selectRooms && selectOffice) {
         if (type === 'Create') addNewStudent();
         if (type === 'Update') updateDataStudent();
@@ -147,7 +195,16 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
     }
   }
 
-  useEffect(() => {
+  useMemo(() => {
+    const setRoom = (key: keyof RoomType, comparison: string) => {
+      return setRoomCurrent(dataDocs.find((room) => room[key] === comparison));
+    };
+
+    if (type === 'Create') setRoom('name_room', selectRooms);
+    if (type === 'Update') setRoom('id', params.slug[0]);
+  }, [type, dataDocs, params, selectRooms]);
+
+  useMemo(() => {
     watch(({ fullName }) => {
       if (fullName) {
         setProfileStudent({
@@ -167,8 +224,34 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
     });
   }, [watch, avatar]);
 
+  useMemo(() => {
+    if (type === 'Update') {
+      roomCurrent?.students.forEach((student) => {
+        if (student.id === Number(params.slug[1])) setStudent(student);
+      });
+    }
+  }, [type, roomCurrent, params]);
+
+  useEffect(() => {
+    if (student) {
+      const { fullName, birthDate, address, phone, office, room } = student;
+      reset({
+        birthDate,
+        fullName,
+        neighborhood: address.neighborhood,
+        numberHouse: address.numberHouse,
+        phone,
+        street: address.street,
+      });
+
+      setSelectRooms(() => room);
+      setSelectOffice(() => office);
+    }
+  }, [reset, student]);
+
   return (
     <div className={styles.formStudent}>
+      {loading && <Loader />}
       <AlertNotification />
       <div className={styles.box}>
         <div className={styles.boxProfile}>
@@ -192,7 +275,7 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
         >
           <CustomSelect
             label="Turmas"
-            setValue={setSelectRoom}
+            setValue={setSelectRooms}
             value={selectRooms}
             items={dataDocs.map((room) => room.name_room)}
             style={{ backgroundColor: 'var(--bg-6)' }}
