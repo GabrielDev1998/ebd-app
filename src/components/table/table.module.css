@@ -11,6 +11,7 @@
 .boxTable table {
   width: 100%;
   border-collapse: collapse;
+
 }
 
 .boxTable table thead {
@@ -21,7 +22,7 @@
 .boxTable table th {
   font-weight: 500;
   font-size: var(--fs-14);
-  text-align: left;
+  text-align: left !important;
   padding: var(--g-20);
 }
 
@@ -40,9 +41,18 @@
   text-align: right;
 }
 
+.notFound {
+  display: flex;
+  flex-direction: column;
+  gap: var(--g-20);
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+}
+
 .notFound p {
   text-align: center;
-  height: 250px;
+
 
   display: flex;
   align-items: center;

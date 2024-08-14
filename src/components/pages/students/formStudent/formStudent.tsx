@@ -41,6 +41,8 @@ export type StudentsProps = {
   room: string;
   office: string;
   profile: string;
+  date_enroll: string;
+  status: 'Ativo' | 'Inativo';
 };
 
 const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
@@ -94,6 +96,8 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
           name: fullName,
           type: 'initials',
         }),
+        date_enroll: new Date().toLocaleDateString(),
+        status: 'Ativo',
       };
 
       const send = (data: StudentsProps[]) => {

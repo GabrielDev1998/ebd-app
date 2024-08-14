@@ -163,6 +163,7 @@ textarea::placeholder {
   border-radius: var(--radius-4);
   font-family: inherit;
   font-size: .845rem;
+  line-height: 1.2;
   font-weight: 700;
   color: var(--colorTextButton);
   background-color: var(--primary);
@@ -288,12 +289,14 @@ textarea::placeholder {
   transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-[data-status="Ativada"] {
+[data-status="Ativada"],
+[data-status="Ativo"] {
   background-color: var(--bgGreen);
   color: var(--green);
 }
 
-[data-status="Desativada"] {
+[data-status="Desativada"],
+[data-status="Inativo"] {
   background-color: var(--bgRed);
   color: var(--red);
 }

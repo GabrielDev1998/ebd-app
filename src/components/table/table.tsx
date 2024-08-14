@@ -41,11 +41,15 @@ export const TableBody = ({ children }: React.PropsWithChildren) => {
 export const TableNotFound = ({
   colSpan,
   text,
+  children,
 }: { colSpan: number; text?: string } & React.PropsWithChildren) => {
   return (
     <tr>
-      <td colSpan={colSpan} className={styles.notFound}>
-        {text ? <p>{text}</p> : <p>Sem informações</p>}
+      <td colSpan={colSpan}>
+        <div className={styles.notFound}>
+          {text ? <p>{text}</p> : <p>Sem informações</p>}
+          {children}
+        </div>
       </td>
     </tr>
   );

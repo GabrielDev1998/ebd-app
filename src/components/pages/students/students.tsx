@@ -16,9 +16,12 @@ import DataBase from '@/firebase/db/database';
 import { RoomType } from '../rooms/rooms';
 import { useParams } from 'next/navigation';
 import { StudentsProps } from './formStudent/formStudent';
+import Link from 'next/link';
+import { Icon } from '@iconify/react/dist/iconify.js';
+import { Loader } from '@/components/loader/loader';
 
 const Students = () => {
-  const { dataDocs } = DataBase<RoomType>('rooms');
+  const { dataDocs, loading } = DataBase<RoomType>('rooms');
   const params: { id: string } = useParams();
 
   // console.log('Renderizou');
@@ -31,6 +34,7 @@ const Students = () => {
   return (
     <GlobalLayout title="Alunos" description="Alunos matriculados na EBD">
       <div className={styles.containerStudents}>
+        {loading && <Loader />}
         <Table>
           <TableHead>
             <TableRow>
@@ -49,8 +53,33 @@ const Students = () => {
               <TableNotFound
                 colSpan={7}
                 text="Não tem alunos matriculados nessa turma"
-              />
+              >
+                <Link href="/student/enroll" className="button-2">
+                  <Icon icon="ic:outline-add" />
+                  Matricular
+                </Link>
+              </TableNotFound>
             )}
+
+            {roomCurrent?.students.length
+              ? roomCurrent.students.map((student) => (
+                  <TableRow key={student.id}>
+                    <TableCell type="td">
+                      <TableProfile
+                        name={student.fullName}
+                        src={student.profile}
+                      />
+                    </TableCell>
+                    <TableCell type="td">{student.birthDate}</TableCell>
+                    <TableCell type="td">{student.room}</TableCell>
+                    <TableCell type="td">Masculino</TableCell>
+                    <TableCell type="td">{student.date_enroll}</TableCell>
+                    <TableCell type="td">
+                      <span data-status={student.status}>{student.status}</span>
+                    </TableCell>
+                  </TableRow>
+                ))
+              : null}
 
             {/*... */}
           </TableBody>
