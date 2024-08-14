@@ -9,6 +9,7 @@ import {
   TableCell,
   TableHead,
   TableNotFound,
+  TableOptions,
   TableProfile,
   TableRow,
 } from '@/components/table/table';
@@ -76,6 +77,22 @@ const Students = () => {
                     <TableCell type="td">{student.date_enroll}</TableCell>
                     <TableCell type="td">
                       <span data-status={student.status}>{student.status}</span>
+                    </TableCell>
+                    <TableCell type="td">
+                      <TableOptions>
+                        <Link href="#">
+                          <Icon icon="solar:trash-bin-trash-bold-duotone" />
+                          Excluir
+                        </Link>
+                        <Link href="/student/edit">
+                          <Icon icon="solar:document-add-bold-duotone" />
+                          Editar
+                        </Link>
+                        <Link href="/student/progress">
+                          <Icon icon="solar:cup-star-bold-duotone" />
+                          Progresso
+                        </Link>
+                      </TableOptions>
                     </TableCell>
                   </TableRow>
                 ))
