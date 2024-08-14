@@ -40,6 +40,7 @@ export type StudentsProps = {
   };
   room: string;
   office: string;
+  profile: string;
 };
 
 const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
@@ -89,6 +90,10 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
         phone,
         room: selectRooms,
         office: selectOffice,
+        profile: avatar({
+          name: fullName,
+          type: 'initials',
+        }),
       };
 
       const send = (data: StudentsProps[]) => {
