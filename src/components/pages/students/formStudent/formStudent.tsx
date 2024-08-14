@@ -13,6 +13,7 @@ import Global from '@/utils/global';
 import ProfileCustom from '@/components/profileCustom/profileCustom';
 import CustomSelect from '@/components/form/select/custom-select';
 import { RoomType } from '../../rooms/rooms';
+import AlertNotification from '@/components/alertNotification/alertNotification';
 
 const schemaFormStudent = z.object({
   fullName: z.string().min(5, {
@@ -28,6 +29,7 @@ const schemaFormStudent = z.object({
 type SchemaFormStudent = z.infer<typeof schemaFormStudent>;
 
 export type StudentsProps = {
+  id: number;
   fullName: string;
   birthDate: string;
   phone: string;
@@ -36,6 +38,8 @@ export type StudentsProps = {
     neighborhood: string;
     numberHouse: string;
   };
+  room: string;
+  office: string;
 };
 
 const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
@@ -49,8 +53,8 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
     resolver: zodResolver(schemaFormStudent),
   });
 
-  const { avatar } = Global();
-  const { createDocument, dataDocs } = DataBase<RoomType>('rooms');
+  const { avatar, alertNotification, popup } = Global();
+  const { dataDocs, updateData } = DataBase<RoomType>('rooms');
   const [profileStudent, setProfileStudent] = React.useState({
     url: '',
     name: '',
@@ -59,7 +63,80 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
   const [selectRooms, setSelectRoom] = React.useState('');
   const [selectOffice, setSelectOffice] = React.useState('');
 
-  console.log('Renderizou');
+  // console.log('Renderizou');
+
+  function handleClickFormStudent({
+    birthDate,
+    fullName,
+    neighborhood,
+    numberHouse,
+    phone,
+    street,
+  }: SchemaFormStudent) {
+    const idRandom = Math.floor(Math.random() * 1000);
+    const roomCurrent = dataDocs.find((room) => room.name_room === selectRooms);
+
+    const addNewStudent = () => {
+      const newStudent: StudentsProps = {
+        id: idRandom,
+        fullName,
+        address: {
+          street,
+          neighborhood,
+          numberHouse,
+        },
+        birthDate,
+        phone,
+        room: selectRooms,
+        office: selectOffice,
+      };
+
+      const send = (data: StudentsProps[]) => {
+        if (roomCurrent) {
+          updateData(
+            roomCurrent.id,
+            {
+              ...roomCurrent,
+              students: data,
+            },
+            () => alertNotification('success', 'Aluno cadastrado com sucesso'),
+          );
+        }
+      };
+
+      if (roomCurrent) {
+        const { students } = roomCurrent;
+        if (students.length === 0) send([newStudent]);
+        else {
+          const isRepeat = roomCurrent?.students.filter(
+            (student) => student.id === idRandom,
+          );
+          // Caso o ID já esteja cadastrado, exibe um aviso.
+          if (isRepeat?.length) {
+            popup({
+              icon: 'warning',
+              title: 'Tente novamente!',
+              text: `O ID ${idRandom} gerado, está registrada em algum aluno.`,
+            });
+          } else {
+            send([...students, newStudent]);
+          }
+        }
+      }
+    };
+
+    // Função para atualizar os dados do aluno já matriculado.
+    const updateDataStudent = () => {};
+
+    if (fullName) {
+      if (selectRooms && selectOffice) {
+        if (type === 'Create') addNewStudent();
+        if (type === 'Update') updateDataStudent();
+      } else {
+        alertNotification('error', 'Selecione as opções para continuar');
+      }
+    }
+  }
 
   useEffect(() => {
     watch(({ fullName }) => {
@@ -83,6 +160,7 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
 
   return (
     <div className={styles.formStudent}>
+      <AlertNotification />
       <div className={styles.box}>
         <div className={styles.boxProfile}>
           {profileStudent.url && profileStudent.name && (
@@ -99,7 +177,10 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
         </div>
       </div>
       <div className={styles.box}>
-        <Form className={styles.form}>
+        <Form
+          className={styles.form}
+          onSubmit={handleSubmit(handleClickFormStudent)}
+        >
           <CustomSelect
             label="Turmas"
             setValue={setSelectRoom}

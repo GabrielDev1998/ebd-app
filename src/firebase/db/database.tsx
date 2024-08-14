@@ -10,6 +10,7 @@ import {
   doc,
   QuerySnapshot,
   getDocs,
+  updateDoc,
 } from 'firebase/firestore';
 import { appInitialize } from '../settings';
 import { useEffect, useState } from 'react';
@@ -40,7 +41,33 @@ function DataBase<T extends DocumentData>(path: string) {
     }
   };
 
-  //Ler dados
+  // Atualizar os documentos
+  async function updateData(
+    id: string | null,
+    data: T,
+    cb?: (data: T) => void,
+  ) {
+    if (id) {
+      const refUpdate = doc(db, path, id);
+      try {
+        setLoading(true);
+        await updateDoc(refUpdate, data)
+          .then(() => {
+            if (cb) cb(data);
+          })
+          .catch((error) => {
+            if (error instanceof FirebaseError) {
+              console.log('Algum erro ocorreu' + error.message);
+            }
+          })
+          .finally(() => setLoading(false));
+      } catch (e) {
+        console.error('Algum erro ocorreu ' + e);
+      }
+    }
+  }
+
+  // Ler dados
   useEffect(() => {
     async function readDocs() {
       try {
@@ -72,18 +99,23 @@ function DataBase<T extends DocumentData>(path: string) {
   // Pegar docs do banco de dados
   useEffect(() => {
     const getDocument = () => {
-      onSnapshot(collection(db, path), (snapshot) => {
-        const data = snapshot as QuerySnapshot<T, T>;
-        setDataDocs(
-          data.docs.map((doc) => {
-            return { ...doc.data(), id: doc.id };
-          }),
-        );
-      });
+      try {
+        onSnapshot(collection(db, path), (snapshot) => {
+          const data = snapshot as QuerySnapshot<T, T>;
+          setDataDocs(
+            data.docs.map((doc) => {
+              return { ...doc.data(), id: doc.id };
+            }),
+          );
+        });
+      } catch (err) {
+        if (err instanceof Error)
+          console.error('Error getting document:', err.message);
+      }
     };
     getDocument();
   }, [path]);
 
-  return { createDocument, dataDocs, loading };
+  return { createDocument, updateData, dataDocs, loading };
 }
 export default DataBase;

@@ -29,6 +29,7 @@
   font-size: var(--fs-12);
   font-weight: 600;
   text-transform: uppercase;
+  color: var(--textColor);
 }
 
 .boxTable table tbody tr{

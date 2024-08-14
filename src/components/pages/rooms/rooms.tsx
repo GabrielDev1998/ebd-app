@@ -172,7 +172,7 @@ const Rooms = () => {
                           <Icon icon="solar:document-add-bold-duotone" />
                           Editar
                         </Link>
-                        <Link href="/students">
+                        <Link href={`/students/${room.id}`}>
                           <Icon icon="solar:users-group-rounded-bold-duotone" />
                           Visualizar alunos
                         </Link>
