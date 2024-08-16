@@ -5,7 +5,7 @@ import React, { createContext, useContext, useEffect } from 'react';
 
 export const themeColors = {
   color_1: {
-    hexP: '#8257E5',
+    hexP: '#773EC7',
     hexS: '#9956F6',
   },
   color_2: {
@@ -22,8 +22,8 @@ export const themeColors = {
     hexS: '#f574b4',
   },
   color_5: {
-    hexP: '#59F789',
-    hexS: '#3cf373',
+    hexP: '#3FB950',
+    hexS: '#29903B',
   },
   color_6: {
     hexP: '#57E5F8',
@@ -79,11 +79,7 @@ export const ThemeContext = ({ children }: { children: React.ReactNode }) => {
     });
 
     // Cores com toms mais claros, definir a cor do texto do botão com uma cor mais escura
-    if (
-      hexP === color_2.hexP ||
-      hexP === color_5.hexP ||
-      hexP === color_6.hexP
-    ) {
+    if (hexP === color_2.hexP || hexP === color_6.hexP) {
       setPropertyDoc({
         variable: '--colorTextButton',
         prop: '#111',

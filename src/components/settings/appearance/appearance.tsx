@@ -39,11 +39,7 @@ const ColorOption = ({
     });
 
     // Cores com toms mais claros, definir a cor do texto do botão com uma cor mais escura
-    if (
-      hexP === color_2.hexP ||
-      hexP === color_5.hexP ||
-      hexP === color_6.hexP
-    ) {
+    if (hexP === color_2.hexP || hexP === color_6.hexP) {
       setPropertyDoc({
         variable: '--colorTextButton',
         prop: '#111',

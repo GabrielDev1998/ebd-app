@@ -169,7 +169,7 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
             items={dataDocs.map((room) => room.name_room)}
             setValue={setSelectRooms}
             value={selectRooms}
-            style={{ backgroundColor: 'var(--bg-6)' }}
+            style={{ backgroundColor: 'var(--bgPrimary)' }}
           />
           <Input
             type="text"
@@ -227,7 +227,7 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
             label="Cargos"
             setValue={setSelectOffice}
             value={selectOffice}
-            style={{ backgroundColor: 'var(--bg-6)' }}
+            style={{ backgroundColor: 'var(--bgPrimary)' }}
             items={[
               'Pastor',
               'Evangelista',

@@ -37,7 +37,7 @@
 .boxInput {
   width: 100%;
   position: relative;
-  background: var(--bg-5);
+  background: var(--bgPrimary);
   border-radius: 8px;
 }
 

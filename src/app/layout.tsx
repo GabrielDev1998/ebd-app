@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
-import { Public_Sans } from 'next/font/google';
+import { Public_Sans, DM_Sans } from 'next/font/google';
 import './globals.css';
 import { AuthContext } from '@/firebase/auth/authProvider';
 import { ThemeContext } from '@/providers/theme/theme-context';
+import { MonaSansRegular } from '@/components/fonts/local/local';
 
-const fontPrimary = Public_Sans({ subsets: ['latin'] });
+const fontPrimary = DM_Sans({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'EBD | Gestão de Alunos',

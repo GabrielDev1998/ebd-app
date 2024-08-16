@@ -6,6 +6,8 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
+  border: 1px solid var(--borderColor);
+  border-radius: 4px;
 }
 
 .boxSelect label {
@@ -29,7 +31,7 @@
 .select {
   height: 55px;
   border-radius: 8px;
-  border: 1px solid var(--borderColor);
+
   position: relative;
   background: inherit;
 
@@ -37,6 +39,7 @@
   align-items: center;
   padding: 0 var(--g-20);
   color: var(--textColor);
+  
 }
 
 .select > span {
@@ -81,6 +84,7 @@
   box-shadow: var(--shadow);
 
   color: var(--textColor-2);
+  border: 1px solid var(--borderColor);
 }
 
 .listOptions li {

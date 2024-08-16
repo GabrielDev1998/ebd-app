@@ -1,4 +1,5 @@
 import localFont from 'next/font/local';
 
-
-const SFPro = localFont({src: ''})
+export const MonaSansRegular = localFont({
+  src: './monaSans/MonaSans-Regular.ttf',
+});

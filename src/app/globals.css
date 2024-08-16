@@ -1,21 +1,18 @@
 :root {
-  --primary: #8257E5;
+  --primary: #773EC7;
   --secondary: #9956F6;
 
   --l: 250px;
   --l-mobile: 100px;
 
   /* Backgrounds */
-  --bgPrimary: #121214;
-  --bgSecondary: #212124;
-  --bgTertiary: #1A1A1E;
+  --bgPrimary: #0D1117;
+  --bgSecondary: #161B22;
+  --bgTertiary: #30363D;
 
-  --bg-1: #212124;
-  --bg-2: #323238;
-  --bg-3: #29292E;
-  --bg-4: #202024;
-  --bg-5: #121214;
-  --bg-6: #1c1c1f;
+  --bg-1: #161B22;
+  --bg-2: #30363D;
+  --bg-3: #21272F;
   --bgGradientRight-3: radial-gradient(circle, rgba(20, 13, 26, 0.747), rgba(20, 30, 32, 0.904));
 
   /* Colors */
@@ -29,12 +26,12 @@
   --bgBlue: #00B8D929;
 
   /* colors text */
-  --textColor: #8D8D99;
-  --textColor-2: #e1e1e6;
-  --textColor-3: #686870;
+  --textColor: #8d96a0;
+  --textColor-2: #E6EDF3;
+  --textColor-3: #8d96a0;
 
   /* colors borders */
-  --borderColor: #333333;
+  --borderColor: #242930;
 
   /* radius */
   --radius-4: 4px;
@@ -237,7 +234,7 @@ textarea::placeholder {
 .icon {
   width: 40px;
   height: 40px;
-  background: var(--bg-2);
+  background: var(--bg-3);
   outline: none;
   cursor: pointer;
   color: var(--textColor);
@@ -308,7 +305,7 @@ textarea::placeholder {
   cursor: pointer;
 }
 
-[data-cor="#8257E5"]{
+[data-cor="#773EC7"]{
   background-color: rgba(130, 87, 229, 0.065);
 } 
 
@@ -324,7 +321,7 @@ textarea::placeholder {
   background-color: rgba(248, 89, 168, 0.065);
 } 
 
-[data-cor="#59F789"]{
+[data-cor="#3FB950"]{
   background-color: rgba(89, 247, 137,  0.065);
 } 
 
@@ -337,10 +334,10 @@ textarea::placeholder {
   overflow: hidden;
 }
 
-[data-cor="#8257E5"] span{
+[data-cor="#773EC7"] span{
   background-color: rgba(130, 87, 229, 0.40) !important;
 } 
-[data-cor="#8257E5"] span::before{
+[data-cor="#773EC7"] span::before{
   background-color: rgb(130, 87, 229);
 } 
 
@@ -368,10 +365,10 @@ textarea::placeholder {
   background-color: rgb(248, 89, 168);
 } 
 
-[data-cor="#59F789"] span{
+[data-cor="#3FB950"] span{
   background-color: rgba(89, 247, 137,  0.40) !important;
 } 
-[data-cor="#59F789"] span::before{
+[data-cor="#3FB950"] span::before{
   background-color: rgb(89, 247, 137);
 } 
 

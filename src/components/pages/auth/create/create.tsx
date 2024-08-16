@@ -72,7 +72,6 @@ const Create = () => {
           type="text"
           id="fullName"
           label="Nome completo"
-          placeholder="Digite seu nome"
           required
           {...register('fullName')}
           error={errors.fullName}
@@ -81,7 +80,6 @@ const Create = () => {
           type="email"
           id="email"
           label="E-mail"
-          placeholder="Digite um email"
           required
           {...register('email')}
           error={errors.email}
@@ -90,7 +88,6 @@ const Create = () => {
           type="password"
           id="password"
           label="Sua senha"
-          placeholder="Digite uma senha"
           required
           {...register('password')}
           error={errors.password}
