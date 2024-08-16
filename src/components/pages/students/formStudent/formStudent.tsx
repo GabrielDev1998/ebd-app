@@ -8,14 +8,13 @@ import Input, { ColumnInput } from '@/components/form/input';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import AlertNotification from '@/components/alertNotification/alertNotification';
+import CustomSelect from '@/components/form/select/custom-select';
 import DataBase from '@/firebase/db/database';
+import { RoomType } from '../../rooms/rooms';
 import Global from '@/utils/global';
 import ProfileCustom from '@/components/profileCustom/profileCustom';
-import CustomSelect from '@/components/form/select/custom-select';
-import { RoomType } from '../../rooms/rooms';
-import AlertNotification from '@/components/alertNotification/alertNotification';
 import { useParams } from 'next/navigation';
-import { Loader } from '@/components/loader/loader';
 
 const schemaFormStudent = z.object({
   fullName: z.string().min(5, {
@@ -47,7 +46,22 @@ export type StudentsProps = {
   status: 'Ativo' | 'Inativo';
 };
 
+const { avatar, alertNotification } = Global();
+
 const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
+  const { dataDocs, updateData } = DataBase<RoomType>('rooms');
+  const [dataProfile, setDataProfile] = useState({
+    name: '',
+    url: '',
+  });
+  const [selectRooms, setSelectRooms] = useState('');
+  const [selectOffice, setSelectOffice] = useState('');
+  const params: { slug: string[] } = useParams();
+  const [roomCurrent, setRoomCurrent] = useState<RoomType | null>(null);
+  const [studentCurrent, setStudentCurrent] = useState<StudentsProps | null>(
+    null,
+  );
+
   const {
     register,
     handleSubmit,
@@ -58,215 +72,92 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
     resolver: zodResolver(schemaFormStudent),
   });
 
-  const { avatar, alertNotification, popup } = Global();
-  const { dataDocs, updateData, loading } = DataBase<RoomType>('rooms');
-  const [profileStudent, setProfileStudent] = React.useState({
-    url: '',
-    name: '',
-  });
-
-  const [selectRooms, setSelectRooms] = React.useState('');
-  const [selectOffice, setSelectOffice] = React.useState('');
-
-  const [roomCurrent, setRoomCurrent] = React.useState<
-    RoomType | null | undefined
-  >(null);
-  const [student, setStudent] = React.useState<
-    StudentsProps | null | undefined
-  >(null);
-  const params: { slug: string[] } = useParams();
-
-  // console.log('Renderizou');
-
-  function handleClickFormStudent(data: SchemaFormStudent) {
-    const idRandom = Math.floor(Math.random() * 1000);
-
-    const addNewStudent = () => {
-      const newStudent: StudentsProps = {
-        id: idRandom,
-        fullName: data.fullName,
-        address: {
-          street: data.street,
-          neighborhood: data.neighborhood,
-          numberHouse: data.numberHouse,
-        },
-        birthDate: data.birthDate,
-        phone: data.phone,
-        room: selectRooms,
-        office: selectOffice,
-        profile: avatar({
-          name: data.fullName,
-          type: 'initials',
-        }),
-        date_enroll: new Date().toLocaleDateString(),
-        status: 'Ativo',
-      };
-
-      const send = (data: StudentsProps[]) => {
-        if (roomCurrent) {
-          updateData(
-            roomCurrent.id,
-            {
-              ...roomCurrent,
-              students: data,
-            },
-            () => alertNotification('success', 'Aluno cadastrado com sucesso'),
-          );
-        }
-      };
-
-      if (roomCurrent) {
-        const { students } = roomCurrent;
-        if (students.length === 0) send([newStudent]);
-        else {
-          const isRepeat = roomCurrent?.students.filter(
-            (student) => student.id === idRandom,
-          );
-          // Caso o ID já esteja cadastrado, exibe um aviso.
-          if (isRepeat?.length) {
-            popup({
-              icon: 'warning',
-              title: 'Tente novamente!',
-              text: `O ID ${idRandom} gerado, está registrada em algum aluno.`,
-            });
-          } else {
-            send([...students, newStudent]);
-          }
-        }
-      }
-    };
-
-    // Função para atualizar os dados do aluno já matriculado.
-    const updateDataStudent = () => {
-      if (roomCurrent) {
-        // Atualizar dados do aluno
-        const sendUpdatedData = (dataStudent: StudentsProps[]) => {
-          updateData(
-            roomCurrent.id,
-            {
-              ...roomCurrent,
-              students: dataStudent,
-            },
-            () => {
-              alertNotification(
-                'success',
-                'Dados do aluno atualizados com sucesso',
-              );
-            },
-          );
-        };
-
-        if (selectRooms !== roomCurrent.name_room) {
-          sendUpdatedData(
-            roomCurrent.students.filter(({ id }) => id !== student?.id),
-          );
-
-          const dataRoom = dataDocs.find(
-            (room) => room.name_room === selectRooms,
-          );
-          if (dataRoom && student) {
-            updateData(dataRoom.id, {
-              ...dataRoom,
-              students: dataRoom.students.map(({ id }) =>
-                id === student.id
-                  ? {
-                      ...student,
-                      ...data,
-                      room: selectRooms,
-                      office: selectOffice,
-                    }
-                  : student,
-              ),
-            });
-          }
-
-          // console.log(student);
-        }
-      }
-    };
-
-    if (data.fullName) {
-      if (selectRooms && selectOffice) {
-        if (type === 'Create') addNewStudent();
-        if (type === 'Update') updateDataStudent();
-      } else {
-        alertNotification('error', 'Selecione as opções para continuar');
-      }
-    }
-  }
-
-  useMemo(() => {
-    const setRoom = (key: keyof RoomType, comparison: string) => {
-      return setRoomCurrent(dataDocs.find((room) => room[key] === comparison));
-    };
-
-    if (type === 'Create') setRoom('name_room', selectRooms);
-    if (type === 'Update') setRoom('id', params.slug[0]);
-  }, [type, dataDocs, params, selectRooms]);
-
-  useMemo(() => {
+  useEffect(() => {
     watch(({ fullName }) => {
       if (fullName) {
-        setProfileStudent({
+        setDataProfile({
+          name: fullName,
           url: avatar({
             name: fullName,
             type: 'initials',
           }),
-          name: fullName,
         });
-        return;
+      } else {
+        setDataProfile({
+          name: '',
+          url: '',
+        });
       }
-
-      setProfileStudent({
-        url: '',
-        name: '',
-      });
     });
-  }, [watch, avatar]);
+  }, [watch]);
+
+  useMemo(() => {
+    const getDataRoom = (type: keyof RoomType, str: String) => {
+      const data = dataDocs.find((room) => room[type] === str);
+      if (data !== undefined) setRoomCurrent(data);
+    };
+
+    if (type === 'Create') getDataRoom('name_room', selectRooms);
+    if (type === 'Update') getDataRoom('id', params.slug[0]);
+  }, [type, dataDocs, selectRooms, params]);
+
+  useMemo(() => {
+    const dataStudent = roomCurrent?.students.find(
+      (student) => student.id === Number(params.slug[1]),
+    );
+    if (dataStudent !== undefined) setStudentCurrent(dataStudent);
+  }, [roomCurrent, params]);
 
   useMemo(() => {
     if (type === 'Update') {
-      roomCurrent?.students.forEach((student) => {
-        if (student.id === Number(params.slug[1])) setStudent(student);
-      });
-    }
-  }, [type, roomCurrent, params]);
-
-  useEffect(() => {
-    if (student) {
-      const { fullName, birthDate, address, phone, office, room } = student;
       reset({
-        birthDate,
-        fullName,
-        neighborhood: address.neighborhood,
-        numberHouse: address.numberHouse,
-        phone,
-        street: address.street,
+        fullName: studentCurrent?.fullName ?? '',
+        birthDate: studentCurrent?.birthDate ?? '',
+        phone: studentCurrent?.phone ?? '',
+        street: studentCurrent?.address?.street ?? '',
+        neighborhood: studentCurrent?.address?.neighborhood ?? '',
+        numberHouse: studentCurrent?.address?.numberHouse ?? '',
       });
 
-      setSelectRooms(() => room);
-      setSelectOffice(() => office);
+      setSelectOffice(() => studentCurrent?.office ?? '');
+      setSelectRooms(() => studentCurrent?.room ?? '');
     }
-  }, [reset, student]);
+  }, [type, reset, studentCurrent]);
+
+  function handleClickFormStudent(data: SchemaFormStudent) {
+    const idRandom = Math.floor(Math.random() * 100);
+
+    // Atualizar dados do aluno
+    const updateDataStudent = () => {};
+
+    // Matricular novos alunos
+    const enrollStudent = () => {};
+
+    if (data.fullName) {
+      if (type === 'Create') enrollStudent();
+      if (type === 'Update') updateDataStudent();
+    } else {
+      alertNotification('error', 'Escolha as opções');
+      return;
+    }
+  }
 
   return (
     <div className={styles.formStudent}>
-      {loading && <Loader />}
+      {/* {loading && <Loader />} */}
       <AlertNotification />
       <div className={styles.box}>
-        <div className={styles.boxProfile}>
-          {profileStudent.url && profileStudent.name && (
-            <>
-              <ProfileCustom
-                src={profileStudent.url}
-                alt={profileStudent.name}
-                width={100}
-                height={100}
-              />
-              <h3>{profileStudent.name}</h3>
-            </>
-          )}
-        </div>
+        {dataProfile.name && (
+          <div className={styles.boxProfile}>
+            <ProfileCustom
+              src={dataProfile.url}
+              alt={dataProfile.name}
+              width={150}
+              height={150}
+            />
+            <h3>{dataProfile.name}</h3>
+          </div>
+        )}
       </div>
       <div className={styles.box}>
         <Form
@@ -275,9 +166,9 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
         >
           <CustomSelect
             label="Turmas"
+            items={dataDocs.map((room) => room.name_room)}
             setValue={setSelectRooms}
             value={selectRooms}
-            items={dataDocs.map((room) => room.name_room)}
             style={{ backgroundColor: 'var(--bg-6)' }}
           />
           <Input
@@ -336,6 +227,7 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
             label="Cargos"
             setValue={setSelectOffice}
             value={selectOffice}
+            style={{ backgroundColor: 'var(--bg-6)' }}
             items={[
               'Pastor',
               'Evangelista',
@@ -345,7 +237,6 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
               'Músico',
               'Membro',
             ]}
-            style={{ backgroundColor: 'var(--bg-6)' }}
           />
           <div className="button-flex">
             {type === 'Create' && (
