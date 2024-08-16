@@ -122,7 +122,7 @@ const Rooms = () => {
             items={['Adultos', 'Adolescentes', 'Crianças', 'Jovens']}
             setValue={setSelectFaixaEtaria}
             value={selectFaixaEtaria}
-            style={{ backgroundColor: 'var(--bg-4)' }}
+            style={{ backgroundColor: 'var(--bgSecondary)' }}
           />
           <div className="button-flex">
             <button className="button-2">Criar sala</button>

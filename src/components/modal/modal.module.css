@@ -26,7 +26,7 @@
 .boxModal {
   width: 100%;
   max-width: 550px;
-  background-color: var(--bg-4);
+  background-color: var(--bgSecondary);
   padding: var(--g-20);
   border-radius: 8px;
   box-shadow: var(--shadow);
@@ -51,6 +51,6 @@
 
 .boxModal > div:nth-child(2) form label,
 .boxModal > div:nth-child(2) form input{
-  background-color: var(--bg-4) !important;
+  background-color: var(--bgSecondary) !important;
 }
 

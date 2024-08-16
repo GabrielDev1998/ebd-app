@@ -37,7 +37,6 @@
 .boxInput {
   width: 100%;
   position: relative;
-  background: var(--bgPrimary);
   border-radius: 8px;
 }
 
@@ -91,7 +90,7 @@
   font-weight: 500;
   line-height: 1.2;
   transition: .3s;
-  background: inherit;
+  background: var(--bgPrimary);
   pointer-events: none;
 }
 
@@ -108,6 +107,8 @@
   font-size: .845rem;
   margin-top: var(--g-10);
   color: var(--erro);
+
+
  }
 
  .form button {

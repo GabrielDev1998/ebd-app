@@ -48,6 +48,8 @@
   font-size: var(--fs-14);
   pointer-events: none;
   color: var(--textColor-2);
+
+  
 }
 
 .select .arrow{
