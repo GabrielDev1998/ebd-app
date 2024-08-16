@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Public_Sans } from 'next/font/google';
+import { Public_Sans } from 'next/font/google';
 import './globals.css';
 import { AuthContext } from '@/firebase/auth/authProvider';
 import { ThemeContext } from '@/providers/theme/theme-context';

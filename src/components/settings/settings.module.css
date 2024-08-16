@@ -74,7 +74,6 @@
   height: 28px;
   margin: 0 auto;
   border-radius: 8px;
-  cursor: pointer;
   transition: .2s ease-in-out;
 
   display: flex;
@@ -117,11 +116,11 @@
   }
 
   .optionsColor {
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 
-  .optionsColor span {
-    margin: 0;
-  }
+
 
 }

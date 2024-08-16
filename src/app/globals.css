@@ -305,6 +305,7 @@ textarea::placeholder {
   min-width: 120px;
   padding: var(--g-20);
   border-radius: 8px;
+  cursor: pointer;
 }
 
 [data-cor="#8257E5"]{
@@ -337,29 +338,51 @@ textarea::placeholder {
 }
 
 [data-cor="#8257E5"] span{
-  background-color: red !important;
+  background-color: rgba(130, 87, 229, 0.40) !important;
+} 
+[data-cor="#8257E5"] span::before{
+  background-color: rgb(130, 87, 229);
 } 
 
 
 [data-cor="#F8F859"] span{
-  background-color: rgba(248, 248, 89, 0.085);
+  background-color: rgba(248, 248, 89, 0.40) !important;
 } 
+[data-cor="#F8F859"] span::before{
+  background-color: rgb(248, 248, 89);
+} 
+
 
 [data-cor="#F87359"] span{
-  background-color: rgba(248, 115, 89, 0.085);
+  background-color: rgba(248, 115, 89, 0.40) !important;
+} 
+[data-cor="#F87359"] span::before{
+  background-color: rgb(248, 115, 89);
 } 
 
+
 [data-cor="#F859A8"] span{
-  background-color: rgba(248, 89, 168, 0.085);
+  background-color: rgba(248, 89, 168, 0.40) !important;
+} 
+[data-cor="#F859A8"] span::before{
+  background-color: rgb(248, 89, 168);
 } 
 
 [data-cor="#59F789"] span{
-  background-color: rgba(89, 247, 137,  0.085);
+  background-color: rgba(89, 247, 137,  0.40) !important;
+} 
+[data-cor="#59F789"] span::before{
+  background-color: rgb(89, 247, 137);
 } 
 
+
 [data-cor="#57E5F8"] span{
-  background-color: rgba(87, 229, 248,  0.085);
+  background-color: rgba(87, 229, 248,  0.40) !important;
 } 
+[data-cor="#57E5F8"] span::before{
+  background-color: rgb(87, 229, 248);
+} 
+
 
 [data-cor] span::before {
   content: '';
