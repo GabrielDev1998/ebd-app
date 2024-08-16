@@ -300,3 +300,72 @@ textarea::placeholder {
   background-color: var(--bgRed);
   color: var(--red);
 }
+
+[data-cor] {
+  min-width: 120px;
+  padding: var(--g-20);
+  border-radius: 8px;
+}
+
+[data-cor="#8257E5"]{
+  background-color: rgba(130, 87, 229, 0.065);
+} 
+
+[data-cor="#F8F859"]{
+  background-color: rgba(248, 248, 89, 0.065);
+} 
+
+[data-cor="#F87359"]{
+  background-color: rgba(248, 115, 89, 0.065);
+} 
+
+[data-cor="#F859A8"]{
+  background-color: rgba(248, 89, 168, 0.065);
+} 
+
+[data-cor="#59F789"]{
+  background-color: rgba(89, 247, 137,  0.065);
+} 
+
+[data-cor="#57E5F8"]{
+  background-color: rgba(87, 229, 248,  0.065);
+} 
+
+[data-cor] span {
+  position: relative;
+  overflow: hidden;
+}
+
+[data-cor="#8257E5"] span{
+  background-color: red !important;
+} 
+
+
+[data-cor="#F8F859"] span{
+  background-color: rgba(248, 248, 89, 0.085);
+} 
+
+[data-cor="#F87359"] span{
+  background-color: rgba(248, 115, 89, 0.085);
+} 
+
+[data-cor="#F859A8"] span{
+  background-color: rgba(248, 89, 168, 0.085);
+} 
+
+[data-cor="#59F789"] span{
+  background-color: rgba(89, 247, 137,  0.085);
+} 
+
+[data-cor="#57E5F8"] span{
+  background-color: rgba(87, 229, 248,  0.085);
+} 
+
+[data-cor] span::before {
+  content: '';
+  width: 10px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
