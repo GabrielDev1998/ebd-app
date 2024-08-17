@@ -44,7 +44,7 @@
   min-width: 150px;
   height: 100px;
   border-radius: 4px;
-
+  overflow: auto;
 }
 
 .boxDay button {
@@ -92,4 +92,22 @@
 
 .boxID p strong {
   color: var(--textColor-2);
+}
+
+.boxAulas {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--g-5);
+  margin-top: var(--g-10);
+}
+
+.boxAula {
+  padding: var(--g-10);
+  font-size: var(--fs-14);
+  justify-content: initial;
+  font-weight: 500;
+  cursor: pointer;
+  line-height: initial;
+  height: auto;
 }

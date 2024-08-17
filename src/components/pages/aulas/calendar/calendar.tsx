@@ -45,6 +45,7 @@ export type TypeAula = {
   status: 'Pendente' | 'Em andamento' | 'Concluído';
   date: string;
   call: TypeCheckedCall | null;
+  room: string;
 };
 
 const { alertNotification, generateRandomNumbers, popup } = Global();
@@ -64,6 +65,14 @@ const Calendar = () => {
   });
   const [generatedID, setGeneratedID] = React.useState<string | null>(null);
   const [dateCalendar, setDateCalendar] = React.useState('');
+  const [aulas, setAulas] = React.useState<TypeAula[]>([]);
+
+  React.useEffect(() => {
+    setAulas([]);
+    dataDocs.forEach((room) => {
+      setAulas((aulas) => [...aulas, ...room.aulas]);
+    });
+  }, [dataDocs]);
 
   function handleAddAula({ number_aula, title_aula }: SchemaFormAula) {
     const room = dataDocs.find((room) => room.name_room === selectRooms);
@@ -94,6 +103,7 @@ const Calendar = () => {
           status: 'Pendente',
           date: dateCalendar,
           call: null,
+          room: selectRooms,
         };
 
         if (room.aulas.length === 0) sendDataAula(newAula);
@@ -191,8 +201,9 @@ const Calendar = () => {
               }}
             >
               <div>
-                <span className={styles.day}>{item.day}</span>
-                <p className={styles.week}>{item.weekText}</p>
+                <span className={styles.day}>
+                  {item.day} - {item.weekText}
+                </span>
               </div>
               <button
                 className={styles.btnAdd}
@@ -205,6 +216,23 @@ const Calendar = () => {
                 <Icon icon="ic:sharp-add" />
               </button>
             </div>
+            {aulas.filter((aula) => aula.date === item.date).length ? (
+              <div className={styles.boxAulas}>
+                {aulas
+                  .filter((aula) => aula.date === item.date)
+                  .map((aula) => (
+                    <div
+                      key={aula.id}
+                      className={styles.boxAula}
+                      data-status={aula.status}
+                    >
+                      <p>
+                        {aula.number_aula} - {aula.title_aula} - {aula.room}
+                      </p>
+                    </div>
+                  ))}
+              </div>
+            ) : null}
           </div>
         ))}
       </div>
