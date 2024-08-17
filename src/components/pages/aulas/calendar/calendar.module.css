@@ -3,6 +3,7 @@
 
   box-shadow: var(--shadow);
   border-radius: 8px;
+  position: relative;
 }
 
 .navCalendar {
@@ -104,10 +105,11 @@
 
 .boxAula {
   padding: var(--g-10);
-  font-size: var(--fs-14);
+  font-size: var(--fs-12);
   justify-content: initial;
   font-weight: 500;
   cursor: pointer;
   line-height: initial;
   height: auto;
 }
+

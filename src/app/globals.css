@@ -283,8 +283,10 @@ textarea::placeholder {
   transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+
 [data-status="Ativada"],
-[data-status="Ativo"] {
+[data-status="Ativo"],
+[data-status="Concluído"] {
   background-color: var(--bgGreen);
   color: var(--green);
 }
@@ -298,6 +300,11 @@ textarea::placeholder {
 [data-status="Pendente"] {
   background-color: var(--bgYellow);
   color: var(--yellow);
+}
+
+[data-status="Em andamento"] {
+  background-color: var(--bgBlue);
+  color: var(--blue);
 }
 
 [data-cor] {

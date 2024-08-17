@@ -15,6 +15,7 @@ import { RoomType } from '../../rooms/rooms';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader } from '@/components/loader/loader';
 
 const schemaFormAula = z.object({
   number_aula: z
@@ -51,7 +52,7 @@ export type TypeAula = {
 const { alertNotification, generateRandomNumbers, popup } = Global();
 
 const Calendar = () => {
-  const { dataDocs, updateData } = DataBase<RoomType>('rooms');
+  const { dataDocs, updateData, loading } = DataBase<RoomType>('rooms');
   const { dataCalendar, setMonthCurrent } = useCalendar();
   const [modalAddAula, setModalAddAula] = React.useState(false);
 
@@ -66,6 +67,7 @@ const Calendar = () => {
   const [generatedID, setGeneratedID] = React.useState<string | null>(null);
   const [dateCalendar, setDateCalendar] = React.useState('');
   const [aulas, setAulas] = React.useState<TypeAula[]>([]);
+  const [modalDataAula, setModalDataAula] = React.useState(false);
 
   React.useEffect(() => {
     setAulas([]);
@@ -131,6 +133,7 @@ const Calendar = () => {
 
   return (
     <div className={styles.containerCalendar}>
+      {loading && <Loader />}
       <Modal
         title="Adicionar aula"
         modal={modalAddAula}
@@ -172,7 +175,11 @@ const Calendar = () => {
           </div>
         </Form>
       </Modal>
-
+      <Modal
+        title="Dados da Aula"
+        modal={modalDataAula}
+        setModal={setModalDataAula}
+      ></Modal>
       <div className={styles.navCalendar}>
         <div className={styles.boxControls}>
           <button
@@ -225,6 +232,7 @@ const Calendar = () => {
                       key={aula.id}
                       className={styles.boxAula}
                       data-status={aula.status}
+                      onClick={() => setModalDataAula(true)}
                     >
                       <p>
                         {aula.number_aula} - {aula.title_aula} - {aula.room}
