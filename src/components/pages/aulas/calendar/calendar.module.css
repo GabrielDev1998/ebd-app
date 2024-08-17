@@ -40,7 +40,7 @@
 
 .boxDay {
   padding: var(--g-10);
-  background-color: var(--bg-3);
+  border: 1px solid var(--borderColor);
   min-width: 150px;
   height: 100px;
   border-radius: 4px;

@@ -87,10 +87,6 @@
     grid-template-columns: 1fr;
   }
 
-  .aside {
-    padding: var(--g-10);
-  }
-
   .menu {
     flex-direction: initial;
   }
@@ -107,8 +103,7 @@
     display: none;
   }
 
-  .boxContent,
-  .boxAppearance {
+  .boxContent{
     padding: var(--g-20);
   }
 

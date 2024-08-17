@@ -1,15 +1,43 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './calendar.module.css';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import useCalendar from './useCalendar';
+import Modal from '@/components/modal/modal';
+import Input from '@/components/form/input';
+import Form from '@/components/form/form';
+import CustomSelect from '@/components/form/select/custom-select';
+import DataBase from '@/firebase/db/database';
+import { RoomType } from '../../rooms/rooms';
 
 const Calendar = () => {
+  const { dataDocs } = DataBase<RoomType>('rooms');
   const { dataCalendar, setMonthCurrent } = useCalendar();
+  const [modalAddAula, setModalAddAula] = React.useState(false);
+
+  const [selectRooms, setSelectRooms] = React.useState('');
 
   return (
     <div className={styles.containerCalendar}>
+      <Modal
+        title="Adicionar aula"
+        modal={modalAddAula}
+        setModal={setModalAddAula}
+      >
+        <Form>
+          <Input type="text" id="number_aula" label="Número" required />
+          <Input type="text" id="title_aula" label="Título" required />
+          <CustomSelect
+            id="rooms"
+            label="Salas"
+            items={dataDocs.map((room) => room.name_room)}
+            setValue={setSelectRooms}
+            value={selectRooms}
+          />
+        </Form>
+      </Modal>
+
       <div className={styles.navCalendar}>
         <div className={styles.boxControls}>
           <button
@@ -38,7 +66,10 @@ const Calendar = () => {
               }}
             >
               <span className={styles.day}>{item.day}</span>
-              <button className={styles.btnAdd}>
+              <button
+                className={styles.btnAdd}
+                onClick={() => setModalAddAula(true)}
+              >
                 <Icon icon="ic:sharp-add" />
               </button>
             </div>

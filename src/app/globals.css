@@ -37,7 +37,7 @@
   --radius-4: 4px;
 
   /* Overlay */
-  --overlay: rgba(13, 17, 23, .5);
+  --overlay: rgba(4, 4, 5, 0.5);
 
   /* Shadows */
   --shadow: rgba(0, 0, 0, 0.2) 0px 0px 2px 0px, rgba(0, 0, 0, 0.12) 0px 12px 24px -4px;

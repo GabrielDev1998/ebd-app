@@ -64,7 +64,7 @@ const ColorOption = ({
 
 const Appearance = () => {
   return (
-    <div className={`${styles.containerAppearance} animaLeft`}>
+    <div className="animaLeft">
       <div className={styles.optionsColor}>
         <ColorOption hexP={color_1.hexP} hexS={color_1.hexS} />
         <ColorOption hexP={color_2.hexP} hexS={color_2.hexS} />
