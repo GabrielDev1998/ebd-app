@@ -2,21 +2,122 @@
 
 import React from 'react';
 import styles from './calendar.module.css';
-import { Icon } from '@iconify/react/dist/iconify.js';
 import useCalendar from './useCalendar';
 import Modal from '@/components/modal/modal';
 import Input from '@/components/form/input';
 import Form from '@/components/form/form';
 import CustomSelect from '@/components/form/select/custom-select';
 import DataBase from '@/firebase/db/database';
+import Global from '@/utils/global';
+
+import { Icon } from '@iconify/react/dist/iconify.js';
 import { RoomType } from '../../rooms/rooms';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const schemaFormAula = z.object({
+  number_aula: z
+    .string()
+    .min(1, { message: 'O número da aula deve ter pelo menos 1 caracter' }),
+  title_aula: z
+    .string()
+    .min(5, { message: 'O título da aula deve ter pelo menos 5 caracteres' }),
+});
+
+type SchemaFormAula = z.infer<typeof schemaFormAula>;
+
+export type TypeCheckedCall = {
+  id: number;
+  checked: boolean;
+};
+
+export type TypeInputCall = {
+  presence: TypeCheckedCall[];
+  bible: TypeCheckedCall[];
+  magazine: TypeCheckedCall[];
+};
+
+export type TypeAula = {
+  id: string;
+  number_aula: string;
+  title_aula: string;
+  status: 'Pendente' | 'Em andamento' | 'Concluído';
+  date: string;
+  call: TypeCheckedCall | null;
+};
+
+const { alertNotification, generateRandomNumbers, popup } = Global();
 
 const Calendar = () => {
-  const { dataDocs } = DataBase<RoomType>('rooms');
+  const { dataDocs, updateData } = DataBase<RoomType>('rooms');
   const { dataCalendar, setMonthCurrent } = useCalendar();
   const [modalAddAula, setModalAddAula] = React.useState(false);
 
   const [selectRooms, setSelectRooms] = React.useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SchemaFormAula>({
+    resolver: zodResolver(schemaFormAula),
+  });
+  const [generatedID, setGeneratedID] = React.useState<string | null>(null);
+  const [dateCalendar, setDateCalendar] = React.useState('');
+
+  function handleAddAula({ number_aula, title_aula }: SchemaFormAula) {
+    const room = dataDocs.find((room) => room.name_room === selectRooms);
+
+    // Função para enviar ao banco de dados a aula adicionada
+    const sendDataAula = (aula: TypeAula) => {
+      if (room) {
+        updateData(
+          room.id,
+          {
+            ...room,
+            aulas: [...room.aulas, aula],
+          },
+          () => {
+            alertNotification('success', 'Aula adicionada com sucesso');
+            setModalAddAula(false);
+          },
+        );
+      }
+    };
+
+    if (number_aula && title_aula) {
+      if (selectRooms && room) {
+        const newAula: TypeAula = {
+          id: generatedID ?? '',
+          number_aula,
+          title_aula,
+          status: 'Pendente',
+          date: dateCalendar,
+          call: null,
+        };
+
+        if (room.aulas.length === 0) sendDataAula(newAula);
+        else {
+          const validateIDRepeatAula = room.aulas.every(
+            (aula) => aula.id !== generatedID,
+          );
+          if (validateIDRepeatAula) sendDataAula(newAula);
+          else {
+            popup({
+              icon: 'warning',
+              title: 'Tente novamente!',
+              text: `Já existe uma aula com este ID (${generatedID}). Por favor, tente criar a aula novamente, para gerar um no ID para está aula.`,
+            });
+            setGeneratedID(null);
+          }
+        }
+
+        return;
+      }
+
+      alertNotification('error', 'Selecione uma sala');
+    }
+  }
 
   return (
     <div className={styles.containerCalendar}>
@@ -25,9 +126,30 @@ const Calendar = () => {
         modal={modalAddAula}
         setModal={setModalAddAula}
       >
-        <Form>
-          <Input type="text" id="number_aula" label="Número" required />
-          <Input type="text" id="title_aula" label="Título" required />
+        <Form onSubmit={handleSubmit(handleAddAula)}>
+          {generatedID && (
+            <div className={styles.boxID}>
+              <p>
+                ID DA AULA: <strong>{generatedID}</strong>
+              </p>
+            </div>
+          )}
+          <Input
+            type="text"
+            id="number_aula"
+            label="Número"
+            required
+            {...register('number_aula')}
+            error={errors.number_aula}
+          />
+          <Input
+            type="text"
+            id="title_aula"
+            label="Título"
+            required
+            {...register('title_aula')}
+            error={errors.title_aula}
+          />
           <CustomSelect
             id="rooms"
             label="Salas"
@@ -35,6 +157,9 @@ const Calendar = () => {
             setValue={setSelectRooms}
             value={selectRooms}
           />
+          <div className="button-flex">
+            <button className="button">Adicionar</button>
+          </div>
         </Form>
       </Modal>
 
@@ -65,10 +190,17 @@ const Calendar = () => {
                 justifyContent: 'space-between',
               }}
             >
-              <span className={styles.day}>{item.day}</span>
+              <div>
+                <span className={styles.day}>{item.day}</span>
+                <p className={styles.week}>{item.weekText}</p>
+              </div>
               <button
                 className={styles.btnAdd}
-                onClick={() => setModalAddAula(true)}
+                onClick={() => {
+                  setModalAddAula(true);
+                  setGeneratedID(generateRandomNumbers());
+                  setDateCalendar(item.date);
+                }}
               >
                 <Icon icon="ic:sharp-add" />
               </button>

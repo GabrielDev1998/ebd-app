@@ -2,7 +2,7 @@
 
 import React, { useMemo } from 'react';
 
-type TypeDayAndWeek = { day: number; weekText: string }[];
+type TypeDayAndWeek = { day: number; weekText: string; date: string }[];
 
 type TypeCalendar = {
   firstDate: Date;
@@ -42,9 +42,12 @@ const useCalendar = () => {
       const OBJDate = new Date(year, month, day);
       const weekNumber = OBJDate.getDay();
       const weekText = ArrWeeks[weekNumber];
+      const date = OBJDate.toLocaleDateString();
+
       dayAndWeek.push({
         day,
         weekText,
+        date,
       });
     }
 

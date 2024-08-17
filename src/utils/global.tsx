@@ -90,13 +90,19 @@ function Global() {
       icon,
       title,
       text: text ?? undefined,
-      background: '#202020',
+      background: '#161B22',
       color: 'var(--colorText)',
       confirmButtonText: 'OK',
       cancelButtonColor: '#d33',
       ...props,
     });
   };
+
+  function generateRandomNumbers() {
+    return `${new Date().getFullYear()}-${Math.floor(
+      Math.random() * 900000 + 100000,
+    )}`;
+  }
 
   return {
     avatar,
@@ -106,6 +112,7 @@ function Global() {
     cutText,
     somarTotal,
     popup,
+    generateRandomNumbers,
   };
 }
 

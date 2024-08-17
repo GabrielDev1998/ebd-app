@@ -27,6 +27,7 @@ import Global from '@/utils/global';
 import type { StudentsProps } from '../students/formStudent/formStudent';
 import Link from 'next/link';
 import { Loader } from '@/components/loader/loader';
+import { TypeAula } from '../aulas/calendar/calendar';
 
 const schemaFormRoom = z.object({
   name_room: z.string().min(5, {
@@ -44,6 +45,7 @@ export type RoomType = {
   date: string;
   students: StudentsProps[];
   status: 'Ativada' | 'Desativada';
+  aulas: TypeAula[];
 };
 
 const { alertNotification, avatar } = Global();
@@ -81,6 +83,7 @@ const Rooms = () => {
             date: new Date().toLocaleDateString(),
             students: [],
             status: 'Ativada',
+            aulas: [],
           },
           () => {
             setOpenModalRoom(false);
