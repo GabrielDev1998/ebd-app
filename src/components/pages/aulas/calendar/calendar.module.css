@@ -1,8 +1,13 @@
 .containerCalendar {
   background-color: var(--bgSecondary);
-  padding: var(--g-20);
+
   box-shadow: var(--shadow);
   border-radius: 8px;
+}
+
+.navCalendar {
+  border-bottom: 1px solid var(--borderColor);
+  padding: var(--g-20);
 }
 
 .boxControls {
@@ -23,4 +28,53 @@
 .boxControls span {
   font-size: var(--fs-18);
   font-weight: 600;
+}
+
+.boxCalendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--g-10);
+  padding: var(--g-20);
+  overflow: auto;
+}
+
+.boxDay {
+  padding: var(--g-10);
+  background-color: var(--bg-3);
+  min-width: 150px;
+  height: 100px;
+  border-radius: 4px;
+}
+
+.boxDay button {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg-2);
+  border: 0;
+  outline: none ;
+  color: var(--textColor);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .3s;
+  visibility: hidden;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.boxDay:hover button {
+  visibility: visible;
+  opacity: 1;
+}
+
+.boxDay button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.day {
+  font-size: var(--fs-14);
+  color: var(--textColor);
 }

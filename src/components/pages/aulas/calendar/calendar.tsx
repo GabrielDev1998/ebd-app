@@ -8,10 +8,6 @@ import useCalendar from './useCalendar';
 const Calendar = () => {
   const { dataCalendar, setMonthCurrent } = useCalendar();
 
-  // useEffect(() => {
-  //   console.log(dataCalendar);
-  // }, [dataCalendar]);
-
   return (
     <div className={styles.containerCalendar}>
       <div className={styles.navCalendar}>
@@ -30,6 +26,24 @@ const Calendar = () => {
             <Icon icon="solar:alt-arrow-right-linear" />
           </button>
         </div>
+      </div>
+      <div className={styles.boxCalendar}>
+        {dataCalendar.dayAndWeek.map((item) => (
+          <div key={item.day} className={styles.boxDay}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <span className={styles.day}>{item.day}</span>
+              <button className={styles.btnAdd}>
+                <Icon icon="ic:sharp-add" />
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

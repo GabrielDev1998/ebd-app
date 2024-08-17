@@ -7,7 +7,7 @@ import Calendar from './calendar/calendar';
 
 const Aulas = () => {
   return (
-    <GlobalLayout title="Aulas" description="Crie suas aulas">
+    <GlobalLayout title="Aulas" description="Crie suas aulas" maxWidth="1400px">
       <Calendar />
     </GlobalLayout>
   );
