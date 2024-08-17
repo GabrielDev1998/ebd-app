@@ -1,0 +1,26 @@
+.containerCalendar {
+  background-color: var(--bgSecondary);
+  padding: var(--g-20);
+  box-shadow: var(--shadow);
+  border-radius: 8px;
+}
+
+.boxControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--g-10);
+}
+
+.boxControls button {
+  background: transparent;
+}
+
+.boxControls button:hover{
+  background-color: var(--bg-3);
+}
+
+.boxControls span {
+  font-size: var(--fs-18);
+  font-weight: 600;
+}
