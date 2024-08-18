@@ -113,3 +113,72 @@
   height: auto;
 }
 
+.boxDataAula {
+  position: relative;
+}
+
+.iconDiploma {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 50%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--primary);
+  padding-right: 50px;
+}
+
+.iconDiploma svg {
+  width: 150px;
+  height: 150px;
+  transform: rotate(25deg);
+}
+
+.dataAula{
+  border: 1px solid var(--borderColor);
+  padding: var(--g-20);
+  border-radius: 8px;
+}
+
+.dataAula li {
+  padding: var(--g-10) 0;
+  font-size: var(--fs-14);
+}
+
+.dataAula li strong {
+  color: var(--textColor);
+}
+
+.boxOptions {
+  margin-top: var(--g-20);
+  display: flex;
+  align-items: center;
+  gap: var(--g-10);
+}
+
+.boxOptions button,
+.boxOptions a{
+  width: 100%;
+  flex: 1;
+}
+
+@media (max-width: 960px) {
+  .iconDiploma {
+    display: none;
+  }
+
+  .boxOptions {
+    flex-direction: column;
+  }
+
+  .boxOptions button,
+  .boxOptions a {
+    justify-content: initial;
+  }
+
+}

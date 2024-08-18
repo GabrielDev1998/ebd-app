@@ -46,7 +46,10 @@
   --erro: #ff5630;
 
   /* Buttons */
-  --colorTextButton: #fff;
+  --bgButton: #1e242c;
+  --bgButtonHover: #282f38;
+  --textColorButton: #8d96a0;
+  --textColorButtonHover: #E6EDF3;
 
   --fs-10: .625rem;
   --fs-12: .75rem;
@@ -164,7 +167,7 @@ textarea::placeholder {
   font-weight: 700;
   color: var(--colorTextButton);
   background-color: var(--primary);
-  transition: opacity .32s ease;
+  transition: .32s ease;
 }
 
 .button:hover,
@@ -178,17 +181,28 @@ textarea::placeholder {
   height: 40px !important;
 }
 
+.button-2.transparent{
+  background: var(--bgButton);
+  color: var(--textColorButton);
+  opacity: 1;
+}
 
-.button.red {
+.button-2.transparent:hover{
+  background-color: var(--bgButtonHover);
+  color: var(--textColorButtonHover);
+}
+
+.button.red,
+.button-2.red {
   color: #FFAC82 !important;
-  background-color: rgba(255, 54, 4, 0.10);
+  background-color: rgba(255, 54, 4, 0.10) !important;
   border-color: transparent !important;
 }
 
-.button.red:hover {
-  background-color: rgba(255, 54, 4, 0.16);
+.button.red:hover,
+.button-2.red:hover {
+  background-color: rgba(255, 54, 4, 0.16) !important;
 }
-
 
 .button-flex,
 .button-flex-2 {

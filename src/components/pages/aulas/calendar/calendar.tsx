@@ -16,6 +16,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader } from '@/components/loader/loader';
+import Link from 'next/link';
 
 const schemaFormAula = z.object({
   number_aula: z
@@ -68,6 +69,9 @@ const Calendar = () => {
   const [dateCalendar, setDateCalendar] = React.useState('');
   const [aulas, setAulas] = React.useState<TypeAula[]>([]);
   const [modalDataAula, setModalDataAula] = React.useState(false);
+  const [aulaCurrent, setAulaCurrent] = React.useState<TypeAula | null>(null);
+
+  // console.log('Renderizou');
 
   React.useEffect(() => {
     setAulas([]);
@@ -179,7 +183,56 @@ const Calendar = () => {
         title="Dados da Aula"
         modal={modalDataAula}
         setModal={setModalDataAula}
-      ></Modal>
+        style={{ maxWidth: '640px' }}
+      >
+        {aulaCurrent && (
+          <div className={styles.boxDataAula}>
+            <span className={styles.iconDiploma}>
+              <Icon icon="solar:diploma-bold-duotone" />
+            </span>
+            <ul className={styles.dataAula}>
+              <li>
+                <strong>ID da Aula:</strong> {aulaCurrent.id}
+              </li>
+              <li>
+                <strong>Número da Aula:</strong> {aulaCurrent.number_aula}
+              </li>
+              <li>
+                <strong>Título:</strong> {aulaCurrent.title_aula}
+              </li>
+              <li>
+                <strong>Status:</strong>{' '}
+                <span data-status={aulaCurrent.status}>
+                  {aulaCurrent.status}
+                </span>
+              </li>
+              <li>
+                <strong>Data:</strong> {aulaCurrent.date}
+              </li>
+              <li>
+                <strong>Sala:</strong> {aulaCurrent.room}
+              </li>
+            </ul>
+          </div>
+        )}
+        <div className={styles.boxOptions}>
+          <button className="button-2 transparent">
+            <Icon icon="solar:document-add-bold-duotone" />
+            Editar
+          </button>
+          <Link
+            href={`/call/${aulaCurrent?.id}`}
+            className="button-2 transparent"
+          >
+            <Icon icon="solar:diploma-verified-bold-duotone" />
+            Iniciar chamada
+          </Link>
+          <button className="button-2 transparent red">
+            <Icon icon="solar:trash-bin-trash-bold-duotone" />
+            Excluir
+          </button>
+        </div>
+      </Modal>
       <div className={styles.navCalendar}>
         <div className={styles.boxControls}>
           <button
@@ -232,7 +285,10 @@ const Calendar = () => {
                       key={aula.id}
                       className={styles.boxAula}
                       data-status={aula.status}
-                      onClick={() => setModalDataAula(true)}
+                      onClick={() => {
+                        setModalDataAula(true);
+                        setAulaCurrent(aula);
+                      }}
                     >
                       <p>
                         {aula.number_aula} - {aula.title_aula} - {aula.room}

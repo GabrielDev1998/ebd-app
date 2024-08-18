@@ -9,11 +9,13 @@ const Modal = ({
   title,
   modal,
   setModal,
+  ...props
 }: {
   title: string;
   modal: boolean;
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
-} & React.PropsWithChildren) => {
+} & React.PropsWithChildren &
+  React.ComponentProps<'div'>) => {
   return (
     <div
       className={`${styles.containerModal} ${modal && styles.active}`}
@@ -21,7 +23,7 @@ const Modal = ({
         if (target === currentTarget) setModal(false);
       }}
     >
-      <div className={styles.boxModal}>
+      <div className={styles.boxModal} {...props}>
         <div className={styles.boxTitle}>
           <h2>{title}</h2>
           <button className="icon" onClick={() => setModal(false)}>

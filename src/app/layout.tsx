@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
-import { Public_Sans, DM_Sans } from 'next/font/google';
+import { DM_Sans } from 'next/font/google';
 import './globals.css';
 import { AuthContext } from '@/firebase/auth/authProvider';
 import { ThemeContext } from '@/providers/theme/theme-context';
-import { MonaSansRegular } from '@/components/fonts/local/local';
 
 const fontPrimary = DM_Sans({ subsets: ['latin'] });
 
