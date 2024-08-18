@@ -9,7 +9,12 @@ import { RoomType } from '../rooms/rooms';
 import ProfileCustom from '@/components/profileCustom/profileCustom';
 import { Loader } from '@/components/loader/loader';
 import LabelCheck from './labelCheck/labelCheck';
-import { TypeAula, TypeInput, TypeInputCall } from '../aulas/calendar/calendar';
+import {
+  TypeAula,
+  TypeInput,
+  TypeInputCall,
+  TypeReportAula,
+} from '../aulas/calendar/calendar';
 
 const Call = () => {
   const params: { id: string } = useParams();
@@ -22,6 +27,16 @@ const Call = () => {
     presence: [],
     bible: [],
     magazine: [],
+  });
+  const [reportAula, setReportAula] = React.useState<TypeReportAula>({
+    absences: 0,
+    bibles: 0,
+    enrolleds: roomCurrent ? roomCurrent.students.length : 0,
+    magazines: 0,
+    offer: '',
+    presences: 0,
+    teacher: '',
+    visitors: '',
   });
 
   React.useMemo(() => {

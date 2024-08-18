@@ -29,6 +29,17 @@ const schemaFormAula = z.object({
 
 type SchemaFormAula = z.infer<typeof schemaFormAula>;
 
+export type TypeReportAula = {
+  presences: number;
+  absences: number;
+  bibles: number;
+  magazines: number;
+  enrolleds: number;
+  visitors: string;
+  teacher: string;
+  offer: string;
+};
+
 export type TypeInput = 'presence' | 'bible' | 'magazine';
 
 export type TypeCheckedCall = {
@@ -50,6 +61,7 @@ export type TypeAula = {
   date: string;
   call: TypeCheckedCall | null;
   room: string;
+  report: TypeReportAula | null;
 };
 
 const { alertNotification, generateRandomNumbers, popup } = Global();
@@ -113,6 +125,7 @@ const Calendar = () => {
           date: dateCalendar,
           call: null,
           room: selectRooms,
+          report: null,
         };
 
         if (room.aulas.length === 0) sendDataAula(newAula);
