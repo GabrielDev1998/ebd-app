@@ -1,0 +1,49 @@
+.containerFound {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--g-20);
+  padding: var(--g-40);
+}
+
+.boxFound {
+  margin-top: var(--g-20);
+  max-width: 500px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--g-20);
+}
+
+.boxFound h1 {
+  font-size: var(--fs-40);
+  line-height: 45px;
+  font-weight: 600;
+}
+
+.boxFound p {
+  color: var(--textColor);
+  line-height: 1.4;
+  font-size: var(--fs-18);
+}
+
+@media (max-width: 960px) {
+  .containerFound img{
+    min-width: 250px !important;
+  }
+
+  .boxFound h1{
+    font-size: var(--fs-32);
+    line-height: 40px;
+  }
+
+  .boxFound p {
+    font-size: var(--fs-14);
+  }
+
+}

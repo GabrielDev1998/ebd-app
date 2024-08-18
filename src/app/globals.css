@@ -172,7 +172,9 @@ textarea::placeholder {
 
 .button:hover,
 .button-2:hover {
-  opacity: .8;
+  background: transparent;
+  color: var(--primary);
+  border-color: currentColor !important;
 }
 
 .button-flex button,
@@ -185,6 +187,7 @@ textarea::placeholder {
   background: var(--bgButton);
   color: var(--textColorButton);
   opacity: 1;
+  border-color: transparent !important;
 }
 
 .button-2.transparent:hover{

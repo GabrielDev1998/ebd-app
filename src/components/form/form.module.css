@@ -107,8 +107,6 @@
   font-size: .845rem;
   margin-top: var(--g-10);
   color: var(--erro);
-
-
  }
 
  .form button {
@@ -133,11 +131,6 @@
 	color: var(--colorTextButton);
 	background-color: var(--primary);
 	transition: opacity .32s ease, background-color .32s ease;
-}
-
-.form button:hover{
-  background: var(--secondary) !important;
-  opacity: 1 !important;
 }
 
 .boxForgot {
