@@ -31,13 +31,17 @@ const Call = () => {
   const [reportAula, setReportAula] = React.useState<TypeReportAula>({
     absences: 0,
     bibles: 0,
-    enrolleds: roomCurrent ? roomCurrent.students.length : 0,
+    enrolleds: 0,
     magazines: 0,
     offer: '',
     presences: 0,
     teacher: '',
     visitors: '',
   });
+
+  const [offer, setOffer] = React.useState('');
+  const [teacher, setTeacher] = React.useState('');
+  const [visitors, setVisitors] = React.useState('');
 
   React.useMemo(() => {
     dataDocs.forEach((room) => {
@@ -77,6 +81,21 @@ const Call = () => {
     if (roomCurrent)
       setAulaCurrent(roomCurrent.aulas.find((aula) => aula.id === params.id));
   }, [roomCurrent, params]);
+
+  React.useEffect(() => {
+    if (roomCurrent) {
+      setReportAula({
+        presences: inputs.presence.filter((input) => input.checked).length,
+        absences: inputs.presence.filter((input) => !input.checked).length,
+        bibles: inputs.bible.filter((input) => input.checked).length,
+        magazines: inputs.magazine.filter((input) => input.checked).length,
+        enrolleds: roomCurrent.students.length,
+        offer,
+        teacher,
+        visitors,
+      });
+    }
+  }, [roomCurrent, inputs, offer, teacher, visitors]);
 
   const verifyInputChecked = (id: number, type: TypeInput) => {
     return inputs[type].find((input) => input.id === id)?.checked ?? false;
@@ -151,15 +170,50 @@ const Call = () => {
             <div className={styles.boxResumo}>
               <div>
                 <h3>Matriculados</h3>
-                <p>0</p>
+                <p>{reportAula.enrolleds}</p>
               </div>
               <div>
                 <h3>Presentes</h3>
-                <p>0</p>
+                <p>{reportAula.presences}</p>
               </div>
               <div>
                 <h3>Ausentes</h3>
-                <p>0</p>
+                <p>{reportAula.absences}</p>
+              </div>
+              <div>
+                <h3>Bíblias</h3>
+                <p>{reportAula.bibles}</p>
+              </div>
+              <div>
+                <h3>Revistas</h3>
+                <p>{reportAula.magazines}</p>
+              </div>
+              <div>
+                <h3>Visitantes</h3>
+                <input
+                  type="text"
+                  id="visitors"
+                  value={visitors}
+                  onChange={({ target }) => setVisitors(target.value)}
+                />
+              </div>
+              <div>
+                <h3>Professor</h3>
+                <input
+                  type="text"
+                  id="teacher"
+                  value={teacher}
+                  onChange={({ target }) => setTeacher(target.value)}
+                />
+              </div>
+              <div>
+                <h3>Ofertas</h3>
+                <input
+                  type="text"
+                  id="offer"
+                  value={offer}
+                  onChange={({ target }) => setOffer(target.value)}
+                />
               </div>
             </div>
           </div>

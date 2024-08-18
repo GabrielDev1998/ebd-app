@@ -80,6 +80,21 @@
   font-size: var(--fs-14);
 }
 
+.boxResumo input {
+  background: transparent;
+  border: 0;
+  outline: none;
+  border-bottom: 1px solid var(--borderColor);
+  min-width: 200px;
+  padding-bottom: var(--g-10);
+  color: var(--textColor-2);
+  text-align: right;
+}
+
+.boxResumo input:focus {
+  border-color: var(--primary);
+}
+
 @media (max-width: 1200px) {
   .boxStudents{
     grid-template-columns: 1fr 1fr;
