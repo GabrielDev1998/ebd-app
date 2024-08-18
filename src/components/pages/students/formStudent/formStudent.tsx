@@ -129,6 +129,7 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
 
       setSelectOffice(() => studentCurrent?.office ?? '');
       setSelectRooms(() => studentCurrent?.room ?? '');
+      setGenre(studentCurrent?.genre ?? '');
     }
   }, [type, reset, studentCurrent]);
 
