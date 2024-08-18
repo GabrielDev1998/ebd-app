@@ -5,16 +5,20 @@ import styles from './formStudent.module.css';
 
 import Form from '@/components/form/form';
 import Input, { ColumnInput } from '@/components/form/input';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 import AlertNotification from '@/components/alertNotification/alertNotification';
 import CustomSelect from '@/components/form/select/custom-select';
 import DataBase from '@/firebase/db/database';
-import { RoomType } from '../../rooms/rooms';
 import Global from '@/utils/global';
 import ProfileCustom from '@/components/profileCustom/profileCustom';
+
+import { type RoomType } from '../../rooms/rooms';
 import { useParams } from 'next/navigation';
+import { Loader } from '@/components/loader/loader';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Radio from '@/components/form/radio';
+import Genre, { TypeGenres } from '@/components/form/genre/genre';
 
 const schemaFormStudent = z.object({
   fullName: z.string().min(5, {
@@ -44,18 +48,20 @@ export type StudentsProps = {
   profile: string;
   date_enroll: string;
   status: 'Ativo' | 'Inativo';
+  genre: TypeGenres;
 };
 
-const { avatar, alertNotification } = Global();
+const { avatar, alertNotification, popup } = Global();
 
 const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
-  const { dataDocs, updateData } = DataBase<RoomType>('rooms');
+  const { dataDocs, updateData, loading } = DataBase<RoomType>('rooms');
   const [dataProfile, setDataProfile] = useState({
     name: '',
     url: '',
   });
   const [selectRooms, setSelectRooms] = useState('');
   const [selectOffice, setSelectOffice] = useState('');
+  const [genre, setGenre] = React.useState('');
   const params: { slug: string[] } = useParams();
   const [roomCurrent, setRoomCurrent] = useState<RoomType | null>(null);
   const [studentCurrent, setStudentCurrent] = useState<StudentsProps | null>(
@@ -102,11 +108,13 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
   }, [type, dataDocs, selectRooms, params]);
 
   useMemo(() => {
-    const dataStudent = roomCurrent?.students.find(
-      (student) => student.id === Number(params.slug[1]),
-    );
-    if (dataStudent !== undefined) setStudentCurrent(dataStudent);
-  }, [roomCurrent, params]);
+    if (type === 'Update') {
+      const dataStudent = roomCurrent?.students.find(
+        (student) => student.id === Number(params.slug[1]),
+      );
+      if (dataStudent !== undefined) setStudentCurrent(dataStudent);
+    }
+  }, [type, roomCurrent, params]);
 
   useMemo(() => {
     if (type === 'Update') {
@@ -126,12 +134,72 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
 
   function handleClickFormStudent(data: SchemaFormStudent) {
     const idRandom = Math.floor(Math.random() * 100);
+    const dataRoom = dataDocs.find((room) => room.name_room === selectRooms);
 
     // Atualizar dados do aluno
     const updateDataStudent = () => {};
 
     // Matricular novos alunos
-    const enrollStudent = () => {};
+    const enrollStudent = () => {
+      const newStudent: StudentsProps = {
+        id: idRandom,
+        fullName: data.fullName,
+        birthDate: data.birthDate,
+        phone: data.phone,
+        address: {
+          street: data.street,
+          neighborhood: data.neighborhood,
+          numberHouse: data.numberHouse,
+        },
+        room: selectRooms,
+        office: selectOffice,
+        profile: avatar({
+          name: data.fullName,
+          type: 'initials',
+        }),
+        date_enroll: new Date().toLocaleDateString(),
+        status: 'Ativo',
+        genre: genre as TypeGenres,
+      };
+
+      if (dataRoom) {
+        const { students } = dataRoom;
+        const sendDataStudent = () => {
+          updateData(
+            dataRoom.id,
+            {
+              ...dataRoom,
+              students: [...students, newStudent],
+            },
+            () => {
+              popup({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: 'Aluno matriculado com sucesso!',
+              });
+              reset();
+              setSelectOffice('');
+              setSelectRooms('');
+            },
+          );
+        };
+
+        if (students.length === 0) sendDataStudent();
+        else {
+          const validateIDRepeatStudent = students.every(
+            (student) => student.id !== newStudent.id,
+          );
+          if (validateIDRepeatStudent) sendDataStudent();
+          else {
+            popup({
+              icon: 'warning',
+              title: 'Tente novamente!',
+              text: `Já existe um aluno com este ID (${idRandom}). Por favor, tente matricular o aluno novamente, para gerar um novo ID para este aluno.`,
+            });
+          }
+        }
+      }
+    };
 
     if (data.fullName) {
       if (type === 'Create') enrollStudent();
@@ -144,7 +212,7 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
 
   return (
     <div className={styles.formStudent}>
-      {/* {loading && <Loader />} */}
+      {loading && <Loader />}
       <AlertNotification />
       <div className={styles.box}>
         {dataProfile.name && (
@@ -238,6 +306,7 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
               'Membro',
             ]}
           />
+          <Genre genre={genre} setGenre={setGenre} />
           <div className="button-flex">
             {type === 'Create' && (
               <button className="button">Matricular</button>

@@ -1,0 +1,6 @@
+.genre{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--g-20);
+}

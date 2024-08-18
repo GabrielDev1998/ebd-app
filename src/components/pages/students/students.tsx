@@ -72,7 +72,7 @@ const Students = () => {
                     </TableCell>
                     <TableCell type="td">{student.birthDate}</TableCell>
                     <TableCell type="td">{student.room}</TableCell>
-                    <TableCell type="td">Masculino</TableCell>
+                    <TableCell type="td">{student.genre}</TableCell>
                     <TableCell type="td">{student.date_enroll}</TableCell>
                     <TableCell type="td">
                       <span data-status={student.status}>{student.status}</span>
