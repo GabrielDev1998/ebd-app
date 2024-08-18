@@ -69,6 +69,7 @@ const Calendar = () => {
   const [dateCalendar, setDateCalendar] = React.useState('');
   const [aulas, setAulas] = React.useState<TypeAula[]>([]);
   const [modalDataAula, setModalDataAula] = React.useState(false);
+
   const [aulaCurrent, setAulaCurrent] = React.useState<TypeAula | null>(null);
 
   // console.log('Renderizou');

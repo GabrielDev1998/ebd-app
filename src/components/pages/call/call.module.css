@@ -1,0 +1,38 @@
+.containerCall {
+  position: relative;
+}
+
+.boxStudents {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--g-20);
+}
+
+.boxStudent {
+  background-color: var(--bg-1);
+  padding: var(--g-20);
+  border-radius: 8px;
+}
+
+.profileStudent {
+  display: flex;
+  align-items: center;
+  gap: var(--g-20);
+}
+
+.profileStudent p {
+  font-size: var(--fs-14);
+  line-height: 1.2;
+}
+
+@media (max-width: 1200px) {
+  .boxStudents{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 960px) {
+  .boxStudents{
+    grid-template-columns: 1fr;
+  }
+}
