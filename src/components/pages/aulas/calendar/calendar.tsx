@@ -29,6 +29,8 @@ const schemaFormAula = z.object({
 
 type SchemaFormAula = z.infer<typeof schemaFormAula>;
 
+export type TypeInput = 'presence' | 'bible' | 'magazine';
+
 export type TypeCheckedCall = {
   id: number;
   checked: boolean;

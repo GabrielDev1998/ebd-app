@@ -9,9 +9,10 @@
 }
 
 .boxStudent {
-  background-color: var(--bg-1);
+
   padding: var(--g-20);
   border-radius: 8px;
+  border: 1px solid var(--borderColor);
 }
 
 .profileStudent {
@@ -23,6 +24,60 @@
 .profileStudent p {
   font-size: var(--fs-14);
   line-height: 1.2;
+}
+
+.boxInputs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--g-10);
+  margin-top: var(--g-20);
+  background-color: var(--bg-1);
+  padding: var(--g-20);
+  border-radius: 8px;
+}
+
+/* Container Info */
+
+.containerInfo {
+  margin-top: var(--g-20);
+  display: flex;
+  flex-direction: column;
+  gap: var(--g-20);
+}
+
+.boxInfo > h2 {
+  font-size: var(--fs-18);
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: var(--g-10);
+}
+
+.boxResumo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--g-10);
+}
+
+.boxResumo > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--bg-1);
+  padding: var(--g-20);
+  border-radius: 8px;
+}
+
+.boxResumo > div,
+.boxFinish  {
+  background-color: var(--bg-1);
+  padding: var(--g-20);
+  border-radius: 8px;
+}
+
+.boxResumo > div h3,
+.boxResumo > div p {
+  font-size: var(--fs-14);
 }
 
 @media (max-width: 1200px) {
