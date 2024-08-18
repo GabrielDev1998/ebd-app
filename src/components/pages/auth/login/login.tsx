@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthUser } from '@/firebase/auth/authProvider';
+import { ButtonLoader } from '@/components/loader/loader';
 
 const schema = z.object({
   email: z.string().email({
@@ -32,7 +33,7 @@ const Login = () => {
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
   });
-  const { loginEmailAndPassword } = AuthUser();
+  const { loginEmailAndPassword, loading } = AuthUser();
 
   function onSubmitForm({ email, password }: FormSchema) {
     if (email && password) {
@@ -73,7 +74,12 @@ const Login = () => {
           {...register('password')}
           error={errors.password}
         />
-        <button type="submit">Entrar</button>
+        <ButtonLoader
+          text={loading ? 'Entrando...' : 'Entrar'}
+          className="button"
+          loading={loading}
+          disabled={loading}
+        />
       </Form>
     </LayoutUser>
   );

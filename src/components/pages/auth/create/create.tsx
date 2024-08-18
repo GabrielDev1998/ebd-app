@@ -13,6 +13,7 @@ import { AuthUser } from '@/firebase/auth/authProvider';
 import Global from '@/utils/global';
 import ReCAPTCHA from 'react-google-recaptcha';
 import useRecaptcha from '@/hooks/useRecaptcha';
+import { ButtonLoader } from '@/components/loader/loader';
 
 const schema = z.object({
   fullName: z
@@ -42,7 +43,7 @@ const Create = () => {
     resolver: zodResolver(schema),
   });
   const { SITE_KEY, recaptcha, validateRecaptcha } = useRecaptcha();
-  const { createNewUser } = AuthUser();
+  const { createNewUser, loading } = AuthUser();
   const { firstLetter } = Global();
 
   function onSubmitForm({ fullName, email, password }: FormSchema) {
@@ -93,7 +94,11 @@ const Create = () => {
           error={errors.password}
         />
         <ReCAPTCHA sitekey={SITE_KEY} ref={recaptcha} theme="dark" />
-        <button type="submit">Criar</button>
+        <ButtonLoader
+          text={loading ? 'Criando...' : 'Criar'}
+          loading={loading}
+          disabled={loading}
+        />
       </Form>
     </LayoutUser>
   );
