@@ -7,15 +7,19 @@ import Input from '@/components/form/input';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Global from '@/utils/global';
+import { AuthUser } from '@/firebase/auth/authProvider';
 
 const schemaPassword = z.object({
   password: z.string().min(8, 'A senha deve ter pelo menos 8 caracteres'),
   passwordConfirm: z
     .string()
-    .min(8, 'A confirmação da senha deve ter pelo menos 8 caracteres'),
+    .min(8, 'A senha deve ter pelo menos 8 caracteres'),
 });
 
 type FormDataPassword = z.infer<typeof schemaPassword>;
+
+const { alertNotification } = Global();
 
 const Password = () => {
   const {
@@ -25,10 +29,28 @@ const Password = () => {
   } = useForm<FormDataPassword>({
     resolver: zodResolver(schemaPassword),
   });
+  const { updatePasswordUser } = AuthUser();
+
+  function handleSubmitPassword({
+    password,
+    passwordConfirm,
+  }: FormDataPassword) {
+    if (password && passwordConfirm) {
+      if (password === passwordConfirm) {
+        updatePasswordUser(password);
+      } else {
+        alertNotification('error', 'As senhas não conferem');
+        return;
+      }
+    }
+  }
 
   return (
     <div className={styles.boxForm}>
-      <Form className={`${styles.form} animaLeft`}>
+      <Form
+        className={`${styles.form} animaLeft`}
+        onSubmit={handleSubmit(handleSubmitPassword)}
+      >
         <Input
           type="password"
           id="password"
@@ -38,6 +60,7 @@ const Password = () => {
           required
         />
         <Input
+          type="password"
           id="password-confirm"
           placeholder="Confirme a nova senha"
           {...register('passwordConfirm')}

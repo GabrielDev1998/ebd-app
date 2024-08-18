@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './form.module.css';
 import { FieldError, FieldErrors } from 'react-hook-form';
 
-type InputComponent = {
+type InputComponent = React.ComponentProps<'input'> & {
   id: string;
   label?: string;
   type?: string;
@@ -29,9 +29,11 @@ const Input = React.forwardRef<HTMLInputElement, InputComponent>(function Input(
         ref={ref}
         {...props}
       />
-      {label && <label htmlFor={id} className={styles.label}>
-        {label}
-      </label>}
+      {label && (
+        <label htmlFor={id} className={styles.label}>
+          {label}
+        </label>
+      )}
       {error && <span className={styles.error}>{error.message}</span>}
     </div>
   );

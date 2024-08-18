@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthUser } from '@/firebase/auth/authProvider';
+import ProfileCustom from '@/components/profileCustom/profileCustom';
 
 const schemaProfile = z.object({
   name: z.string().min(5).max(100),
@@ -27,21 +28,35 @@ const Profile = () => {
     resolver: zodResolver(schemaProfile),
   });
   const [bio, setBio] = React.useState('');
-
-  const {userCurrent} = AuthUser();
+  const { userCurrent, updateDataUser } = AuthUser();
 
   React.useMemo(() => {
-    if(userCurrent){
+    if (userCurrent) {
       reset({
         name: userCurrent.displayName ?? '',
         email: userCurrent.email ?? '',
-      })
+      });
     }
-  }, [userCurrent, reset])
+  }, [userCurrent, reset]);
 
   return (
     <div className={styles.boxForm}>
-      <Form className={`${styles.form} animaLeft`}>
+      {userCurrent && (
+        <div className={styles.boxProfile}>
+          <ProfileCustom
+            src={userCurrent.photoURL ?? ''}
+            alt={userCurrent.displayName ?? ''}
+            width={150}
+            height={150}
+          />
+        </div>
+      )}
+      <Form
+        className={`${styles.form} animaLeft`}
+        onSubmit={handleSubmit(({ name }) => {
+          if (name) updateDataUser(name);
+        })}
+      >
         <Input
           id="name"
           placeholder="Nome completo"
@@ -49,14 +64,23 @@ const Profile = () => {
           error={errors.name}
           required
         />
-        <Input
-          id="email"
-          placeholder="Seu email"
-          {...register('email')}
-          error={errors.email}
-          required
+        <div>
+          <Input
+            id="email"
+            placeholder="Seu email"
+            {...register('email')}
+            error={errors.email}
+            required
+            disabled={true}
+          />
+          <span className={styles.alert}>Não é possível alterar o email</span>
+        </div>
+        <Textarea
+          id="bio"
+          onChange={({ target }) => setBio(target.value)}
+          value={bio}
+          placeholder="Biografia"
         />
-        <Textarea id="bio" onChange={({target}) => setBio(target.value)} value={bio} placeholder='Biografia'/>
         <div className="button-flex">
           <button className="button">Salvar alterações</button>
         </div>

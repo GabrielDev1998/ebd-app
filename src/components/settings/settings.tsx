@@ -10,6 +10,7 @@ import Password from './password/password';
 import Appearance from './appearance/appearance';
 
 import { usePathname } from 'next/navigation';
+import AlertNotification from '../alertNotification/alertNotification';
 
 const Settings = () => {
   const pathname = usePathname();
@@ -23,6 +24,7 @@ const Settings = () => {
       title="Configurações"
       description="Gerencie as informações de conta, dados pessoais e apararência da plataforma"
     >
+      <AlertNotification />
       <div className={styles.containerSettings}>
         <aside className={styles.aside}>
           <ul className={styles.menu}>

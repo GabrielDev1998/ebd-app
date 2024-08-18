@@ -10,6 +10,7 @@ import {
   User,
   updateProfile,
   signOut,
+  updatePassword,
 } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 import Global from '@/utils/global';
@@ -29,9 +30,11 @@ type TypeAuth = {
   userActive: User | null | boolean;
   userCurrent: User | null;
   logoutUser: () => void;
+  updateDataUser: (newName: string, cb?: () => void) => void;
+  updatePasswordUser: (newPassword: string) => void;
 };
 
-const { avatar } = Global();
+const { avatar, popup } = Global();
 
 const AuthProvider = createContext<TypeAuth | null>(null);
 export const AuthContext = ({ children }: { children: React.ReactNode }) => {
@@ -107,6 +110,62 @@ export const AuthContext = ({ children }: { children: React.ReactNode }) => {
       .finally(() => setLoading(false));
   }
 
+  // Atualizar dados do usuário
+  async function updateDataUser(newName: string, cb?: () => void) {
+    // Implementar a função de atualizar dados do usuário aqui.
+    // Por exemplo: updateProfile(auth.currentUser, { displayName: 'Novo nome' });
+
+    if (userCurrent) {
+      setLoading(true);
+      await updateProfile(userCurrent, {
+        displayName: newName,
+        photoURL: avatar({
+          name: newName,
+          type: 'initials',
+        }),
+      })
+        .then(() => {
+          if (cb) cb();
+          popup({
+            icon: 'success',
+            title: 'Dados atualizados!',
+            text: 'Seus dados foram atualizados com sucesso',
+          });
+        })
+        .catch((error) => {
+          if (error instanceof FirebaseError) {
+            console.log('Não foi possível atualizar os dados ' + error.message);
+          }
+        })
+        .finally(() => setLoading(false));
+    }
+  }
+
+  //Atualizara a senha
+  async function updatePasswordUser(newPassword: string) {
+    if (userCurrent) {
+      setLoading(true);
+      await updatePassword(userCurrent, newPassword)
+        .then(() => {
+          popup({
+            icon: 'success',
+            title: 'Senha atualizada!',
+            text: 'Sua senha foi atualizada com sucesso',
+          });
+        })
+        .catch((error) => {
+          if (error instanceof FirebaseError) {
+            popup({
+              icon: 'error',
+              title: 'Algum erro ocorreu!',
+              text: 'Não foi possível atualizar a senha ' + error.message,
+            });
+          }
+        })
+        .finally(() => setLoading(false));
+    }
+  }
+
   // Usuário ativo
   React.useEffect(() => {
     setLoading(true);
@@ -127,6 +186,8 @@ export const AuthContext = ({ children }: { children: React.ReactNode }) => {
         loginEmailAndPassword,
         logoutUser,
         setLoading,
+        updateDataUser,
+        updatePasswordUser,
         loading,
         userActive,
         userCurrent,

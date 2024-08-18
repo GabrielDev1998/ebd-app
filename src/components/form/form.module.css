@@ -72,6 +72,12 @@
   outline-color: var(--primary);
  }
 
+ .input:disabled{
+  opacity: .5;
+  border-color: var(--borderColor);
+  outline: none;
+ }
+
  .boxForm textarea {
   background: inherit;
   height: 250px;

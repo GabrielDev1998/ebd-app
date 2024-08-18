@@ -203,11 +203,12 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
     };
 
     if (data.fullName) {
-      if (type === 'Create') enrollStudent();
-      if (type === 'Update') updateDataStudent();
-    } else {
-      alertNotification('error', 'Escolha as opções');
-      return;
+      if (selectRooms && selectOffice && genre) {
+        if (type === 'Create') enrollStudent();
+        if (type === 'Update') updateDataStudent();
+      } else {
+        alertNotification('error', 'Escolha as opções');
+      }
     }
   }
 
