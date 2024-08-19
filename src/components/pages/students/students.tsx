@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import styles from './students.module.css';
 import GlobalLayout from '@/components/globalLayout/globalLayout';
 import {

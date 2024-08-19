@@ -45,6 +45,8 @@ export type TypeInput = 'presence' | 'bible' | 'magazine';
 export type TypeCheckedCall = {
   id: number;
   checked: boolean;
+  type: TypeInput;
+  points: number;
 };
 
 export type TypeInputCall = {

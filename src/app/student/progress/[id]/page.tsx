@@ -1,3 +1,6 @@
+import { LayoutContext } from '@/components/globalLayout/layout-context';
+import Progress from '@/components/pages/students/progress/progress';
+import ProtectedRouter from '@/protectedRoute/protectedRoute';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -6,5 +9,11 @@ export const metadata: Metadata = {
 };
 
 export default function PageProgress() {
-  return <></>;
+  return (
+    <ProtectedRouter>
+      <LayoutContext>
+        <Progress />
+      </LayoutContext>
+    </ProtectedRouter>
+  );
 }

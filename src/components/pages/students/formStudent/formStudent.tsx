@@ -138,7 +138,38 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
     const dataRoom = dataDocs.find((room) => room.name_room === selectRooms);
 
     // Atualizar dados do aluno
-    const updateDataStudent = () => {};
+    const updateDataStudent = () => {
+      if (roomCurrent && studentCurrent) {
+        updateData(
+          roomCurrent.id,
+          {
+            ...roomCurrent,
+            students: roomCurrent.students.map((student) =>
+              student.id === studentCurrent.id
+                ? {
+                    ...student,
+                    ...data,
+                    address: {
+                      street: data.street,
+                      neighborhood: data.neighborhood,
+                      numberHouse: data.numberHouse,
+                    },
+                    genre: genre as TypeGenres,
+                    office: selectOffice,
+                  }
+                : student,
+            ),
+          },
+          () => {
+            popup({
+              icon: 'success',
+              title: 'Dados atualizados!',
+              text: 'Dados do aluno atualizados com sucesso!',
+            });
+          },
+        );
+      }
+    };
 
     // Matricular novos alunos
     const enrollStudent = () => {
@@ -234,13 +265,15 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
           className={styles.form}
           onSubmit={handleSubmit(handleClickFormStudent)}
         >
-          <CustomSelect
-            label="Turmas"
-            items={dataDocs.map((room) => room.name_room)}
-            setValue={setSelectRooms}
-            value={selectRooms}
-            style={{ backgroundColor: 'var(--bgPrimary)' }}
-          />
+          {type === 'Create' && (
+            <CustomSelect
+              label="Turmas"
+              items={dataDocs.map((room) => room.name_room)}
+              setValue={setSelectRooms}
+              value={selectRooms}
+              style={{ backgroundColor: 'var(--bgPrimary)' }}
+            />
+          )}
           <Input
             type="text"
             label="Nome completo"

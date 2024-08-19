@@ -16,6 +16,7 @@ import {
   TypeReportAula,
 } from '../aulas/calendar/calendar';
 import Global from '@/utils/global';
+import NoData from '@/components/noData/no-data';
 
 const { popup } = Global();
 
@@ -68,6 +69,8 @@ const Call = () => {
                   {
                     id: student.id,
                     checked: false,
+                    points: 0,
+                    type,
                   },
                 ],
               };
@@ -80,12 +83,12 @@ const Call = () => {
     createInput(['presence', 'magazine', 'bible']);
   }, [roomCurrent]);
 
-  React.useEffect(() => {
+  React.useMemo(() => {
     if (roomCurrent)
       setAulaCurrent(roomCurrent.aulas.find((aula) => aula.id === params.id));
   }, [roomCurrent, params]);
 
-  React.useEffect(() => {
+  React.useMemo(() => {
     if (roomCurrent) {
       setReportAula({
         presences: inputs.presence.filter((input) => input.checked).length,
@@ -100,6 +103,15 @@ const Call = () => {
     }
   }, [roomCurrent, inputs, offer, teacher, visitors]);
 
+  React.useMemo(() => {
+    if (aulaCurrent && aulaCurrent.call) {
+      setInputs(aulaCurrent.call);
+      setOffer(aulaCurrent.report?.offer ?? '');
+      setTeacher(aulaCurrent.report?.teacher ?? '');
+      setVisitors(aulaCurrent.report?.visitors ?? '');
+    }
+  }, [aulaCurrent]);
+
   const verifyInputChecked = (id: number, type: TypeInput) => {
     return inputs[type].find((input) => input.id === id)?.checked ?? false;
   };
@@ -110,20 +122,30 @@ const Call = () => {
     const id = target.id as TypeInput;
     const idStudent = Number(target.getAttribute('data-id'));
 
-    setInputs((inputs) => {
-      return {
-        ...inputs,
-        [id]: inputs[id].map((input) =>
-          input.id === idStudent
-            ? {
-                ...input,
-                checked: !input.checked,
-                id: idStudent,
-              }
-            : input,
-        ),
-      };
-    });
+    if (aulaCurrent?.status !== 'Concluído') {
+      setInputs((inputs) => {
+        return {
+          ...inputs,
+          [id]: inputs[id].map((input) =>
+            input.id === idStudent
+              ? {
+                  ...input,
+                  checked: !input.checked,
+                  id: idStudent,
+                  type: id,
+                  points: target.checked ? 50 : 0,
+                }
+              : input,
+          ),
+        };
+      });
+    } else {
+      popup({
+        icon: 'error',
+        title: 'Atenção!',
+        text: 'A chamada já está concluída.',
+      });
+    }
   };
 
   const updateDataAula = (data: TypeAula, text: string) => {
@@ -159,6 +181,7 @@ const Call = () => {
           ...aulaCurrent,
           call: inputs,
           status: 'Concluído',
+          report: reportAula,
         },
         'Chamada finalizada com sucesso',
       );
@@ -217,7 +240,12 @@ const Call = () => {
               </div>
             ))}
           </div>
-        ) : null}
+        ) : (
+          <NoData
+            text="Não tem alunos matriculados nessa turma"
+            style={{ backgroundColor: 'var(--bg-1)' }}
+          />
+        )}
         <div className={styles.containerInfo}>
           <div className={styles.boxInfo}>
             <h2>Resumo</h2>
@@ -249,6 +277,8 @@ const Call = () => {
                   id="visitors"
                   value={visitors}
                   onChange={({ target }) => setVisitors(target.value)}
+                  placeholder="Visitantes"
+                  disabled={aulaCurrent?.status === 'Concluído'}
                 />
               </div>
               <div>
@@ -258,6 +288,8 @@ const Call = () => {
                   id="teacher"
                   value={teacher}
                   onChange={({ target }) => setTeacher(target.value)}
+                  placeholder="Professor"
+                  disabled={aulaCurrent?.status === 'Concluído'}
                 />
               </div>
               <div>
@@ -267,22 +299,28 @@ const Call = () => {
                   id="offer"
                   value={offer}
                   onChange={({ target }) => setOffer(target.value)}
+                  placeholder="Ofertas"
+                  disabled={aulaCurrent?.status === 'Concluído'}
                 />
               </div>
             </div>
           </div>
-          {aulaCurrent?.status === 'Concluído' ? (
-            <div className={`${styles.boxInfo} ${styles.boxFinish}`}>
-              <h2>Chamada finalizada!</h2>
-              <button className="button" onClick={handleClickReopen}>
-                Reabrir chamada
-              </button>
-            </div>
-          ) : (
-            <button className="button" onClick={handleClickFinish}>
-              Finalizar chamada
-            </button>
-          )}
+          {roomCurrent?.students.length ? (
+            <>
+              {aulaCurrent?.status === 'Concluído' ? (
+                <div className={`${styles.boxInfo} ${styles.boxFinish}`}>
+                  <h2>Chamada finalizada!</h2>
+                  <button className="button" onClick={handleClickReopen}>
+                    Reabrir chamada
+                  </button>
+                </div>
+              ) : (
+                <button className="button" onClick={handleClickFinish}>
+                  Finalizar chamada
+                </button>
+              )}
+            </>
+          ) : null}
         </div>
       </div>
     </GlobalLayout>

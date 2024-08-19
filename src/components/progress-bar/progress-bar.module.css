@@ -1,0 +1,27 @@
+.progressBar {
+  height: 6px;
+  width: 100%;
+  background-color: var(--bg-2);
+  position: relative;
+  border-radius: 4px;
+}
+
+.infoProgress {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-20);
+  justify-content: flex-end;
+  font-size: var(--fs-12);
+  margin-bottom: var(--g-10);
+}
+
+.progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: var(--primary);
+  border-radius: inherit;
+  transition: var(--transition);
+}
