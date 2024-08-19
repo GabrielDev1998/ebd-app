@@ -47,7 +47,8 @@
 
   /* Buttons */
   --bgButton: #1e242c;
-  --bgButtonHover: #282f38;
+  --bgButton-2: #282f38;
+
   --textColorButton: #8d96a0;
   --textColorButtonHover: #E6EDF3;
 
@@ -191,7 +192,7 @@ textarea::placeholder {
 }
 
 .button-2.transparent:hover{
-  background-color: var(--bgButtonHover);
+  background-color: var(--bgButton-2);
   color: var(--textColorButtonHover);
 }
 

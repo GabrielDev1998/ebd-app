@@ -1,6 +1,6 @@
 .containerProgress {
   display: grid;
-  grid-template-columns: 450px 1fr;
+  grid-template-columns: 400px 1fr;
   gap: var(--g-20);
   position: relative;
 }
@@ -10,6 +10,53 @@
   background-color: var(--bg-1);
   border-radius: 8px;
   align-self: flex-start;
+  overflow: hidden;
+}
+
+.boxNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--g-10);
+  overflow: auto;
+}
+
+.boxNav  button {
+  flex: 1;
+  flex-direction: column;
+  height: auto !important;
+  padding: var(--g-20) !important;
+  min-width: 180px; 
+}
+
+.boxNav  button .months {
+  display: flex;
+}
+
+.boxNav  button span{
+  display: inline-block;
+  margin-left: var(--g-5);
+  color: var(--textColor-2);
+  font-size: var(--fs-10);
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.boxNav button span:nth-of-type(2)::before,
+.boxNav button span:nth-of-type(2)::after{
+  content: '•';
+}
+
+.boxNav button span:nth-of-type(2)::before{
+  margin-right: 5px;
+}
+
+.boxNav button span:nth-of-type(2)::after{
+  margin-left: 5px;
+}
+
+.boxNav button.active{
+  background-color: var(--bgButton-2);
 }
 
 .boxProfile{

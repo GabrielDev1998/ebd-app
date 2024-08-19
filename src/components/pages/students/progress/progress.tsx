@@ -15,6 +15,8 @@ import {
   TypeCheckedCall,
   TypeInput,
 } from '../../aulas/calendar/calendar';
+import { dataLesson } from '@/lessons/lessons';
+import { monthsToQuarters, quartersToMonths } from 'date-fns';
 
 const Progress = () => {
   const { dataDocs, loading } = DataBase<RoomType>('rooms');
@@ -40,6 +42,9 @@ const Progress = () => {
     puntuactions: 0,
     progress: 0,
   });
+  const [buttonNav, setButtonNav] = React.useState(
+    dataLesson[monthsToQuarters(new Date().getMonth())].quarter,
+  );
 
   React.useEffect(() => {
     dataDocs.forEach((room) => {
@@ -53,7 +58,9 @@ const Progress = () => {
     if (student) {
       dataDocs.forEach((room) => {
         room.students.forEach(({ id }) => {
-          if (id === student.id) setAulas(room.aulas);
+          if (id === student.id) {
+            setAulas(room.aulas);
+          }
         });
       });
     }
@@ -125,6 +132,7 @@ const Progress = () => {
     <GlobalLayout
       title="Progresso"
       description="Progresso do aluno ao decorrer das aulas"
+      maxWidth="1400px"
     >
       <div className={styles.containerProgress}>
         {loading && <Loader />}
@@ -167,7 +175,26 @@ const Progress = () => {
             </div>
           </div>
         </div>
-        <div className={styles.box}></div>
+        <div className={styles.box}>
+          <div className={styles.boxNav}>
+            {dataLesson.map((item) => (
+              <button
+                key={item.quarter}
+                className={`button-2 transparent ${
+                  item.quarter === buttonNav && styles.active
+                }`}
+                onClick={() => setButtonNav(item.quarter)}
+              >
+                <div className={styles.months}>
+                  {item.months.map((month) => (
+                    <span key={month}>{month}</span>
+                  ))}
+                </div>
+                {item.quarter}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </GlobalLayout>
   );
