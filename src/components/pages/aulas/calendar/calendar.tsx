@@ -59,7 +59,7 @@ export type TypeAula = {
   title_aula: string;
   status: 'Pendente' | 'Em andamento' | 'Concluído';
   date: string;
-  call: TypeCheckedCall | null;
+  call: TypeInputCall | null;
   room: string;
   report: TypeReportAula | null;
 };

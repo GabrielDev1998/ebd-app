@@ -15,10 +15,13 @@ import {
   TypeInputCall,
   TypeReportAula,
 } from '../aulas/calendar/calendar';
+import Global from '@/utils/global';
+
+const { popup } = Global();
 
 const Call = () => {
   const params: { id: string } = useParams();
-  const { dataDocs, loading } = DataBase<RoomType>('rooms');
+  const { dataDocs, loading, updateData } = DataBase<RoomType>('rooms');
   const [roomCurrent, setRoomCurrent] = React.useState<RoomType | null>(null);
   const [aulaCurrent, setAulaCurrent] = React.useState<
     TypeAula | null | undefined
@@ -123,6 +126,57 @@ const Call = () => {
     });
   };
 
+  const updateDataAula = (data: TypeAula, text: string) => {
+    if (roomCurrent && aulaCurrent) {
+      updateData(
+        roomCurrent.id,
+        {
+          ...roomCurrent,
+          aulas: roomCurrent.aulas.map((aula) =>
+            aula.id === aulaCurrent.id
+              ? {
+                  ...aula,
+                  ...data,
+                }
+              : aula,
+          ),
+        },
+        () => {
+          popup({
+            icon: 'success',
+            title: 'Sucesso!',
+            text,
+          });
+        },
+      );
+    }
+  };
+
+  const handleClickFinish = () => {
+    if (aulaCurrent) {
+      updateDataAula(
+        {
+          ...aulaCurrent,
+          call: inputs,
+          status: 'Concluído',
+        },
+        'Chamada finalizada com sucesso',
+      );
+    }
+  };
+
+  const handleClickReopen = () => {
+    if (aulaCurrent) {
+      updateDataAula(
+        {
+          ...aulaCurrent,
+          status: 'Em andamento',
+        },
+        'Chamada reaberta com sucesso.',
+      );
+    }
+  };
+
   return (
     <GlobalLayout title="Chamada" description="Realizar a chamada dos alunos">
       <div className={styles.containerCall}>
@@ -220,10 +274,14 @@ const Call = () => {
           {aulaCurrent?.status === 'Concluído' ? (
             <div className={`${styles.boxInfo} ${styles.boxFinish}`}>
               <h2>Chamada finalizada!</h2>
-              <button className="button">Reabrir chamada</button>
+              <button className="button" onClick={handleClickReopen}>
+                Reabrir chamada
+              </button>
             </div>
           ) : (
-            <button className="button">Finalizar chamada</button>
+            <button className="button" onClick={handleClickFinish}>
+              Finalizar chamada
+            </button>
           )}
         </div>
       </div>
