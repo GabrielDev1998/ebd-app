@@ -18,6 +18,7 @@ const C = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+  padding: var(--g-20);
   & p {
     color: var(--textColor);
     font-weight: 400;

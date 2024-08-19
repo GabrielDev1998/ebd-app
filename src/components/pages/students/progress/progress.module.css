@@ -27,7 +27,7 @@
   flex-direction: column;
   height: auto !important;
   padding: var(--g-20) !important;
-  min-width: 180px; 
+  min-width: 220px; 
 }
 
 .boxNav  button .months {
