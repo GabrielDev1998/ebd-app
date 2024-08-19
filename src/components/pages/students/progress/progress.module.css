@@ -19,6 +19,7 @@
   justify-content: space-between;
   gap: var(--g-10);
   overflow: auto;
+  padding-bottom: var(--g-10);
 }
 
 .boxNav  button {
@@ -114,6 +115,67 @@
 .aproveitamento:nth-of-type(2), 
 .aproveitamento:nth-of-type(5){
   border-right: 1px solid var(--borderColor);
+}
+
+.boxAulas {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  gap: var(--g-10);
+}
+
+.boxAula {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--g-20);
+  background-color: var(--bg-3);
+  border-radius: 8px;
+}
+
+.numberAula {
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
+  min-height: 35px;
+  background-color: var(--bg-2);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: var(--fs-12);
+  line-height: 1.2;
+  font-weight: 700;
+  border-radius: 4px;
+}
+
+.boxAula .date {
+  font-size: var(--fs-12);
+  color: var(--textColor);
+  line-height: 1.2;
+}
+
+.boxAula .titleAula {
+  font-size: var(--fs-14);
+  line-height: 1.2;
+  margin-top: var(--g-5);
+}
+
+.identificador {
+  width: 7px;
+  height: 7px;
+  min-width: 7px;
+  min-height: 7px;
+  border-radius: 50%;
+}
+
+.identificador.presence {
+  background-color: var(--green);
+}
+
+.identificador.absence {
+  background-color: var(--red);
 }
 
 @media (max-width: 1200px) {

@@ -17,6 +17,7 @@ import {
 } from '../../aulas/calendar/calendar';
 import { dataLesson } from '@/lessons/lessons';
 import { monthsToQuarters, quartersToMonths } from 'date-fns';
+import NoData from '@/components/noData/no-data';
 
 const Progress = () => {
   const { dataDocs, loading } = DataBase<RoomType>('rooms');
@@ -59,12 +60,16 @@ const Progress = () => {
       dataDocs.forEach((room) => {
         room.students.forEach(({ id }) => {
           if (id === student.id) {
-            setAulas(room.aulas);
+            setAulas(
+              room.aulas
+                .filter((aula) => aula.quarter === buttonNav)
+                .sort((a, b) => Number(a.number_aula) - Number(b.number_aula)),
+            );
           }
         });
       });
     }
-  }, [dataDocs, student]);
+  }, [dataDocs, student, buttonNav]);
 
   React.useMemo(() => {
     // Pegar a chamada de todas as aulas
@@ -105,7 +110,7 @@ const Progress = () => {
     ).length;
     const progress = Number(
       (completedClasses
-        ? (completedClasses * 100) / totalPresences
+        ? (totalPresences * 100) / completedClasses
         : 0
       ).toFixed(0),
     );
@@ -194,6 +199,38 @@ const Progress = () => {
               </button>
             ))}
           </div>
+          {aulas.length ? (
+            <div className={styles.boxAulas}>
+              {aulas.map((aula) => (
+                <div className={styles.boxAula} key={aula.id}>
+                  <div style={{ display: 'flex', gap: 'var(--g-10)' }}>
+                    <span className={styles.numberAula}>
+                      {aula.number_aula}
+                    </span>
+                    <div>
+                      <p className={styles.date}>{aula.date}</p>
+                      <h3 className={styles.titleAula}>{aula.title_aula}</h3>
+                    </div>
+                  </div>
+                  <span
+                    className={`${styles.identificador} ${
+                      aula.call?.presence.filter((item) => item.checked).length
+                        ? styles.presence
+                        : styles.absence
+                    }`}
+                  ></span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <NoData
+              text="Aluno não compareceu nesse trimestre"
+              style={{
+                backgroundColor: 'var(--bg-3)',
+                marginTop: 'var(--g-10)',
+              }}
+            />
+          )}
         </div>
       </div>
     </GlobalLayout>

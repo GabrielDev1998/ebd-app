@@ -1,4 +1,4 @@
-type TypeQuarter =
+export type TypeQuarter =
   | '1° trimestre'
   | '2° trimestre'
   | '3° trimestre'

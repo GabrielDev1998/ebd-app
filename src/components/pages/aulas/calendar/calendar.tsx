@@ -17,6 +17,8 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader } from '@/components/loader/loader';
 import Link from 'next/link';
+import { dataLesson, TypeQuarter } from '@/lessons/lessons';
+import { monthsToQuarters } from 'date-fns';
 
 const schemaFormAula = z.object({
   number_aula: z
@@ -64,6 +66,7 @@ export type TypeAula = {
   call: TypeInputCall | null;
   room: string;
   report: TypeReportAula | null;
+  quarter: TypeQuarter;
 };
 
 const { alertNotification, generateRandomNumbers, popup } = Global();
@@ -99,6 +102,7 @@ const Calendar = () => {
 
   function handleAddAula({ number_aula, title_aula }: SchemaFormAula) {
     const room = dataDocs.find((room) => room.name_room === selectRooms);
+    const quarterNumber = monthsToQuarters(Number(dateCalendar.slice(3, 5)));
 
     // Função para enviar ao banco de dados a aula adicionada
     const sendDataAula = (aula: TypeAula) => {
@@ -128,6 +132,7 @@ const Calendar = () => {
           call: null,
           room: selectRooms,
           report: null,
+          quarter: dataLesson[quarterNumber].quarter,
         };
 
         if (room.aulas.length === 0) sendDataAula(newAula);
