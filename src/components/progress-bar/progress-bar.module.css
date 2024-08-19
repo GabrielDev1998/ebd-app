@@ -23,5 +23,5 @@
   height: 100%;
   background-color: var(--primary);
   border-radius: inherit;
-  transition: var(--transition);
+  transition: .3s;
 }
