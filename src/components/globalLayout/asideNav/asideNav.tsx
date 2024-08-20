@@ -50,16 +50,6 @@ const AsideNav = () => {
             <li>
               <LinkIcon
                 className={`${styles.linkMenu} ${
-                  pathname.includes('students') && styles.active
-                }`}
-                href="/students"
-                text="Alunos"
-                icon="solar:users-group-rounded-bold-duotone"
-              />
-            </li>
-            <li>
-              <LinkIcon
-                className={`${styles.linkMenu} ${
                   pathname.includes('aulas') && styles.active
                 }`}
                 href="/aulas"

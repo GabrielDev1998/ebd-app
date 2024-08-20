@@ -51,7 +51,8 @@ export type RoomType = {
 const { alertNotification, avatar } = Global();
 
 const Rooms = () => {
-  const { createDocument, dataDocs, loading } = DataBase<RoomType>('rooms');
+  const { createDocument, dataDocs, loading, errorBase } =
+    DataBase<RoomType>('rooms');
   const [openModalRoom, setOpenModalRoom] = React.useState(false);
   const [selectFaixaEtaria, setSelectFaixaEtaria] = React.useState('');
   const {
@@ -152,38 +153,47 @@ const Rooms = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {!dataDocs.length ? (
-                <TableNotFound colSpan={5} />
+              {errorBase ? (
+                <TableNotFound colSpan={5} text="Você não tem acesso" />
               ) : (
-                dataDocs.map((room) => (
-                  <TableRow key={room.id}>
-                    <TableCell type="td">
-                      <TableProfile name={room.name_room} src={room.image} />
-                    </TableCell>
-                    <TableCell type="td">{room.date}</TableCell>
-                    <TableCell type="td">{room.students.length}</TableCell>
-                    <TableCell type="td">
-                      <span data-status={room.status}>{room.status}</span>
-                    </TableCell>
-                    <TableCell type="td">
-                      <TableOptions>
-                        <Link href="#">
-                          <Icon icon="solar:trash-bin-trash-bold-duotone" />
-                          Excluir
-                        </Link>
-                        <Link href="/student/edit">
-                          <Icon icon="solar:document-add-bold-duotone" />
-                          Editar
-                        </Link>
-                        <Link href={`/students/${room.id}`}>
-                          <Icon icon="solar:users-group-rounded-bold-duotone" />
-                          Visualizar alunos
-                        </Link>
-                      </TableOptions>
-                    </TableCell>
-                  </TableRow>
-                ))
+                !dataDocs.length && (
+                  <TableNotFound
+                    colSpan={5}
+                    text="Não tem dados para mostrar"
+                  />
+                )
               )}
+
+              {dataDocs.length
+                ? dataDocs.map((room) => (
+                    <TableRow key={room.id}>
+                      <TableCell type="td">
+                        <TableProfile name={room.name_room} src={room.image} />
+                      </TableCell>
+                      <TableCell type="td">{room.date}</TableCell>
+                      <TableCell type="td">{room.students.length}</TableCell>
+                      <TableCell type="td">
+                        <span data-status={room.status}>{room.status}</span>
+                      </TableCell>
+                      <TableCell type="td">
+                        <TableOptions>
+                          <Link href="#">
+                            <Icon icon="solar:trash-bin-trash-bold-duotone" />
+                            Excluir
+                          </Link>
+                          <Link href="/student/edit">
+                            <Icon icon="solar:document-add-bold-duotone" />
+                            Editar
+                          </Link>
+                          <Link href={`/students/${room.id}`}>
+                            <Icon icon="solar:users-group-rounded-bold-duotone" />
+                            Visualizar alunos
+                          </Link>
+                        </TableOptions>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : null}
             </TableBody>
           </Table>
         </div>

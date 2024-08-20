@@ -21,6 +21,7 @@ const db = getFirestore(appInitialize);
 function DataBase<T extends DocumentData>(path: string) {
   const [loading, setLoading] = useState(false);
   const [dataDocs, setDataDocs] = useState<T[]>([]);
+  const [errorBase, setErrorBase] = useState<string | null>(null);
 
   // Criar docs WithFieldValue
   const createDocument = async (data: T, cb?: () => void) => {
@@ -29,10 +30,12 @@ function DataBase<T extends DocumentData>(path: string) {
       await addDoc(collection(db, path), data)
         .then(() => {
           if (cb) cb();
+          setErrorBase(null);
         })
         .catch((error) => {
           if (error instanceof FirebaseError) {
             console.log('Algum erro ocorreu ' + error.message);
+            setErrorBase(error.message);
           }
         })
         .finally(() => setLoading(false));
@@ -54,10 +57,12 @@ function DataBase<T extends DocumentData>(path: string) {
         await updateDoc(refUpdate, data)
           .then(() => {
             if (cb) cb(data);
+            setErrorBase(null);
           })
           .catch((error) => {
             if (error instanceof FirebaseError) {
               console.log('Algum erro ocorreu' + error.message);
+              setErrorBase(error.message);
             }
           })
           .finally(() => setLoading(false));
@@ -80,10 +85,12 @@ function DataBase<T extends DocumentData>(path: string) {
                 return { ...doc.data(), id: doc.id };
               }),
             );
+            setErrorBase(null);
           })
           .catch((error) => {
             if (error instanceof FirebaseError) {
               console.log('Não foi possível ler os dados ' + error.message);
+              setErrorBase(error.message);
             }
           })
           .finally(() => {
@@ -116,6 +123,6 @@ function DataBase<T extends DocumentData>(path: string) {
     getDocument();
   }, [path]);
 
-  return { createDocument, updateData, dataDocs, loading };
+  return { createDocument, updateData, dataDocs, loading, errorBase };
 }
 export default DataBase;

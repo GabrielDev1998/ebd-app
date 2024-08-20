@@ -210,9 +210,6 @@ const Calendar = () => {
       >
         {aulaCurrent && (
           <div className={styles.boxDataAula}>
-            <span className={styles.iconDiploma}>
-              <Icon icon="solar:diploma-bold-duotone" />
-            </span>
             <ul className={styles.dataAula}>
               <li>
                 <strong>ID da Aula:</strong> {aulaCurrent.id}

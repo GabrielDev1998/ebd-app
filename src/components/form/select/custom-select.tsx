@@ -10,12 +10,14 @@ const CustomSelect = ({
   items,
   setValue,
   value,
+  className,
   ...props
 }: {
   label: string;
   items: string[];
   setValue: React.Dispatch<React.SetStateAction<string>>;
   value: string;
+  className?: string;
 } & React.ComponentProps<'div'>) => {
   const { isOpen, ref, setIsOpen } = useOutside<HTMLUListElement>();
 
@@ -29,7 +31,7 @@ const CustomSelect = ({
   return (
     <>
       {isOpen && <div className={`overlay ${styles.overlaySelect}`}></div>}
-      <div className={styles.boxSelect} {...props}>
+      <div className={`${styles.boxSelect} ${className}`} {...props}>
         <label
           className={`${value && styles.active}`}
           style={isOpen ? { color: 'var(--textColor-2)', top: '-10px' } : {}}

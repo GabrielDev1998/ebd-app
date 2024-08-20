@@ -17,8 +17,8 @@ import { Loader } from '@/components/loader/loader';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Radio from '@/components/form/radio';
 import Genre, { TypeGenres } from '@/components/form/genre/genre';
+import { Tooltip } from 'react-tooltip';
 
 const schemaFormStudent = z.object({
   fullName: z.string().min(5, {
@@ -267,6 +267,7 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
         >
           {type === 'Create' && (
             <CustomSelect
+              id="rooms"
               label="Turmas"
               items={dataDocs.map((room) => room.name_room)}
               setValue={setSelectRooms}

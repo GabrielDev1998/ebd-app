@@ -117,28 +117,6 @@
   position: relative;
 }
 
-.iconDiploma {
-  position: absolute;
-  top: 0;
-  right: 0;
-
-  width: 50%;
-  height: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  color: var(--primary);
-  padding-right: 50px;
-}
-
-.iconDiploma svg {
-  width: 150px;
-  height: 150px;
-  transform: rotate(25deg);
-}
-
 .dataAula{
   border: 1px solid var(--borderColor);
   padding: var(--g-20);
@@ -168,10 +146,6 @@
 }
 
 @media (max-width: 960px) {
-  .iconDiploma {
-    display: none;
-  }
-
   .boxOptions {
     flex-direction: column;
   }

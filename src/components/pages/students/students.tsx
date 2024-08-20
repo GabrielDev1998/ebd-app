@@ -24,8 +24,6 @@ const Students = () => {
   const { dataDocs, loading } = DataBase<RoomType>('rooms');
   const params: { id: string } = useParams();
 
-  // console.log('Renderizou');
-
   const roomCurrent = useMemo(() => {
     const data = dataDocs.find((room) => room.id === params.id);
     return data ?? null;

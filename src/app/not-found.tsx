@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './not-found.module.css';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import type { Metadata } from 'next';
