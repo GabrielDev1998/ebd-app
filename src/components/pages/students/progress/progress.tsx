@@ -105,14 +105,8 @@ const Progress = () => {
     const totalAbsences = getTotalData('presence', false);
     const totalBibles = getTotalData('bible', true);
     const totalMagazines = getTotalData('magazine', true);
-    const completedClasses = aulas.filter(
-      (aula) => aula.status === 'Concluído',
-    ).length;
     const progress = Number(
-      (completedClasses
-        ? (totalPresences * 100) / completedClasses
-        : 0
-      ).toFixed(0),
+      (aulas.length ? (totalPresences * 100) / aulas.length : 0).toFixed(0),
     );
 
     const totalPointsPresence = getTotalPuntuactions('presence');
