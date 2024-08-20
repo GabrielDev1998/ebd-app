@@ -93,12 +93,12 @@
   line-height: 1.2;
   color: var(--textColor);
   text-transform: uppercase;
+  margin-bottom: var(--g-5);
 }
 
 .aproveitamento p{
   line-height: 1.2;
   font-weight: 600;
-  margin-top: var(--g-5);
 }
 
 .aproveitamento:nth-of-type(1),
