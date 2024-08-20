@@ -245,7 +245,11 @@ const Calendar = () => {
             className="button-2 transparent"
           >
             <Icon icon="solar:diploma-verified-bold-duotone" />
-            Iniciar chamada
+            {aulaCurrent?.status === 'Concluído'
+              ? 'Editar chamada'
+              : aulaCurrent?.status === 'Em andamento'
+              ? 'Continuar chamada'
+              : 'Iniciar chamada'}
           </Link>
           <button className="button-2 transparent red">
             <Icon icon="solar:trash-bin-trash-bold-duotone" />

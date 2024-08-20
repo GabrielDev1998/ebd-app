@@ -83,6 +83,10 @@ const Call = () => {
     createInput(['presence', 'magazine', 'bible']);
   }, [roomCurrent]);
 
+  React.useEffect(() => {
+    console.log(inputs);
+  }, [inputs]);
+
   React.useMemo(() => {
     if (roomCurrent)
       setAulaCurrent(roomCurrent.aulas.find((aula) => aula.id === params.id));
@@ -104,13 +108,39 @@ const Call = () => {
   }, [roomCurrent, inputs, offer, teacher, visitors]);
 
   React.useMemo(() => {
-    if (aulaCurrent && aulaCurrent.call) {
-      setInputs(aulaCurrent.call);
+    if (roomCurrent && aulaCurrent) {
+      const { call } = aulaCurrent;
+      const showInputsChecked = (types: TypeInput[]) => {
+        roomCurrent.students.forEach((student) => {
+          types.forEach((type) => {
+            if (call) {
+              setInputs((inputs) => {
+                return {
+                  ...inputs,
+                  [type]: inputs[type].map((input) =>
+                    input.id === student.id
+                      ? {
+                          ...input,
+                          checked:
+                            call[type].find((item) => item.id === student.id)
+                              ?.checked ?? false,
+                        }
+                      : input,
+                  ),
+                };
+              });
+            }
+          });
+        });
+      };
+
+      showInputsChecked(['presence', 'magazine', 'bible']);
+
       setOffer(aulaCurrent.report?.offer ?? '');
       setTeacher(aulaCurrent.report?.teacher ?? '');
       setVisitors(aulaCurrent.report?.visitors ?? '');
     }
-  }, [aulaCurrent]);
+  }, [roomCurrent, aulaCurrent]);
 
   const verifyInputChecked = (id: number, type: TypeInput) => {
     return inputs[type].find((input) => input.id === id)?.checked ?? false;
