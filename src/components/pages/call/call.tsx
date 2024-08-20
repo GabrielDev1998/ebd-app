@@ -83,10 +83,6 @@ const Call = () => {
     createInput(['presence', 'magazine', 'bible']);
   }, [roomCurrent]);
 
-  React.useEffect(() => {
-    console.log(inputs);
-  }, [inputs]);
-
   React.useMemo(() => {
     if (roomCurrent)
       setAulaCurrent(roomCurrent.aulas.find((aula) => aula.id === params.id));
