@@ -11,18 +11,6 @@ export const metadata: Metadata = {
 const Found = () => {
   return (
     <div className={styles.containerFound}>
-      <Image
-        src="/assets/images/404.png"
-        alt=""
-        width={0}
-        height={0}
-        sizes="100vw"
-        style={{
-          width: 'auto',
-          height: 'auto',
-          minWidth: '350px',
-        }}
-      />
       <div className={styles.boxFound}>
         <h1>Página não encontrada</h1>
         <p>
