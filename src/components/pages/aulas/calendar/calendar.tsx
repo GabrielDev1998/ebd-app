@@ -80,6 +80,7 @@ const Calendar = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<SchemaFormAula>({
     resolver: zodResolver(schemaFormAula),
@@ -90,8 +91,7 @@ const Calendar = () => {
   const [modalDataAula, setModalDataAula] = React.useState(false);
 
   const [aulaCurrent, setAulaCurrent] = React.useState<TypeAula | null>(null);
-
-  // console.log('Renderizou');
+  const [typeForm, setTypeForm] = React.useState<'Create' | 'Edit'>('Create');
 
   React.useEffect(() => {
     setAulas([]);
@@ -100,18 +100,34 @@ const Calendar = () => {
     });
   }, [dataDocs]);
 
-  function handleAddAula({ number_aula, title_aula }: SchemaFormAula) {
+  React.useEffect(() => {
+    if (typeForm === 'Edit') {
+      reset({
+        number_aula: aulaCurrent?.number_aula ?? '',
+        title_aula: aulaCurrent?.title_aula ?? '',
+      });
+
+      setSelectRooms(() => aulaCurrent?.room ?? '');
+    } else {
+      reset({
+        number_aula: '',
+        title_aula: '',
+      });
+      setSelectRooms('');
+    }
+  }, [typeForm, reset, aulaCurrent]);
+
+  function handleAula({ number_aula, title_aula }: SchemaFormAula) {
     const room = dataDocs.find((room) => room.name_room === selectRooms);
     const quarterNumber = monthsToQuarters(Number(dateCalendar.slice(3, 5)));
 
-    // Função para enviar ao banco de dados a aula adicionada
-    const sendDataAula = (aula: TypeAula) => {
+    const sendDataAula = (aulas: TypeAula[]) => {
       if (room) {
         updateData(
           room.id,
           {
             ...room,
-            aulas: [...room.aulas, aula],
+            aulas,
           },
           () => {
             alertNotification('success', 'Aula adicionada com sucesso');
@@ -121,59 +137,77 @@ const Calendar = () => {
       }
     };
 
-    if (number_aula && title_aula) {
-      if (selectRooms && room) {
-        const newAula: TypeAula = {
-          id: generatedID ?? '',
-          number_aula,
-          title_aula,
-          status: 'Pendente',
-          date: dateCalendar,
-          call: null,
-          room: selectRooms,
-          report: null,
-          quarter: dataLesson[quarterNumber].quarter,
-        };
+    const addAula = () => {
+      if (number_aula && title_aula) {
+        if (selectRooms && room) {
+          const newAula: TypeAula = {
+            id: generatedID ?? '',
+            number_aula,
+            title_aula,
+            status: 'Pendente',
+            date: dateCalendar,
+            call: null,
+            room: selectRooms,
+            report: null,
+            quarter: dataLesson[quarterNumber].quarter,
+          };
 
-        if (room.aulas.length === 0) sendDataAula(newAula);
-        else {
-          const validateIDRepeatAula = room.aulas.every(
-            (aula) => aula.id !== generatedID,
-          );
-          if (validateIDRepeatAula) sendDataAula(newAula);
+          if (room.aulas.length === 0) sendDataAula([newAula]);
           else {
-            popup({
-              icon: 'warning',
-              title: 'Tente novamente!',
-              text: `Já existe uma aula com este ID (${generatedID}). Por favor, tente criar a aula novamente, para gerar um no ID para está aula.`,
-            });
-            setGeneratedID(null);
+            const validateIDRepeatAula = room.aulas.every(
+              (aula) => aula.id !== generatedID,
+            );
+            if (validateIDRepeatAula) sendDataAula([...room.aulas, newAula]);
+            else {
+              popup({
+                icon: 'warning',
+                title: 'Tente novamente!',
+                text: `Já existe uma aula com este ID (${generatedID}). Por favor, tente criar a aula novamente, para gerar um no ID para está aula.`,
+              });
+              setGeneratedID(null);
+            }
           }
+        } else {
+          alertNotification('error', 'Selecione uma sala');
         }
-
-        return;
       }
+    };
 
-      alertNotification('error', 'Selecione uma sala');
-    }
+    const editAula = () => {
+      if (aulaCurrent && room) {
+        sendDataAula(
+          room.aulas.map((aula) =>
+            aula.id === aulaCurrent.id
+              ? {
+                  ...aula,
+                  number_aula,
+                  title_aula,
+                }
+              : aula,
+          ),
+        );
+      }
+    };
+
+    if (typeForm === 'Create') addAula();
+    if (typeForm === 'Edit') editAula();
+  }
+
+  function handleClickEditAula() {
+    setModalDataAula(false);
+    setModalAddAula(true);
+    setTypeForm('Edit');
   }
 
   return (
     <div className={styles.containerCalendar}>
       {loading && <Loader />}
       <Modal
-        title="Adicionar aula"
+        title={`${typeForm === 'Create' ? 'Adicionar aula' : 'Editar aula'}`}
         modal={modalAddAula}
         setModal={setModalAddAula}
       >
-        <Form onSubmit={handleSubmit(handleAddAula)}>
-          {generatedID && (
-            <div className={styles.boxID}>
-              <p>
-                ID DA AULA: <strong>{generatedID}</strong>
-              </p>
-            </div>
-          )}
+        <Form onSubmit={handleSubmit(handleAula)}>
           <Input
             type="text"
             id="number_aula"
@@ -190,15 +224,19 @@ const Calendar = () => {
             {...register('title_aula')}
             error={errors.title_aula}
           />
-          <CustomSelect
-            id="rooms"
-            label="Salas"
-            items={dataDocs.map((room) => room.name_room)}
-            setValue={setSelectRooms}
-            value={selectRooms}
-          />
+          {typeForm === 'Create' && (
+            <CustomSelect
+              id="rooms"
+              label="Salas"
+              items={dataDocs.map((room) => room.name_room)}
+              setValue={setSelectRooms}
+              value={selectRooms}
+            />
+          )}
           <div className="button-flex">
-            <button className="button">Adicionar</button>
+            <button className="button">
+              {typeForm === 'Create' ? 'Adicionar' : 'Salvar alterações'}
+            </button>
           </div>
         </Form>
       </Modal>
@@ -236,7 +274,10 @@ const Calendar = () => {
           </div>
         )}
         <div className={styles.boxOptions}>
-          <button className="button-2 transparent">
+          <button
+            className="button-2 transparent"
+            onClick={handleClickEditAula}
+          >
             <Icon icon="solar:document-add-bold-duotone" />
             Editar
           </button>
@@ -295,6 +336,7 @@ const Calendar = () => {
                   setModalAddAula(true);
                   setGeneratedID(generateRandomNumbers());
                   setDateCalendar(item.date);
+                  setTypeForm('Create');
                 }}
               >
                 <Icon icon="ic:sharp-add" />
