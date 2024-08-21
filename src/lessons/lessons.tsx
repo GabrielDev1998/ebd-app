@@ -4,66 +4,84 @@ export type TypeQuarter =
   | '3° trimestre'
   | '4° trimestre';
 
-type TypeRoom = {
-  id: string;
-  name: string;
-  lesson: string;
-};
-
 type TypeLessons = {
   quarter: TypeQuarter;
   numberQuarter: number;
-  rooms: TypeRoom[];
   months: string[];
+  lesson: {
+    room: string;
+    title: string;
+    description: string;
+  }[];
 };
 
 export const dataLesson: TypeLessons[] = [
   {
     quarter: '1° trimestre',
     numberQuarter: 1,
-    rooms: [
+    months: ['Janeiro', 'Fevereiro', 'Março'],
+    lesson: [
       {
-        id: '',
-        name: '',
-        lesson: '',
+        room: 'Guerreiros',
+        title: 'Deus é Fiel com todos nós',
+        description: 'Deus vai abençoar todos nós',
+      },
+      {
+        room: 'Soldadinhos de Cristo',
+        title: 'Deus é Fiel com todas as crianças',
+        description: 'Deus vai abençoar todas as crianças',
       },
     ],
-    months: ['Janeiro', 'Fevereiro', 'Março'],
   },
   {
     quarter: '2° trimestre',
     numberQuarter: 2,
-    rooms: [
+    months: ['Abril', 'Maio', 'Junho'],
+    lesson: [
       {
-        id: '',
-        name: '',
-        lesson: '',
+        room: 'Guerreiros',
+        title: 'Deus é Fiel com todos nós',
+        description: 'Deus vai abençoar todos nós',
+      },
+      {
+        room: 'Soldadinhos de Cristo',
+        title: 'Deus é Fiel com todas as crianças',
+        description: 'Deus vai abençoar todas as crianças',
       },
     ],
-    months: ['Abril', 'Maio', 'Junho'],
   },
   {
     quarter: '3° trimestre',
     numberQuarter: 3,
-    rooms: [
+    months: ['Julho', 'Agosto', 'Setembro'],
+    lesson: [
       {
-        id: '',
-        name: '',
-        lesson: '',
+        room: 'Guerreiros',
+        title: 'Deus é Fiel com todos nós',
+        description: 'Deus vai abençoar todos nós',
+      },
+      {
+        room: 'Soldadinhos de Cristo',
+        title: 'Deus é Fiel com todas as crianças',
+        description: 'Deus vai abençoar todas as crianças',
       },
     ],
-    months: ['Julho', 'Agosto', 'Setembro'],
   },
   {
     quarter: '4° trimestre',
     numberQuarter: 4,
-    rooms: [
+    months: ['Outubro', 'Novembro', 'Dezembro'],
+    lesson: [
       {
-        id: '',
-        name: '',
-        lesson: '',
+        room: 'Guerreiros',
+        title: 'Deus é Fiel com todos nós',
+        description: 'Deus vai abençoar todos nós',
+      },
+      {
+        room: 'Soldadinhos de Cristo',
+        title: 'Deus é Fiel com todas as crianças',
+        description: 'Deus vai abençoar todas as crianças',
       },
     ],
-    months: ['Outubro', 'Novembro', 'Dezembro'],
   },
 ];

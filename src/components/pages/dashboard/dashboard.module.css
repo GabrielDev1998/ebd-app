@@ -1,0 +1,95 @@
+.containerDashboard {
+  display: grid;
+  grid-template-columns: 1fr 450px;
+  gap: var(--g-20);
+}
+
+.boxPanel {
+  align-self: flex-start;
+  background-color: var(--bg-1);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: var(--g-20);
+}
+
+.boxPanel:nth-of-type(1) {
+  height: 250px;
+}
+
+.boxPanel > h3 {
+  font-size: var(--fs-18);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+
+/* Lessons */
+.boxLesson {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--g-40);
+  position: relative;
+}
+
+.boxLesson > p {
+  color: var(--textColor);
+  line-height: 1.2;
+}
+
+.slideLessons {
+  display: flex;
+  overflow: hidden;
+  margin-top: var(--g-20);
+}
+
+.boxControl {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  gap: var(--g-10);
+  padding: var(--g-20);
+}
+
+.boxControl button {
+  width: 40px;
+  height: 40px;
+}
+
+.lesson {
+  min-width: 100%;
+  transition: .3s ease-in-out;
+  transform: translateX(0%);
+}
+
+.lesson .room {
+  font-size: var(--fs-12);
+  text-transform: uppercase;
+  color: var(--primary);  
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: var(--g-5);
+}
+
+.lesson h3 {
+  font-size: var(--fs-24);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.lesson p {
+  font-size: var(--fs-14);
+  color: var(--textColor);
+  line-height: 1.2;
+  margin-top: var(--g-10);
+}
+
+@media (max-width: 1200px) {
+  .containerDashboard{
+    grid-template-columns: 1fr;
+  }
+}
