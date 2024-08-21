@@ -34,7 +34,7 @@ type TypeAuth = {
   updatePasswordUser: (newPassword: string) => void;
 };
 
-const { avatar, popup } = Global();
+const { avatar, popup, alertNotification } = Global();
 
 const AuthProvider = createContext<TypeAuth | null>(null);
 export const AuthContext = ({ children }: { children: React.ReactNode }) => {
@@ -69,9 +69,7 @@ export const AuthContext = ({ children }: { children: React.ReactNode }) => {
       })
       .catch((error) => {
         if (error instanceof FirebaseError) {
-          console.log(
-            'Não foi possível realizar a criação de usuário ' + error.message,
-          );
+          alertNotification('error', error.message);
         }
       })
       .finally(() => setLoading(false));
@@ -92,7 +90,7 @@ export const AuthContext = ({ children }: { children: React.ReactNode }) => {
       })
       .catch((error) => {
         if (error instanceof FirebaseError) {
-          console.log('Não foi possível entrar na sua conta ' + error.message);
+          alertNotification('error', error.message);
         }
       })
       .finally(() => setLoading(false));
@@ -104,7 +102,7 @@ export const AuthContext = ({ children }: { children: React.ReactNode }) => {
     signOut(auth)
       .catch((error) => {
         if (error instanceof FirebaseError) {
-          console.log('Algum erro ocorreu ' + error.message);
+          alertNotification('error', error.message);
         }
       })
       .finally(() => setLoading(false));
@@ -134,7 +132,7 @@ export const AuthContext = ({ children }: { children: React.ReactNode }) => {
         })
         .catch((error) => {
           if (error instanceof FirebaseError) {
-            console.log('Não foi possível atualizar os dados ' + error.message);
+            alertNotification('error', error.message);
           }
         })
         .finally(() => setLoading(false));
