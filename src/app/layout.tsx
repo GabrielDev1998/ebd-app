@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import { DM_Sans } from 'next/font/google';
+import { DM_Sans, Pathway_Extreme } from 'next/font/google';
 import './globals.css';
 import { AuthContext } from '@/firebase/auth/authProvider';
 import { ThemeContext } from '@/providers/theme/theme-context';
 
-const fontPrimary = DM_Sans({ subsets: ['latin'] });
+const fontPrimary = Pathway_Extreme({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'EBD | Gestão de Alunos',
