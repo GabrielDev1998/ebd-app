@@ -89,9 +89,6 @@ export const AuthContext = ({ children }: { children: React.ReactNode }) => {
   }) {
     setLoading(true);
     await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log('User signed in successfully:', userCredential.user);
-      })
       .catch((error) => {
         if (error instanceof FirebaseError) {
           alertNotification('error', error.message);
@@ -110,9 +107,6 @@ export const AuthContext = ({ children }: { children: React.ReactNode }) => {
         : new OAuthProvider('microsoft.com');
 
     signInWithPopup(auth, provider)
-      .then((result) => {
-        console.log(result);
-      })
       .catch((error) => {
         if (error instanceof FirebaseError) {
           alertNotification('error', error.message);
