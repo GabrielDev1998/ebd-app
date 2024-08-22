@@ -36,7 +36,7 @@ const Login = () => {
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
   });
-  const { loginEmailAndPassword, loading } = AuthUser();
+  const { loginEmailAndPassword, loading, loginSocialNetwork } = AuthUser();
 
   function onSubmitForm({ email, password }: FormSchema) {
     if (email && password) {
@@ -50,7 +50,7 @@ const Login = () => {
   return (
     <LayoutUser text="Entrar na plataforma">
       <Form
-        onSubmit={handleSubmit(onSubmitForm)}
+        // onSubmit={handleSubmit(onSubmitForm)}
         title="Entre na sua conta"
         link={{
           href: '/auth/create',
@@ -85,14 +85,14 @@ const Login = () => {
         />
 
         <div className={styles.boxLoginSocial}>
-          <button>
+          <Link href="#" onClick={() => loginSocialNetwork('Google')}>
             <Icon icon="flat-color-icons:google" />
             Fazer login com o Google
-          </button>
-          <button>
+          </Link>
+          <Link href="#" onClick={() => loginSocialNetwork('Outlook')}>
             <Icon icon="file-icons:microsoft-outlook" />
             Fazer login com o Outlook
-          </button>
+          </Link>
         </div>
       </Form>
     </LayoutUser>

@@ -15,14 +15,14 @@ const LayoutUser = ({ children, text }: LayoutUserComponent) => {
     <>
       <AlertNotification />
       <div className={styles.layout}>
-        <div className={styles.box}>
+        {/* <div className={styles.box}>
           <div className={styles.header}>
             <Logo />
           </div>
           <div className={styles.boxTitle}>
             <h1>{text}</h1>
           </div>
-        </div>
+        </div> */}
         <div className={styles.box}>{children}</div>
       </div>
     </>

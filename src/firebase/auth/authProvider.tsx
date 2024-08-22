@@ -11,6 +11,9 @@ import {
   updateProfile,
   signOut,
   updatePassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  OAuthProvider,
 } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 import Global from '@/utils/global';
@@ -32,6 +35,7 @@ type TypeAuth = {
   logoutUser: () => void;
   updateDataUser: (newName: string, cb?: () => void) => void;
   updatePasswordUser: (newPassword: string) => void;
+  loginSocialNetwork: (typeProvider: 'Google' | 'Outlook') => void;
 };
 
 const { avatar, popup, alertNotification } = Global();
@@ -87,6 +91,27 @@ export const AuthContext = ({ children }: { children: React.ReactNode }) => {
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log('User signed in successfully:', userCredential.user);
+      })
+      .catch((error) => {
+        if (error instanceof FirebaseError) {
+          alertNotification('error', error.message);
+        }
+      })
+      .finally(() => setLoading(false));
+  }
+
+  // Realizar login com rede social
+  async function loginSocialNetwork(typeProvider: 'Google' | 'Outlook') {
+    setLoading(true);
+
+    const provider =
+      typeProvider === 'Google'
+        ? new GoogleAuthProvider()
+        : new OAuthProvider('microsoft.com');
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        console.log(result);
       })
       .catch((error) => {
         if (error instanceof FirebaseError) {
@@ -186,6 +211,7 @@ export const AuthContext = ({ children }: { children: React.ReactNode }) => {
         setLoading,
         updateDataUser,
         updatePasswordUser,
+        loginSocialNetwork,
         loading,
         userActive,
         userCurrent,
