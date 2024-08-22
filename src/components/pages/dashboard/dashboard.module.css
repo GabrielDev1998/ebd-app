@@ -26,7 +26,6 @@
 }
 
 .boxLesson {
-  height: 250px;
   background-color: var(--bg-1);
 }
 
@@ -83,9 +82,9 @@
 }
 
 .lesson h3 {
-  font-size: var(--fs-24);
+  font-size: var(--fs-18);
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.4;
 }
 
 .lesson p {

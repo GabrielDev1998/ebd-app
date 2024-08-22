@@ -11,8 +11,8 @@ type TypeLessons = {
   monthsNumber: number[];
   lesson: {
     room: string;
-    title: string;
-    description: string;
+    title: string | null;
+    description: string | null;
   }[];
 };
 
@@ -25,13 +25,14 @@ export const dataLesson: TypeLessons[] = [
     lesson: [
       {
         room: 'Guerreiros',
-        title: 'Deus é Fiel com todos nós',
-        description: 'Deus vai abençoar todos nós',
+        title:
+          'TÍTULO: FAMILIA, UM PROJETO DE DEUS – Moldando lares estruturados, saudáveis e estabelecendo um legado de valores segundo a Bíblia Sagrada.',
+        description: '',
       },
       {
         room: 'Soldadinhos de Cristo',
-        title: 'Deus é Fiel com todas as crianças',
-        description: 'Deus vai abençoar todas as crianças',
+        title: '',
+        description: '',
       },
     ],
   },
@@ -43,13 +44,14 @@ export const dataLesson: TypeLessons[] = [
     lesson: [
       {
         room: 'Guerreiros',
-        title: 'Deus é Fiel com todos nós',
-        description: 'Deus vai abençoar todos nós',
+        title:
+          'ORDENANÇAS BÍBLICAS – Doutrina Fundamentais Imperativas aos Cristãos para uma vida bem-sucedida e de Comunhão com Deus',
+        description: '',
       },
       {
         room: 'Soldadinhos de Cristo',
-        title: 'Deus é Fiel com todas as crianças',
-        description: 'Deus vai abençoar todas as crianças',
+        title: '',
+        description: '',
       },
     ],
   },
@@ -61,13 +63,14 @@ export const dataLesson: TypeLessons[] = [
     lesson: [
       {
         room: 'Guerreiros',
-        title: 'Deus é Fiel com todos nós',
-        description: 'Deus vai abençoar todos nós',
+        title:
+          'A RELEVÂNCIA DA IGREJA, SUA ESSÊNCIA E MISSÃO – Reafirmando os fundamentos, a importância do compromisso com a Palavra de Deus, a Adoração sincera e o serviço autêntico, segundo os preceitos de Jesus Cristo.',
+        description: '',
       },
       {
         room: 'Soldadinhos de Cristo',
-        title: 'Deus é Fiel com todas as crianças',
-        description: 'Deus vai abençoar todas as crianças',
+        title: '',
+        description: '',
       },
     ],
   },
@@ -79,13 +82,14 @@ export const dataLesson: TypeLessons[] = [
     lesson: [
       {
         room: 'Guerreiros',
-        title: 'Deus é Fiel com todos nós',
-        description: 'Deus vai abençoar todos nós',
+        title:
+          'OS DEZ MANDAMENTOS – Estabelecendo Princípios e Valores Morais, Sociais e Espirituais Imutáveis para uma Vida Abençoada',
+        description: '',
       },
       {
         room: 'Soldadinhos de Cristo',
-        title: 'Deus é Fiel com todas as crianças',
-        description: 'Deus vai abençoar todas as crianças',
+        title: '',
+        description: '',
       },
     ],
   },
