@@ -50,7 +50,7 @@ const Login = () => {
   return (
     <LayoutUser text="Entrar na plataforma">
       <Form
-        // onSubmit={handleSubmit(onSubmitForm)}
+        onSubmit={handleSubmit(onSubmitForm)}
         title="Entre na sua conta"
         link={{
           href: '/auth/create',
