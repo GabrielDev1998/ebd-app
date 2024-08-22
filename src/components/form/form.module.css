@@ -132,7 +132,7 @@
 	text-decoration: none;
   border-radius: 8px;
 	font-family: inherit;
-	font-size: 1rem;
+	font-size: .845rem;
 	font-weight: 700;
 	color: var(--colorTextButton);
 	background-color: var(--primary);
