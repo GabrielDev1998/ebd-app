@@ -1,6 +1,8 @@
 'use client';
 
 import React from 'react';
+import styles from '../layout-user.module.css';
+
 import LayoutUser from '../layout-user';
 import Form from '@/components/form/form';
 import Input from '@/components/form/input';
@@ -13,6 +15,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthUser } from '@/firebase/auth/authProvider';
 import { ButtonLoader } from '@/components/loader/loader';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
 const schema = z.object({
   email: z.string().email({
@@ -80,6 +83,17 @@ const Login = () => {
           loading={loading}
           disabled={loading}
         />
+
+        <div className={styles.boxLoginSocial}>
+          <button>
+            <Icon icon="flat-color-icons:google" />
+            Fazer login com o Google
+          </button>
+          <button>
+            <Icon icon="file-icons:microsoft-outlook" />
+            Fazer login com o Outlook
+          </button>
+        </div>
       </Form>
     </LayoutUser>
   );
