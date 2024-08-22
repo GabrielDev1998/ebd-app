@@ -19,8 +19,6 @@ export type typeDataStudent = {
   birthDate: string;
 };
 
-type TypeBirthDay = 'quarter' | 'today' | 'month';
-
 type TypeDataBirthDay = {
   quarter: typeDataStudent[];
   today: typeDataStudent[];
