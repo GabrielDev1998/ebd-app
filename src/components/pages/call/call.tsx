@@ -163,6 +163,7 @@ const Call = () => {
               ? {
                   ...input,
                   checked: target.checked,
+                  points: target.checked ? 50 : 0,
                 }
               : input,
           ),

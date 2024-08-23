@@ -20,8 +20,8 @@ const C = styled.div`
   text-align: center;
   padding: var(--g-20);
   & p {
-    color: var(--textColor);
-    font-weight: 400;
+    color: var(--textColor-2);
+    font-weight: 500;
   }
 `;
 

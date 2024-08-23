@@ -58,15 +58,11 @@ const Progress = () => {
   React.useEffect(() => {
     if (student) {
       dataDocs.forEach((room) => {
-        room.students.forEach(({ id }) => {
-          if (id === student.id) {
-            setAulas(
-              room.aulas
-                .filter((aula) => aula.quarter === buttonNav)
-                .sort((a, b) => Number(a.number_aula) - Number(b.number_aula)),
-            );
-          }
-        });
+        const studentCurrent = room.students.find(
+          (student) => student.id === student.id,
+        );
+        if (studentCurrent)
+          setAulas(room.aulas.filter((aula) => aula.quarter === buttonNav));
       });
     }
   }, [dataDocs, student, buttonNav]);
@@ -75,27 +71,33 @@ const Progress = () => {
     // Pegar a chamada de todas as aulas
     const getAllCall = () => {
       const arrCall: TypeCheckedCall[] = [];
-      if (student) {
-        aulas.forEach((aula) => {
-          if (aula.call) {
-            Object.values(aula.call).forEach((arrItem) => {
-              arrItem.forEach((item) => arrCall.push(item));
-            });
-          }
-        });
-      }
+      aulas.forEach((aula) => {
+        if (aula.call) {
+          Object.values(aula.call).forEach((arrItem) => {
+            arrItem.forEach((item) => arrCall.push(item));
+          });
+        }
+      });
+
       return arrCall;
     };
 
     const arrCall = getAllCall();
 
     const getTotalData = (type: TypeInput, condition: boolean) =>
-      arrCall.filter((item) => item.type === type && item.checked === condition)
-        .length;
+      arrCall.filter(
+        (item) =>
+          item.type === type &&
+          student?.id === item.id &&
+          item.checked === condition,
+      ).length;
 
     const getTotalPuntuactions = (type: TypeInput) => {
       return arrCall
-        .filter((item) => item.type === type && item.points)
+        .filter(
+          (item) =>
+            item.type === type && student?.id === item.id && item.points,
+        )
         .reduce((acc, item) => {
           return acc + item.points;
         }, 0);
@@ -208,7 +210,9 @@ const Progress = () => {
                   </div>
                   <span
                     className={`${styles.identificador} ${
-                      aula.call?.presence.filter((item) => item.checked).length
+                      aula.call?.presence.filter(
+                        (item) => item.checked && item.id === student?.id,
+                      ).length
                         ? styles.presence
                         : styles.absence
                     }`}
