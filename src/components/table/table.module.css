@@ -57,7 +57,8 @@
   justify-content: center;
   color: var(--textColor);
 
-  font-size: var(--fs-18);
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .profile {

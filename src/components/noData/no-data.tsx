@@ -21,7 +21,8 @@ const C = styled.div`
   padding: var(--g-20);
   & p {
     color: var(--textColor);
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 1rem;
   }
 `;
 
