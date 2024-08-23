@@ -14,6 +14,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   OAuthProvider,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 import Global from '@/utils/global';
@@ -36,6 +37,7 @@ type TypeAuth = {
   updateDataUser: (newName: string, cb?: () => void) => void;
   updatePasswordUser: (newPassword: string) => void;
   loginSocialNetwork: (typeProvider: 'Google' | 'Outlook') => void;
+  resetPassword: (email: string) => void;
 };
 
 const { avatar, popup, alertNotification } = Global();
@@ -183,6 +185,25 @@ export const AuthContext = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
+  // Redefinir senha
+  async function resetPassword(email: string) {
+    setLoading(true);
+    await sendPasswordResetEmail(auth, email)
+      .then(() => {
+        popup({
+          icon: 'success',
+          title: 'Redefinição de senha!',
+          text: 'Um email foi enviado para você com instruções para redefinir sua senha.',
+        });
+      })
+      .catch((error) => {
+        if (error instanceof FirebaseError) {
+          alertNotification('error', error.message);
+        }
+      })
+      .finally(() => setLoading(false));
+  }
+
   // Usuário ativo
   React.useEffect(() => {
     setLoading(true);
@@ -206,6 +227,7 @@ export const AuthContext = ({ children }: { children: React.ReactNode }) => {
         updateDataUser,
         updatePasswordUser,
         loginSocialNetwork,
+        resetPassword,
         loading,
         userActive,
         userCurrent,

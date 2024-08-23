@@ -59,7 +59,7 @@ const Create = () => {
   }
 
   return (
-    <LayoutUser text="Criar uma conta na EBD">
+    <LayoutUser>
       <Form
         onSubmit={handleSubmit(onSubmitForm)}
         title="Criar conta"

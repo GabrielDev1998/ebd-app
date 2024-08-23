@@ -48,7 +48,7 @@ const Login = () => {
   }
 
   return (
-    <LayoutUser text="Entrar na plataforma">
+    <LayoutUser>
       <Form
         onSubmit={handleSubmit(onSubmitForm)}
         title="Entre na sua conta"

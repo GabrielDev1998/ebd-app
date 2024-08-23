@@ -18,7 +18,6 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Genre, { TypeGenres } from '@/components/form/genre/genre';
-import { Tooltip } from 'react-tooltip';
 
 const schemaFormStudent = z.object({
   fullName: z.string().min(5, {
