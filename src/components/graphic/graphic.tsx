@@ -2,48 +2,72 @@
 
 import React from 'react';
 import styles from './graphic.module.css';
-import {
-  BarChart,
-  Bar,
-  ResponsiveContainer,
-  XAxis,
-  Tooltip,
-  Legend,
-} from 'recharts';
 
-const Graphic = () => {
-  const data = [
-    {
-      name: 'Page A',
-      points: 4000,
-    },
-    {
-      name: 'Page B',
-      points: 3000,
-    },
-    {
-      name: 'Page C',
-      points: 5000,
-    },
-    {
-      name: 'Page D',
-      points: 8000,
-    },
-  ];
+import Chart from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
 
+export type TypeChartSeries = {
+  name?: string;
+  data: number[];
+};
+
+export type TypeChart = {
+  categories: string[] | number[];
+  series: TypeChartSeries[];
+  titleTooltip?: string;
+  options?: ApexOptions;
+};
+
+const Graphic = ({ categories, series, titleTooltip, options }: TypeChart) => {
   return (
-    <div className={styles.graphic}>
-      <ResponsiveContainer
-        width="100%"
-        height="100%"
-        style={{ fontFamily: 'inherit', fontSize: '.845rem' }}
-      >
-        <BarChart width={150} height={40} data={data}>
-          <XAxis dataKey="name" />
-          <Tooltip />
-          <Bar dataKey="points" fill="var(--primary)" />
-        </BarChart>
-      </ResponsiveContainer>
+    <div className={styles.chart}>
+      <Chart
+        type="bar"
+        series={series}
+        height={450}
+        options={{
+          xaxis: {
+            categories,
+            labels: {
+              style: {
+                fontSize: '12px',
+                fontFamily: 'inherit',
+                fontWeight: '400',
+              },
+            },
+          },
+          chart: {
+            foreColor: 'var(--textColor)',
+            fontFamily: 'inherit',
+            toolbar: {
+              show: false,
+            },
+          },
+          fill: {
+            colors: ['var(--primary)'],
+          },
+          ...options,
+          tooltip: {
+            y: {
+              title: {
+                formatter: function (value) {
+                  return titleTooltip ?? value;
+                },
+              },
+            },
+          },
+          plotOptions: {
+            bar: {
+              horizontal: false,
+              columnWidth: '55%',
+              borderRadius: 4,
+            },
+          },
+          grid: {
+            borderColor: 'var(--borderColor)',
+          },
+        }}
+      />
     </div>
   );
 };

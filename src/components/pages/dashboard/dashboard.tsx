@@ -138,9 +138,17 @@ const Dashboard = () => {
             </div>
           </div>
           <div className={`${styles.box} ${styles.containerRanking}`}>
-            <h3>Ranking</h3>
+            <h3>Ofertas</h3>
             <div className={styles.boxGraphic}>
-              <Graphic />
+              <Graphic
+                series={[]}
+                categories={[
+                  '1º trimestre',
+                  '2º trimestre',
+                  '3º trimestre',
+                  '4º trimestre',
+                ]}
+              />
             </div>
           </div>
         </div>
