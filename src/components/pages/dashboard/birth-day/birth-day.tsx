@@ -15,15 +15,19 @@ const BirthDay = ({
     <div>
       <h3>{title}</h3>
       <div>
-        {data.map((item, index) => (
-          <div key={index} className={styles.boxBirthDay}>
-            <div>
-              <p>{item.name}</p>
-              <p className={styles.room}>{item.room}</p>
+        {data.length ? (
+          data.map((item, index) => (
+            <div key={index} className={styles.boxBirthDay}>
+              <div>
+                <p>{item.name}</p>
+                <p className={styles.room}>{item.room}</p>
+              </div>
+              <p>{item.birthDate}</p>
             </div>
-            <p>{item.birthDate}</p>
-          </div>
-        ))}
+          ))
+        ) : (
+          <span className={styles.empty}>Não tem aniversariantes</span>
+        )}
       </div>
     </div>
   );

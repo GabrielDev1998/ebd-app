@@ -132,6 +132,18 @@
   margin-top: var(--g-5);
 }
 
+.empty {
+  font-size: var(--fs-14);
+  line-height: 1.2;
+  text-align: center;
+
+  background-color: var(--bgTertiary);
+  padding: var(--g-20);
+  border-radius: 4px;
+
+  color: var(--textColor);
+}
+
 @media (max-width: 1200px) {
   .containerDashboard{
     grid-template-columns: 1fr;
