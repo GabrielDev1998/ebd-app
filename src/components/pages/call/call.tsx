@@ -236,8 +236,8 @@ const Call = () => {
 
   return (
     <GlobalLayout title="Chamada" description="Realizar a chamada dos alunos">
+      {loading && <Loader />}
       <div className={styles.containerCall}>
-        {loading && <Loader />}
         {roomCurrent?.students.length ? (
           <div className={styles.boxStudents}>
             {dataPagination.currentItens.map((student) => (
