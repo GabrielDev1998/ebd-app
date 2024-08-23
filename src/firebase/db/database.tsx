@@ -4,19 +4,22 @@ import {
   getFirestore,
   collection,
   addDoc,
-  WithFieldValue,
   DocumentData,
   onSnapshot,
   doc,
   QuerySnapshot,
   getDocs,
   updateDoc,
+  deleteDoc,
 } from 'firebase/firestore';
 import { appInitialize } from '../settings';
 import { useEffect, useState } from 'react';
 import { FirebaseError } from 'firebase/app';
+import Global from '@/utils/global';
+import Swal from 'sweetalert2';
 
 const db = getFirestore(appInitialize);
+const { alertNotification, popup } = Global();
 
 function DataBase<T extends DocumentData>(path: string) {
   const [loading, setLoading] = useState(false);
@@ -36,6 +39,7 @@ function DataBase<T extends DocumentData>(path: string) {
           if (error instanceof FirebaseError) {
             console.log('Algum erro ocorreu ' + error.message);
             setErrorBase(error.message);
+            alertNotification('error', error.message);
           }
         })
         .finally(() => setLoading(false));
@@ -63,12 +67,62 @@ function DataBase<T extends DocumentData>(path: string) {
             if (error instanceof FirebaseError) {
               console.log('Algum erro ocorreu' + error.message);
               setErrorBase(error.message);
+              alertNotification('error', error.message);
             }
           })
           .finally(() => setLoading(false));
       } catch (e) {
         console.error('Algum erro ocorreu ' + e);
       }
+    }
+  }
+
+  // Deletar documentos
+  async function deleteDocument(
+    id: string,
+    feedback?: {
+      title: string;
+      text: string;
+    },
+  ) {
+    try {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Tem certeza que deseja excluir?',
+        text: 'Se você excluir, não poderá mais ter acesso ao dado.',
+        confirmButtonText: 'Sim',
+        cancelButtonText: 'Não',
+        showCancelButton: true,
+        background: '#ffffff',
+        color: 'var(--colorText-2)',
+        confirmButtonColor: 'var(--primary)',
+        cancelButtonColor: 'var(--colorCancel)',
+      }).then(async ({ isConfirmed }) => {
+        if (isConfirmed) {
+          setLoading(true);
+          await deleteDoc(doc(db, path, id))
+            .then(() => {
+              popup({
+                icon: 'success',
+                title: feedback ? feedback.title : 'Documento deletado!',
+                text: feedback
+                  ? feedback.text
+                  : 'O documento foi deletado com sucesso',
+              });
+              setErrorBase(null);
+            })
+            .catch((error) => {
+              if (error instanceof FirebaseError) {
+                console.log('Algum erro ocorreu ' + error.message);
+                setErrorBase(error.message);
+                alertNotification('error', error.message);
+              }
+            })
+            .finally(() => setLoading(false));
+        }
+      });
+    } catch (e) {
+      console.error('Algum erro ocorreu' + e);
     }
   }
 
@@ -123,6 +177,13 @@ function DataBase<T extends DocumentData>(path: string) {
     getDocument();
   }, [path]);
 
-  return { createDocument, updateData, dataDocs, loading, errorBase };
+  return {
+    createDocument,
+    updateData,
+    deleteDocument,
+    dataDocs,
+    loading,
+    errorBase,
+  };
 }
 export default DataBase;

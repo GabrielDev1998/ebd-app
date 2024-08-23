@@ -93,7 +93,8 @@ function Global() {
       background: '#ffffff',
       color: 'var(--colorText-2)',
       confirmButtonText: 'OK',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: 'var(--primary)',
+      cancelButtonColor: 'var(--colorCancel)',
       ...props,
     });
   };

@@ -51,7 +51,7 @@ export type RoomType = {
 const { alertNotification, avatar } = Global();
 
 const Rooms = () => {
-  const { createDocument, dataDocs, loading, errorBase } =
+  const { createDocument, dataDocs, loading, errorBase, deleteDocument } =
     DataBase<RoomType>('rooms');
   const [openModalRoom, setOpenModalRoom] = React.useState(false);
   const [selectFaixaEtaria, setSelectFaixaEtaria] = React.useState('');
@@ -177,7 +177,16 @@ const Rooms = () => {
                       </TableCell>
                       <TableCell type="td">
                         <TableOptions>
-                          <Link href="#">
+                          <Link
+                            href="#"
+                            onClick={() => {
+                              if (room.id)
+                                deleteDocument(room.id, {
+                                  title: 'Sala deletada!',
+                                  text: `Sala ${room.name_room} deletada com sucesso.`,
+                                });
+                            }}
+                          >
                             <Icon icon="solar:trash-bin-trash-bold-duotone" />
                             Excluir
                           </Link>
