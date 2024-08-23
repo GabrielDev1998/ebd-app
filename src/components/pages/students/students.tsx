@@ -30,7 +30,11 @@ const Students = () => {
   }, [params, dataDocs]);
 
   return (
-    <GlobalLayout title="Alunos" description="Alunos matriculados na EBD">
+    <GlobalLayout
+      title="Alunos"
+      description="Alunos matriculados na EBD"
+      maxWidth="1400px"
+    >
       <div className={styles.containerStudents}>
         {loading && <Loader />}
         <Table>
