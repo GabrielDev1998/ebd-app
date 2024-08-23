@@ -93,7 +93,6 @@
 
   font-size: var(--fs-14);
   color: var(--textColor);
-  font-weight: 500;
   line-height: 1.2;
   transition: .3s;
   background: var(--bgPrimary);
@@ -158,12 +157,13 @@
   align-items: center;
   gap: var(--g-10);
   font-size: var(--fs-14);
+  color: var(--textColor);
 }
 
 .labelRadio span {
   width: 20px;
   height: 20px;
-  background: var(--bg-1);
+  background: var(--bgTertiary);
   border-radius: 50%;
 }
 
