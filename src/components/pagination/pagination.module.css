@@ -1,0 +1,53 @@
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--g-10);
+
+  padding: var(--g-20) 0;
+}
+
+.controls button {
+  background: transparent;
+  outline: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 0.845rem;
+  color: var(--textColor);
+  transition: .3s;
+  user-select: none;
+
+}
+
+.controls button:disabled,
+.controls button:hover {
+  color: var(--textColor);
+}
+
+.boxButtonPagination {
+  display: flex;
+  align-items: center;
+  overflow: auto;
+  flex-wrap: wrap;
+  gap: var(--g-10);
+}
+
+.boxButtonPagination button {
+  font-weight: 700;
+  font-size: 0.845rem;
+  color: var(--textColor);
+  border-radius: 4px;
+
+  width: 40px;
+  height: 40px;
+}
+
+.boxButtonPagination button{
+  background-color: var(--bgTertiary);
+}
+
+.boxButtonPagination button.active,
+.boxButtonPagination button:hover{
+  background-color: var(--primary);
+  color: #fff;
+}

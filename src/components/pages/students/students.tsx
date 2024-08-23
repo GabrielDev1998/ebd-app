@@ -19,6 +19,8 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { Loader } from '@/components/loader/loader';
+import usePagination from '@/components/pagination/usePagination';
+import Pagination from '@/components/pagination/pagination';
 
 const Students = () => {
   const { dataDocs, loading } = DataBase<RoomType>('rooms');
@@ -28,6 +30,11 @@ const Students = () => {
     const data = dataDocs.find((room) => room.id === params.id);
     return data ?? null;
   }, [params, dataDocs]);
+
+  const dataPagination = usePagination(
+    roomCurrent ? roomCurrent.students : [],
+    7,
+  );
 
   return (
     <GlobalLayout
@@ -63,8 +70,8 @@ const Students = () => {
               </TableNotFound>
             )}
 
-            {roomCurrent?.students.length
-              ? roomCurrent.students.map((student) => (
+            {dataPagination.currentItens.length
+              ? dataPagination.currentItens.map((student) => (
                   <TableRow key={student.id}>
                     <TableCell type="td">
                       <TableProfile
@@ -86,7 +93,7 @@ const Students = () => {
                           Excluir
                         </Link>
                         <Link
-                          href={`/student/edit/${roomCurrent.id}/${student.id}`}
+                          href={`/student/edit/${roomCurrent?.id}/${student.id}`}
                         >
                           <Icon icon="solar:document-add-bold-duotone" />
                           Editar
@@ -104,6 +111,7 @@ const Students = () => {
             {/*... */}
           </TableBody>
         </Table>
+        <Pagination {...dataPagination} />
       </div>
     </GlobalLayout>
   );
