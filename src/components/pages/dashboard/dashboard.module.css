@@ -144,6 +144,11 @@
   color: var(--textColor);
 }
 
+/* Gráfico */
+.boxGraphic {
+  margin-top: var(--g-20);
+}
+
 @media (max-width: 1200px) {
   .containerDashboard{
     grid-template-columns: 1fr;

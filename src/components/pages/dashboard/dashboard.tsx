@@ -12,6 +12,7 @@ import { RoomType } from '../rooms/rooms';
 import Global from '@/utils/global';
 import BirthDay from './birth-day/birth-day';
 import { Loader } from '@/components/loader/loader';
+import Graphic from '@/components/graphic/graphic';
 
 export type typeDataStudent = {
   name: string;
@@ -138,6 +139,9 @@ const Dashboard = () => {
           </div>
           <div className={`${styles.box} ${styles.containerRanking}`}>
             <h3>Ranking</h3>
+            <div className={styles.boxGraphic}>
+              <Graphic />
+            </div>
           </div>
         </div>
         <div className={`${styles.box} ${styles.boxPanel}`}>
