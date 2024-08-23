@@ -41,7 +41,7 @@
 }
 
 .menu li a.active {
-  background-color: var(--bg-1);
+  background-color: var(--bgTertiary);
 }
 
 .boxForm .form {
