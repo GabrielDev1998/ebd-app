@@ -119,7 +119,9 @@ const Calendar = () => {
 
   function handleAula({ number_aula, title_aula }: SchemaFormAula) {
     const room = dataDocs.find((room) => room.name_room === selectRooms);
-    const quarterNumber = monthsToQuarters(Number(dateCalendar.slice(3, 5)));
+    const quarterNumber = monthsToQuarters(
+      Number(dateCalendar.slice(3, 5)) - 1,
+    );
 
     const sendDataAula = (aulas: TypeAula[]) => {
       if (room) {
@@ -197,6 +199,31 @@ const Calendar = () => {
     setModalDataAula(false);
     setModalAddAula(true);
     setTypeForm('Edit');
+  }
+
+  function handleClickDeleteAula() {
+    const roomCurrent = dataDocs.find(
+      (room) => room.name_room === aulaCurrent?.room,
+    );
+    if (roomCurrent) {
+      updateData(
+        roomCurrent.id,
+        {
+          ...roomCurrent,
+          aulas: roomCurrent.aulas.filter(
+            (aula) => aula.id !== aulaCurrent?.id,
+          ),
+        },
+        () => {
+          popup({
+            icon: 'success',
+            title: 'Aula excluída com sucesso',
+            text: 'A aula foi excluída com sucesso.',
+          });
+          setModalDataAula(false);
+        },
+      );
+    }
   }
 
   return (
@@ -292,7 +319,10 @@ const Calendar = () => {
               ? 'Continuar chamada'
               : 'Iniciar chamada'}
           </Link>
-          <button className="button-2 transparent red">
+          <button
+            className="button-2 transparent red"
+            onClick={handleClickDeleteAula}
+          >
             <Icon icon="solar:trash-bin-trash-bold-duotone" />
             Excluir
           </button>

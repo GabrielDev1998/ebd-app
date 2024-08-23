@@ -18,6 +18,8 @@ import {
 import { dataLesson } from '@/lessons/lessons';
 import { monthsToQuarters } from 'date-fns';
 import NoData from '@/components/noData/no-data';
+import usePagination from '@/components/pagination/usePagination';
+import Pagination from '@/components/pagination/pagination';
 
 const Progress = () => {
   const { dataDocs, loading } = DataBase<RoomType>('rooms');
@@ -46,6 +48,7 @@ const Progress = () => {
   const [buttonNav, setButtonNav] = React.useState(
     dataLesson[monthsToQuarters(new Date().getMonth())].quarter,
   );
+  const dataPagination = usePagination(aulas, 5);
 
   React.useEffect(() => {
     dataDocs.forEach((room) => {
@@ -184,7 +187,10 @@ const Progress = () => {
                 className={`button-2 transparent ${
                   item.quarter === buttonNav && styles.active
                 }`}
-                onClick={() => setButtonNav(item.quarter)}
+                onClick={() => {
+                  setButtonNav(item.quarter);
+                  dataPagination.setCurrentPage(0);
+                }}
               >
                 <div className={styles.months}>
                   {item.months.map((month) => (
@@ -195,9 +201,9 @@ const Progress = () => {
               </button>
             ))}
           </div>
-          {aulas.length ? (
+          {dataPagination.currentItens.length ? (
             <div className={styles.boxAulas}>
-              {aulas.map((aula) => (
+              {dataPagination.currentItens.map((aula) => (
                 <div className={styles.boxAula} key={aula.id}>
                   <div style={{ display: 'flex', gap: 'var(--g-10)' }}>
                     <span className={styles.numberAula}>
@@ -229,6 +235,7 @@ const Progress = () => {
               }}
             />
           )}
+          <Pagination {...dataPagination} />
         </div>
       </div>
     </GlobalLayout>

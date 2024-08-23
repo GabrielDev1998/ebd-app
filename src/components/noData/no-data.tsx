@@ -20,7 +20,7 @@ const C = styled.div`
   text-align: center;
   padding: var(--g-20);
   & p {
-    color: var(--textColor-2);
+    color: var(--textColor);
     font-weight: 500;
   }
 `;

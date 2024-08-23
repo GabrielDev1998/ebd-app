@@ -48,59 +48,113 @@ export type RoomType = {
   aulas: TypeAula[];
 };
 
-const { alertNotification, avatar } = Global();
+const { alertNotification, avatar, popup } = Global();
 
 const Rooms = () => {
-  const { createDocument, dataDocs, loading, errorBase, deleteDocument } =
-    DataBase<RoomType>('rooms');
+  const {
+    createDocument,
+    updateData,
+    dataDocs,
+    loading,
+    errorBase,
+    deleteDocument,
+  } = DataBase<RoomType>('rooms');
   const [openModalRoom, setOpenModalRoom] = React.useState(false);
   const [selectFaixaEtaria, setSelectFaixaEtaria] = React.useState('');
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<SchemaFormRoom>({
     resolver: zodResolver(schemaFormRoom),
   });
 
+  const [typeForm, setTypeForm] = React.useState<'Create' | 'Update'>('Create');
+  const [roomCurrent, setRoomCurrent] = React.useState<RoomType | null>(null);
+
+  React.useEffect(() => {
+    if (roomCurrent) {
+      reset({
+        name_room: roomCurrent.name_room,
+      });
+      setSelectFaixaEtaria(() => roomCurrent.faixa_etaria);
+    }
+  }, [reset, roomCurrent]);
+
+  React.useEffect(() => {
+    if (openModalRoom === false) {
+      setTypeForm('Create');
+      setRoomCurrent(null);
+      reset({
+        name_room: '',
+      });
+      setSelectFaixaEtaria('');
+    }
+  }, [openModalRoom, reset]);
+
   function handleFormRoom(data: SchemaFormRoom) {
+    const isRoom = dataDocs.every(
+      (room) =>
+        room.name_room.toLowerCase().trim() !==
+        data.name_room.toLowerCase().trim(),
+    );
+
     if (data.name_room) {
       if (selectFaixaEtaria === '') {
         alertNotification('error', 'Selecione uma faixa etária');
         return;
       }
 
-      // Criar a sala
-      const createNewRoom = () => {
-        createDocument(
-          {
-            id: '',
-            image: avatar({
-              name: data.name_room,
-              type: 'initials',
-            }),
-            faixa_etaria: selectFaixaEtaria,
-            name_room: data.name_room,
-            date: new Date().toLocaleDateString(),
-            students: [],
-            status: 'Ativada',
-            aulas: [],
-          },
-          () => {
-            setOpenModalRoom(false);
-            alertNotification('success', 'Sala criada com sucesso');
-          },
-        );
-      };
-
-      const isRoom = dataDocs.every(
-        (room) =>
-          room.name_room.toLowerCase().trim() !==
-          data.name_room.toLowerCase().trim(),
-      );
-
-      if (isRoom) createNewRoom();
-      else alertNotification('error', 'Já existe uma sala com esse nome');
+      if (typeForm === 'Create') {
+        if (isRoom) {
+          createDocument(
+            {
+              id: '',
+              image: avatar({
+                name: data.name_room,
+                type: 'initials',
+              }),
+              faixa_etaria: selectFaixaEtaria,
+              name_room: data.name_room,
+              date: new Date().toLocaleDateString(),
+              students: [],
+              status: 'Ativada',
+              aulas: [],
+            },
+            () => {
+              setOpenModalRoom(false);
+              alertNotification('success', 'Sala criada com sucesso');
+            },
+          );
+        } else alertNotification('error', 'Já existe uma sala com esse nome');
+      } else {
+        if (roomCurrent) {
+          if (isRoom) {
+            updateData(
+              roomCurrent.id,
+              {
+                ...roomCurrent,
+                name_room: data.name_room,
+                faixa_etaria: selectFaixaEtaria,
+              },
+              () => {
+                setOpenModalRoom(false);
+                popup({
+                  icon: 'success',
+                  title: 'Sucesso!',
+                  text: 'Sala atualizada com sucesso!',
+                });
+                setRoomCurrent(null);
+                reset({
+                  name_room: '',
+                });
+                setSelectFaixaEtaria('');
+              },
+            );
+          } else alertNotification('error', 'Já existe uma sala com esse nome');
+        }
+      }
     }
   }
 
@@ -108,7 +162,7 @@ const Rooms = () => {
     <GlobalLayout title="Salas" description="Salas ativas na EBD">
       <AlertNotification />
       <Modal
-        title="Criar uma sala"
+        title={typeForm === 'Create' ? 'Criar uma sala' : 'Editar sala'}
         modal={openModalRoom}
         setModal={setOpenModalRoom}
       >
@@ -129,7 +183,9 @@ const Rooms = () => {
             style={{ backgroundColor: 'var(--bgSecondary)' }}
           />
           <div className="button-flex">
-            <button className="button-2">Criar sala</button>
+            <button className="button-2">
+              {typeForm === 'Create' ? 'Criar sala' : 'Salvar alterações'}
+            </button>
           </div>
         </Form>
       </Modal>
@@ -146,6 +202,7 @@ const Rooms = () => {
             <TableHead>
               <TableRow>
                 <TableCell type="th">Sala</TableCell>
+                <TableCell type="th">Faixa etária</TableCell>
                 <TableCell type="th">Data de Registro</TableCell>
                 <TableCell type="th">Total de Alunos</TableCell>
                 <TableCell type="th">Status</TableCell>
@@ -170,6 +227,7 @@ const Rooms = () => {
                       <TableCell type="td">
                         <TableProfile name={room.name_room} src={room.image} />
                       </TableCell>
+                      <TableCell type="td">{room.faixa_etaria}</TableCell>
                       <TableCell type="td">{room.date}</TableCell>
                       <TableCell type="td">{room.students.length}</TableCell>
                       <TableCell type="td">
@@ -190,7 +248,14 @@ const Rooms = () => {
                             <Icon icon="solar:trash-bin-trash-bold-duotone" />
                             Excluir
                           </Link>
-                          <Link href="/student/edit">
+                          <Link
+                            href="#"
+                            onClick={() => {
+                              setOpenModalRoom(true);
+                              setTypeForm('Update');
+                              setRoomCurrent(room);
+                            }}
+                          >
                             <Icon icon="solar:document-add-bold-duotone" />
                             Editar
                           </Link>
