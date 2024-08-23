@@ -1,6 +1,11 @@
 .header {
   border-bottom: 1px solid var(--borderColor);
   padding: 0 var(--g-40);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  background-color: var(--bgPrimary);
 }
 
 .navHeader {

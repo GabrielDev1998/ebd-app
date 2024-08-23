@@ -16,7 +16,7 @@ import {
   TypeInput,
 } from '../../aulas/calendar/calendar';
 import { dataLesson } from '@/lessons/lessons';
-import { monthsToQuarters, quartersToMonths } from 'date-fns';
+import { monthsToQuarters } from 'date-fns';
 import NoData from '@/components/noData/no-data';
 
 const Progress = () => {
