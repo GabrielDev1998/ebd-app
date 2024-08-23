@@ -59,6 +59,12 @@ const Call = () => {
   React.useMemo(() => {
     const createInput = (types: TypeInput[]) => {
       if (roomCurrent?.students) {
+        setInputs({
+          presence: [],
+          bible: [],
+          magazine: [],
+        });
+
         roomCurrent.students.forEach((student) => {
           types.forEach((type) => {
             setInputs((inputs) => {
@@ -156,10 +162,7 @@ const Call = () => {
             input.id === idStudent
               ? {
                   ...input,
-                  checked: !input.checked,
-                  id: idStudent,
-                  type: id,
-                  points: target.checked ? 50 : 0,
+                  checked: target.checked,
                 }
               : input,
           ),
