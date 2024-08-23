@@ -17,6 +17,8 @@ import {
 } from '../aulas/calendar/calendar';
 import Global from '@/utils/global';
 import NoData from '@/components/noData/no-data';
+import usePagination from '@/components/pagination/usePagination';
+import Pagination from '@/components/pagination/pagination';
 
 const { popup } = Global();
 
@@ -46,6 +48,8 @@ const Call = () => {
   const [offer, setOffer] = React.useState('');
   const [teacher, setTeacher] = React.useState('');
   const [visitors, setVisitors] = React.useState('');
+
+  const dataPagination = usePagination(roomCurrent?.students ?? [], 10);
 
   React.useMemo(() => {
     dataDocs.forEach((room) => {
@@ -236,7 +240,7 @@ const Call = () => {
         {loading && <Loader />}
         {roomCurrent?.students.length ? (
           <div className={styles.boxStudents}>
-            {roomCurrent.students.map((student) => (
+            {dataPagination.currentItens.map((student) => (
               <div key={student.id} className={styles.boxStudent}>
                 <div className={styles.profileStudent}>
                   <ProfileCustom
@@ -276,6 +280,7 @@ const Call = () => {
             style={{ backgroundColor: 'var(--bg-1)' }}
           />
         )}
+        <Pagination {...dataPagination} />
         <div className={styles.containerInfo}>
           <div className={styles.boxInfo}>
             <h2>Resumo</h2>
