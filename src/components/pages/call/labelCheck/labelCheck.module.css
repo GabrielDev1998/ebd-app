@@ -9,8 +9,8 @@
   align-items: center;
   justify-content: center;
 
-  background-color: var(--bg-3);
-  color: var(--textColor-3);
+  background-color: var(--bgTertiary);
+  color: var(--textColor);
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;

@@ -1,7 +1,7 @@
 .progressBar {
   height: 6px;
   width: 100%;
-  background-color: var(--bg-2);
+  background-color: var(--bgTertiary);
   position: relative;
   border-radius: 4px;
 }

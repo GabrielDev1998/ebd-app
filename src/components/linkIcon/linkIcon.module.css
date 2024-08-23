@@ -17,5 +17,5 @@
 }
 
 .link:hover{
-  background-color: var(--bg-1);
+  background-color: var(--bgTertiary);
 }

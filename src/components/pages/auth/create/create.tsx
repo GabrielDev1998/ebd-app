@@ -93,7 +93,7 @@ const Create = () => {
           {...register('password')}
           error={errors.password}
         />
-        <ReCAPTCHA sitekey={SITE_KEY} ref={recaptcha} theme="dark" />
+        <ReCAPTCHA sitekey={SITE_KEY} ref={recaptcha} />
         <ButtonLoader
           text={loading ? 'Criando...' : 'Criar'}
           loading={loading}

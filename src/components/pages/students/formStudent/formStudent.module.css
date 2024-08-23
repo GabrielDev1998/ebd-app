@@ -11,6 +11,7 @@
   padding: var(--g-40);
   border: 1px solid var(--borderColor); 
   align-self: flex-start;
+  box-shadow: var(--shadow-2);
 }
 
 .form {

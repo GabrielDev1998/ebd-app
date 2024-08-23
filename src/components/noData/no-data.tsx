@@ -10,10 +10,10 @@ type INoData = React.ComponentProps<'div'> & {
 const C = styled.div`
   display: flex;
   height: 300px;
-  background-color: var(--background-2);
+  background-color: var(--bg-1) !important;
   width: 100%;
   border-radius: 8px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-2);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -220,7 +220,7 @@ const Progress = () => {
             <NoData
               text="Aluno não compareceu nesse trimestre"
               style={{
-                backgroundColor: 'var(--bg-3)',
+                backgroundColor: 'var(--bgTertiary)',
                 marginTop: 'var(--g-10)',
               }}
             />

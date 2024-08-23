@@ -74,7 +74,7 @@
 }
 
 .boxLoginSocial a:hover{
-  background-color: var(--bg-1);
+  background-color: var(--bgTertiary);
 }
 
 .boxLoginSocial a  svg {

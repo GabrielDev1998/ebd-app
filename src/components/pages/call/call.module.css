@@ -9,10 +9,10 @@
 }
 
 .boxStudent {
-
   padding: var(--g-20);
   border-radius: 8px;
   border: 1px solid var(--borderColor);
+  box-shadow: var(--shadow-2);
 }
 
 .profileStudent {
@@ -63,16 +63,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--bg-1);
   padding: var(--g-20);
   border-radius: 8px;
 }
 
 .boxResumo > div,
 .boxFinish  {
-  background-color: var(--bg-1);
   padding: var(--g-20);
   border-radius: 8px;
+  box-shadow: var(--shadow-2);
+  background-color: var(--bg-1);
 }
 
 .boxResumo > div h3,

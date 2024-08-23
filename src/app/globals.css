@@ -6,32 +6,29 @@
   --l-mobile: 100px;
 
   /* Backgrounds */
-  --bgPrimary: #0D1117;
-  --bgSecondary: #161B22;
-  --bgTertiary: #30363D;
+  --bgPrimary: #fff;
+  --bgSecondary: #fff;
+  --bgTertiary: #F6F7F8;
   
-  --bg-1: #161B22;
-  --bg-2: #30363D;
-  --bg-3: #21272F;
-  --bgGradientRight-3: radial-gradient(circle, rgba(20, 13, 26, 0.747), rgba(20, 30, 32, 0.904));
+  --bg-1: #fff;
+  --bgGradientRight-3: radial-gradient(circle, rgba(213, 193, 230, 0.747), rgba(195, 227, 233, 0.904));
 
   /* Colors */
-  --red: #FFAC82;
-  --bgRed: #FF563029;
-  --yellow: #FFD666;
-  --bgYellow: #FFAB0029;
-  --green: #77ED8B;
-  --bgGreen: #22C55E29;
-  --blue: #61F3F3;
-  --bgBlue: #00B8D929;
+  --red: #B71D18;
+  --bgRed: rgba(255, 86, 48, 0.161);
+  --yellow: #b76e00;
+  --bgYellow: rgba(255, 168, 0, 0.161);
+  --green: #118d57;
+  --bgGreen: rgba(34, 197, 94, 0.161);
+  --blue: #006c9c;
+  --bgBlue: rgba(0, 184, 217, 0.161);
 
   /* colors text */
-  --textColor: #8d96a0;
-  --textColor-2: #E6EDF3;
-  --textColor-3: #7d8691;
+  --textColor: #637381;
+  --textColor-2: #1d1d1d;
 
   /* colors borders */
-  --borderColor: #242930;
+  --borderColor: #F2F3F5;
 
   /* radius */
   --radius-4: 4px;
@@ -41,16 +38,16 @@
 
   /* Shadows */
   --shadow: rgba(0, 0, 0, 0.2) 0px 0px 2px 0px, rgba(0, 0, 0, 0.12) 0px 12px 24px -4px;
+  --shadow-2: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px, rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
 
   /*  */
   --erro: #ff5630;
 
   /* Buttons */
-  --bgButton: #1e242c;
-  --bgButton-2: #282f38;
+  --bgButton: #F6F7F8;
+  --bgButton-2: #e9ebee;
 
-  --textColorButton: #8d96a0;
-  --textColorButtonHover: #E6EDF3;
+  --textColorButton: #637381;
 
   --fs-10: .625rem;
   --fs-12: .75rem;
@@ -126,7 +123,7 @@ video {
 
 input::placeholder,
 textarea::placeholder {
-  color: var(--textColor-3);
+  color: var(--textColor);
   font-size: .845rem;
   font-weight: 300;
 }
@@ -166,7 +163,7 @@ textarea::placeholder {
   font-size: .845rem;
   line-height: 1.2;
   font-weight: 700;
-  color: var(--colorTextButton);
+  color: #fff;
   background-color: var(--primary);
   transition: .32s ease;
 }
@@ -193,13 +190,12 @@ textarea::placeholder {
 
 .button-2.transparent:hover{
   background-color: var(--bgButton-2);
-  color: var(--textColorButtonHover);
 }
 
 .button.red,
 .button-2.red {
-  color: #FFAC82 !important;
-  background-color: rgba(255, 54, 4, 0.10) !important;
+  color: var(--red) !important;
+  background-color: var(--bgRed) !important;
   border-color: transparent !important;
 }
 
@@ -252,7 +248,7 @@ textarea::placeholder {
 .icon {
   width: 40px;
   height: 40px;
-  background: var(--bg-3);
+  background: var(--bgTertiary);
   outline: none;
   cursor: pointer;
   color: var(--textColor);

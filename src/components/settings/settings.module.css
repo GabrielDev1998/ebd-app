@@ -10,6 +10,7 @@
   border-radius: 8px;
   padding: var(--g-20);
   align-self: flex-start;
+  box-shadow: var(--shadow-2);
 }
 
 .boxContent {
@@ -46,8 +47,6 @@
 .boxForm .form {
   max-width: initial;
 }
-
-
 
 /* Perfil */
 .boxProfile {

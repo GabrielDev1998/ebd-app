@@ -92,7 +92,7 @@
   padding: 3px;
 
   font-size: var(--fs-14);
-  color: var(--textColor-3);
+  color: var(--textColor);
   font-weight: 500;
   line-height: 1.2;
   transition: .3s;
@@ -134,7 +134,7 @@
 	font-family: inherit;
 	font-size: .845rem;
 	font-weight: 700;
-	color: var(--colorTextButton);
+	color: #fff;
 	background-color: var(--primary);
 	transition: opacity .32s ease, background-color .32s ease;
 }
@@ -174,7 +174,6 @@
 .labelRadio input {
   display: none;
 }
-
 
 @media (max-width: 960px) {
   .columnInput{

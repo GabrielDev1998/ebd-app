@@ -6,6 +6,7 @@
   background-color: var(--bg-1);
   border-radius: 8px;
   overflow: auto;
+  box-shadow: var(--shadow-2);
 }
 
 .boxTable table {
@@ -14,7 +15,7 @@
 }
 
 .boxTable table thead {
-  background-color: var(--bg-3);
+  background-color: var(--bgTertiary);
 }
 
 .boxTable table td,
@@ -78,7 +79,7 @@
   right: 45px;
   width: 200px;
   padding: var(--g-10);
-  background-color: var(--bg-3);
+  background-color: var(--bg-1);
   border-radius: 8px;
   box-shadow: var(--shadow);
   border: 1px solid var(--borderColor);
@@ -112,5 +113,5 @@
 
 .list > *:hover{
   color: var(--textColor-2);
-  background-color: var(--bg-2);
+  background-color: var(--bgTertiary);
 }

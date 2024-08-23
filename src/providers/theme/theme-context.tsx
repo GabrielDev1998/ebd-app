@@ -9,25 +9,12 @@ export const themeColors = {
     hexS: '#9956F6',
   },
   color_2: {
-    hexP: '#F8F859',
-    hexS: '#f8e059',
-  },
-  color_3: {
     hexP: '#F87359',
     hexS: '#f78a74',
   },
-
-  color_4: {
+  color_3: {
     hexP: '#F859A8',
     hexS: '#f574b4',
-  },
-  color_5: {
-    hexP: '#3FB950',
-    hexS: '#29903B',
-  },
-  color_6: {
-    hexP: '#57E5F8',
-    hexS: '#31e1f8',
   },
 };
 
@@ -66,7 +53,7 @@ export const ThemeContext = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const { hexP, hexS } = themeStorage;
-    const { color_2, color_5, color_6 } = themeColors;
+    const { color_2 } = themeColors;
 
     setPropertyDoc({
       variable: '--primary',
@@ -77,14 +64,6 @@ export const ThemeContext = ({ children }: { children: React.ReactNode }) => {
       variable: '--secondary',
       prop: hexS,
     });
-
-    // Cores com toms mais claros, definir a cor do texto do botão com uma cor mais escura
-    if (hexP === color_2.hexP || hexP === color_6.hexP) {
-      setPropertyDoc({
-        variable: '--colorTextButton',
-        prop: '#111',
-      });
-    }
   }, [themeStorage]);
 
   return (

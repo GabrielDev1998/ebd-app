@@ -27,7 +27,7 @@
 }
 
 .buttonNav:hover {
-  background-color: var(--bg-3);
+  background-color: var(--bgTertiary);
 }
 
 .buttonNav svg {
@@ -103,7 +103,7 @@
 }
 
 .menuUser li a:hover {
-  background-color: var(--bg-3);
+  background-color: var(--bgTertiary);
   color: var(--textColor-2);
 }
 
