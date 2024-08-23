@@ -55,6 +55,8 @@ const Dashboard = () => {
 
   React.useEffect(() => {
     dataDocs.forEach((room) => {
+      setStudentsBirthDay([]);
+
       room.students.forEach((student) => {
         setStudentsBirthDay((prevStudents) => [
           ...prevStudents,
@@ -68,7 +70,7 @@ const Dashboard = () => {
     });
   }, [dataDocs]);
 
-  React.useEffect(() => {
+  React.useMemo(() => {
     const OBJDate = new Date();
     const dayCurr = OBJDate.getDate();
     const monthCurr = OBJDate.getMonth() + 1;
