@@ -13,7 +13,7 @@ const CustomSelect = ({
   className,
   ...props
 }: {
-  label: string;
+  label?: string;
   items: string[];
   setValue: React.Dispatch<React.SetStateAction<string>>;
   value: string;
@@ -32,12 +32,14 @@ const CustomSelect = ({
     <>
       {isOpen && <div className={`overlay ${styles.overlaySelect}`}></div>}
       <div className={`${styles.boxSelect} ${className}`} {...props}>
-        <label
-          className={`${value && styles.active}`}
-          style={isOpen ? { color: 'var(--textColor-2)', top: '-10px' } : {}}
-        >
-          {label}
-        </label>
+        {label && (
+          <label
+            className={`${value && styles.active}`}
+            style={isOpen ? { color: 'var(--textColor-2)', top: '-10px' } : {}}
+          >
+            {label}
+          </label>
+        )}
         <div className={styles.select} onClick={handleClickSelect}>
           {value && <span className={styles.optionValue}>{value}</span>}
           <i className={`${styles.arrow} ${isOpen && styles.active}`}>

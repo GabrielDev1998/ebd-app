@@ -13,6 +13,7 @@ import Global from '@/utils/global';
 import BirthDay from './birth-day/birth-day';
 import { Loader } from '@/components/loader/loader';
 import Graphic from '@/components/graphic/graphic';
+import CustomSelect from '@/components/form/select/custom-select';
 
 export type typeDataStudent = {
   name: string;
@@ -48,6 +49,7 @@ const Dashboard = () => {
   });
 
   const refZeroALeft = React.useRef(zeroLeft);
+  const [selectRooms, setSelectRooms] = React.useState('');
 
   React.useEffect(() => {
     if (slide > totalSlides) setSlide(0);
@@ -102,6 +104,10 @@ const Dashboard = () => {
     });
   }, [studentsBirthDay]);
 
+  React.useEffect(() => {
+    console.log(dataDocs);
+  }, [dataDocs]);
+
   return (
     <GlobalLayout title="Dashboard" maxWidth="1400px">
       <div className={styles.containerDashboard}>
@@ -139,6 +145,12 @@ const Dashboard = () => {
           </div>
           <div className={`${styles.box} ${styles.containerRanking}`}>
             <h3>Ofertas</h3>
+            <CustomSelect
+              items={dataDocs.map((room) => room.name_room)}
+              setValue={setSelectRooms}
+              value={selectRooms}
+              style={{ marginTop: 'var(--g-20)' }}
+            />
             <div className={styles.boxGraphic}>
               <Graphic
                 series={[]}
