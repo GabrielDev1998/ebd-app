@@ -79,7 +79,7 @@ const Dashboard = () => {
     });
   }, [dataDocs]);
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     const OBJDate = new Date();
     const dayCurr = OBJDate.getDate();
     const monthCurr = OBJDate.getMonth() + 1;
@@ -110,11 +110,11 @@ const Dashboard = () => {
     });
   }, [studentsBirthDay]);
 
-  React.useEffect(() => {
+  React.useMemo(() => {
     if (dataDocs.length) setSelectRooms(() => dataDocs[1].name_room);
   }, [dataDocs]);
 
-  React.useEffect(() => {
+  React.useMemo(() => {
     const roomCurrent = dataDocs.find((room) => room.name_room === selectRooms);
 
     setGraphicOffer([]);
