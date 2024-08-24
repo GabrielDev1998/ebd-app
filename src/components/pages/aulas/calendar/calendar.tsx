@@ -206,21 +206,33 @@ const Calendar = () => {
       (room) => room.name_room === aulaCurrent?.room,
     );
     if (roomCurrent) {
-      updateData(
-        roomCurrent.id,
+      popup(
         {
-          ...roomCurrent,
-          aulas: roomCurrent.aulas.filter(
-            (aula) => aula.id !== aulaCurrent?.id,
-          ),
+          icon: 'warning',
+          title: 'Deseja excluir essa aula?',
+          text: 'Não será possível reverter essa ação.',
+          confirmButtonText: 'Sim',
+          cancelButtonText: 'Não',
+          showCancelButton: true,
         },
         () => {
-          popup({
-            icon: 'success',
-            title: 'Aula excluída com sucesso',
-            text: 'A aula foi excluída com sucesso.',
-          });
-          setModalDataAula(false);
+          updateData(
+            roomCurrent.id,
+            {
+              ...roomCurrent,
+              aulas: roomCurrent.aulas.filter(
+                (aula) => aula.id !== aulaCurrent?.id,
+              ),
+            },
+            () => {
+              popup({
+                icon: 'success',
+                title: 'Aula excluída com sucesso',
+                text: `A aula (${aulaCurrent?.title_aula}) foi deletada com sucesso.`,
+              });
+              setModalDataAula(false);
+            },
+          );
         },
       );
     }
