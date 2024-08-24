@@ -4,12 +4,16 @@ import React from 'react';
 import styles from './progress.module.css';
 import GlobalLayout from '@/components/globalLayout/globalLayout';
 import DataBase from '@/firebase/db/database';
+import ProfileCustom from '@/components/profileCustom/profileCustom';
+import ProgressBar from '@/components/progress-bar/progress-bar';
+import NoData from '@/components/noData/no-data';
+import usePagination from '@/components/pagination/usePagination';
+import Pagination from '@/components/pagination/pagination';
+
 import { RoomType } from '../../rooms/rooms';
 import { useParams } from 'next/navigation';
 import { StudentsProps } from '../formStudent/formStudent';
-import ProfileCustom from '@/components/profileCustom/profileCustom';
 import { Loader } from '@/components/loader/loader';
-import ProgressBar from '@/components/progress-bar/progress-bar';
 import {
   TypeAula,
   TypeCheckedCall,
@@ -17,9 +21,6 @@ import {
 } from '../../aulas/calendar/calendar';
 import { dataLesson } from '@/lessons/lessons';
 import { monthsToQuarters } from 'date-fns';
-import NoData from '@/components/noData/no-data';
-import usePagination from '@/components/pagination/usePagination';
-import Pagination from '@/components/pagination/pagination';
 
 const Progress = () => {
   const { dataDocs, loading } = DataBase<RoomType>('rooms');
@@ -140,7 +141,7 @@ const Progress = () => {
     >
       <div className={styles.containerProgress}>
         {loading && <Loader />}
-        <div className={styles.box}>
+        <div className={`${styles.box} ${styles.containerProfileStudent}`}>
           {student && (
             <div className={styles.boxProfile}>
               <ProfileCustom
@@ -201,9 +202,9 @@ const Progress = () => {
               </button>
             ))}
           </div>
-          {dataPagination.currentItens.length ? (
+          {aulas.length ? (
             <div className={styles.boxAulas}>
-              {dataPagination.currentItens.map((aula) => (
+              {aulas.map((aula) => (
                 <div className={styles.boxAula} key={aula.id}>
                   <div style={{ display: 'flex', gap: 'var(--g-10)' }}>
                     <span className={styles.numberAula}>
@@ -235,7 +236,7 @@ const Progress = () => {
               }}
             />
           )}
-          <Pagination {...dataPagination} />
+          {/* <Pagination {...dataPagination} /> */}
         </div>
       </div>
     </GlobalLayout>

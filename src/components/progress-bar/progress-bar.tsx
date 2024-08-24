@@ -5,14 +5,12 @@ import styles from './progress-bar.module.css';
 
 const ProgressBar = ({
   progress,
-  className,
   ...props
 }: {
-  className?: string;
   progress: number;
 } & React.ComponentProps<'div'>) => {
   return (
-    <div className={`${styles.containerProgress} ${className}`} {...props}>
+    <div {...props}>
       <div className={styles.infoProgress}>
         <p>{progress}%</p>
       </div>
