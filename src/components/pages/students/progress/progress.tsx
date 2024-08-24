@@ -63,7 +63,7 @@ const Progress = () => {
     if (student) {
       dataDocs.forEach((room) => {
         const studentCurrent = room.students.find(
-          (student) => student.id === student.id,
+          ({ id }) => id === student.id,
         );
         if (studentCurrent)
           setAulas(room.aulas.filter((aula) => aula.quarter === buttonNav));
