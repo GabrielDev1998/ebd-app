@@ -51,7 +51,7 @@ const Call = () => {
 
   const dataPagination = usePagination(roomCurrent?.students ?? [], 10);
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     dataDocs.forEach((room) => {
       if (room.aulas.length) {
         const aula = room.aulas.find((aula) => aula.id === params.id);
@@ -60,7 +60,7 @@ const Call = () => {
     });
   }, [dataDocs, params]);
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     const createInput = (types: TypeInput[]) => {
       if (roomCurrent?.students) {
         setInputs({
@@ -93,12 +93,12 @@ const Call = () => {
     createInput(['presence', 'magazine', 'bible']);
   }, [roomCurrent]);
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     if (roomCurrent)
       setAulaCurrent(roomCurrent.aulas.find((aula) => aula.id === params.id));
   }, [roomCurrent, params]);
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     if (roomCurrent) {
       setReportAula({
         presences: inputs.presence.filter((input) => input.checked).length,
@@ -113,7 +113,7 @@ const Call = () => {
     }
   }, [roomCurrent, inputs, offer, teacher, visitors]);
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     if (roomCurrent && aulaCurrent) {
       const { call } = aulaCurrent;
       const showInputsChecked = (types: TypeInput[]) => {

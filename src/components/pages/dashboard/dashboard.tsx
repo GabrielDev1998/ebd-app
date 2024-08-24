@@ -6,7 +6,7 @@ import GlobalLayout from '@/components/globalLayout/globalLayout';
 import DataBase from '@/firebase/db/database';
 
 import { dataLesson, TypeQuarter } from '@/lessons/lessons';
-import { monthsToQuarters, quartersToMonths } from 'date-fns';
+import { monthsToQuarters } from 'date-fns';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { RoomType } from '../rooms/rooms';
 import Global from '@/utils/global';
@@ -110,11 +110,11 @@ const Dashboard = () => {
     });
   }, [studentsBirthDay]);
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     if (dataDocs.length) setSelectRooms(() => dataDocs[1].name_room);
   }, [dataDocs]);
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     const roomCurrent = dataDocs.find((room) => room.name_room === selectRooms);
 
     setGraphicOffer([]);
