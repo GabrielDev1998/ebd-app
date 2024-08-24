@@ -26,8 +26,8 @@
 }
 
 .boxHome h1 {
-  font-size: var(--fs-80);
-  line-height: 80px;
+  font-size: var(--fs-72);
+  line-height: 90px;
   font-weight: 800;
   letter-spacing: -3.8px;
   margin-bottom: var(--g-20);
