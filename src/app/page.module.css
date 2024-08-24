@@ -29,7 +29,6 @@
   font-size: var(--fs-72);
   line-height: 90px;
   font-weight: 800;
-  letter-spacing: -3.8px;
   margin-bottom: var(--g-20);
 }
 
@@ -48,11 +47,9 @@
 }
 
 @media (max-width: 960px) {
-
   .boxHome h1{
     font-size: var(--fs-48);
     line-height: 52px;
-    letter-spacing: -2.4px;
   }
 
   .boxHome  p  {
