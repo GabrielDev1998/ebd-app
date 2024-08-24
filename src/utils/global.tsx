@@ -76,6 +76,25 @@ function Global() {
     }, 0);
   };
 
+  const convertCurrency = (value: unknown) => {
+    //
+    //
+    const getValue = (value: number) => {
+      return value.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      });
+    };
+
+    if (typeof value === 'number') return getValue(value);
+    if (typeof value === 'string') {
+      const transformedValue = Number(
+        value.replace('R$', '').replaceAll(',', '.'),
+      );
+      return getValue(transformedValue);
+    }
+  };
+
   const popup = ({
     icon,
     title,
@@ -114,6 +133,7 @@ function Global() {
     somarTotal,
     popup,
     generateRandomNumbers,
+    convertCurrency,
   };
 }
 

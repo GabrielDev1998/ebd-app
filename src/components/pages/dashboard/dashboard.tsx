@@ -5,7 +5,7 @@ import styles from './dashboard.module.css';
 import GlobalLayout from '@/components/globalLayout/globalLayout';
 import DataBase from '@/firebase/db/database';
 
-import { dataLesson } from '@/lessons/lessons';
+import { dataLesson, TypeQuarter } from '@/lessons/lessons';
 import { monthsToQuarters, quartersToMonths } from 'date-fns';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { RoomType } from '../rooms/rooms';
@@ -27,7 +27,7 @@ type TypeDataBirthDay = {
   month: typeDataStudent[];
 };
 
-const { zeroLeft } = Global();
+const { zeroLeft, convertCurrency } = Global();
 
 const Dashboard = () => {
   const { dataDocs, loading } = DataBase<RoomType>('rooms');
@@ -50,6 +50,12 @@ const Dashboard = () => {
 
   const refZeroALeft = React.useRef(zeroLeft);
   const [selectRooms, setSelectRooms] = React.useState('');
+  const [graphicOffer, setGraphicOffer] = React.useState<
+    {
+      quarter: TypeQuarter;
+      total: number;
+    }[]
+  >([]);
 
   React.useEffect(() => {
     if (slide > totalSlides) setSlide(0);
@@ -105,8 +111,47 @@ const Dashboard = () => {
   }, [studentsBirthDay]);
 
   React.useEffect(() => {
-    console.log(dataDocs);
+    if (dataDocs.length) setSelectRooms(() => dataDocs[1].name_room);
   }, [dataDocs]);
+
+  React.useEffect(() => {
+    const roomCurrent = dataDocs.find((room) => room.name_room === selectRooms);
+
+    setGraphicOffer([]);
+
+    if (roomCurrent) {
+      const { aulas } = roomCurrent;
+
+      const getTotalOffers = (quarter: TypeQuarter) => {
+        const total = aulas
+          .filter((aula) => aula.quarter === quarter)
+          .map((item) => {
+            const convertValue = item.report?.offer
+              ? Number(item.report?.offer.replace('R$', '').replace(',', '.'))
+              : 0;
+            return convertValue;
+          })
+          .reduce((acc, value) => {
+            return acc + value;
+          }, 0);
+
+        setGraphicOffer((prevGraphic) => [
+          ...prevGraphic,
+          {
+            quarter,
+            total,
+          },
+        ]);
+
+        return { quarter, total };
+      };
+
+      getTotalOffers('1° trimestre');
+      getTotalOffers('2° trimestre');
+      getTotalOffers('3° trimestre');
+      getTotalOffers('4° trimestre');
+    }
+  }, [dataDocs, selectRooms]);
 
   return (
     <GlobalLayout title="Dashboard" maxWidth="1400px">
@@ -153,13 +198,32 @@ const Dashboard = () => {
             />
             <div className={styles.boxGraphic}>
               <Graphic
-                series={[]}
-                categories={[
-                  '1º trimestre',
-                  '2º trimestre',
-                  '3º trimestre',
-                  '4º trimestre',
+                series={[
+                  {
+                    name: 'Ofertas',
+                    data: graphicOffer.map((item) => item.total),
+                  },
                 ]}
+                categories={graphicOffer.map((item) => item.quarter)}
+                options={{
+                  dataLabels: {
+                    formatter(val) {
+                      return `${convertCurrency(val)}`;
+                    },
+                  },
+                  responsive: [
+                    {
+                      breakpoint: 960,
+                      options: {
+                        plotOptions: {
+                          bar: {
+                            horizontal: true,
+                          },
+                        },
+                      },
+                    },
+                  ],
+                }}
               />
             </div>
           </div>
