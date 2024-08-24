@@ -163,12 +163,14 @@ const Dashboard = () => {
               <button
                 className={`icon ${styles.control}`}
                 onClick={() => setSlide(slide - 1)}
+                aria-label="Voltar"
               >
                 <Icon icon="solar:alt-arrow-left-line-duotone" />
               </button>
               <button
                 className={`icon ${styles.control}`}
                 onClick={() => setSlide(slide + 1)}
+                aria-label="Próximo"
               >
                 <Icon icon="solar:alt-arrow-right-line-duotone" />
               </button>
