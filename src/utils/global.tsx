@@ -95,16 +95,19 @@ function Global() {
     }
   };
 
-  const popup = ({
-    icon,
-    title,
-    text,
-    ...props
-  }: {
-    icon: 'question' | 'info' | 'error' | 'warning' | 'success';
-    title: string;
-    text?: string & SweetAlertOptions;
-  }) => {
+  const popup = (
+    {
+      icon,
+      title,
+      text,
+      ...props
+    }: {
+      icon: 'question' | 'info' | 'error' | 'warning' | 'success';
+      title: string;
+      text?: string;
+    } & SweetAlertOptions,
+    cb?: () => void,
+  ) => {
     Swal.fire({
       icon,
       title,
@@ -115,6 +118,8 @@ function Global() {
       confirmButtonColor: 'var(--primary)',
       cancelButtonColor: 'var(--colorCancel)',
       ...props,
+    }).then(({ isConfirmed }) => {
+      if (isConfirmed) cb && cb();
     });
   };
 

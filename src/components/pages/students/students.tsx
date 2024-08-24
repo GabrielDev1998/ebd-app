@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import styles from './students.module.css';
 import GlobalLayout from '@/components/globalLayout/globalLayout';
 import {
@@ -21,20 +21,61 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import { Loader } from '@/components/loader/loader';
 import usePagination from '@/components/pagination/usePagination';
 import Pagination from '@/components/pagination/pagination';
+import { StudentsProps } from './formStudent/formStudent';
+import Global from '@/utils/global';
+
+const { popup } = Global();
 
 const Students = () => {
-  const { dataDocs, loading } = DataBase<RoomType>('rooms');
+  const { dataDocs, loading, updateData } = DataBase<RoomType>('rooms');
   const params: { id: string } = useParams();
+  const [roomCurrent, setRoomCurrent] = React.useState<
+    RoomType | null | undefined
+  >(null);
 
-  const roomCurrent = useMemo(() => {
-    const data = dataDocs.find((room) => room.id === params.id);
-    return data ?? null;
+  React.useEffect(() => {
+    setRoomCurrent(dataDocs.find((room) => room.id === params.id));
   }, [params, dataDocs]);
 
   const dataPagination = usePagination(
     roomCurrent ? roomCurrent.students : [],
     7,
   );
+
+  function handleClickDeleteStudent({ id, fullName }: StudentsProps) {
+    if (roomCurrent) {
+      const filteredStudents = roomCurrent.students.filter(
+        (student) => student.id !== id,
+      );
+
+      popup(
+        {
+          icon: 'warning',
+          title: 'Tem certeza?',
+          text: 'Não será possível reverter essa ação.',
+          confirmButtonText: 'Sim',
+          cancelButtonText: 'Não',
+          showCancelButton: true,
+        },
+        () => {
+          updateData(
+            roomCurrent.id,
+            {
+              ...roomCurrent,
+              students: filteredStudents,
+            },
+            () => {
+              popup({
+                icon: 'success',
+                title: 'Aluno deletado com sucesso.',
+                text: `O aluno ${fullName} foi deletado com sucesso.`,
+              });
+            },
+          );
+        },
+      );
+    }
+  }
 
   return (
     <GlobalLayout
@@ -88,7 +129,10 @@ const Students = () => {
                     </TableCell>
                     <TableCell type="td">
                       <TableOptions>
-                        <Link href="#">
+                        <Link
+                          href="#"
+                          onClick={() => handleClickDeleteStudent(student)}
+                        >
                           <Icon icon="solar:trash-bin-trash-bold-duotone" />
                           Excluir
                         </Link>
