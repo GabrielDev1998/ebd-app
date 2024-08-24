@@ -23,7 +23,7 @@ const Form = ({
   ...props
 }: FormComponent) => {
   return (
-    <div className={`${styles.boxForm} ${className}`}>
+    <div className={`${styles.boxForm} ${className ?? false}`}>
       {title && (
         <div className={styles.boxTitle}>
           <h2>{title}</h2>
@@ -41,4 +41,3 @@ const Form = ({
   );
 };
 export default Form;
-
