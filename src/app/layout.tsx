@@ -1,12 +1,10 @@
 import type { Metadata } from 'next';
-import { DM_Sans, Public_Sans } from 'next/font/google';
+import { Nunito_Sans } from 'next/font/google';
 import './globals.css';
 import { AuthContext } from '@/firebase/auth/authProvider';
 import { ThemeContext } from '@/providers/theme/theme-context';
 
-import { GeistSans } from 'geist/font/sans';
-
-// const fontPrimary = Public_Sans({ subsets: ['latin'] });
+const fontPrimary = Nunito_Sans({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'EBD | Gestão de Alunos',
@@ -20,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={GeistSans.className}>
+      <body className={fontPrimary.className}>
         <AuthContext>
           <ThemeContext>{children}</ThemeContext>
         </AuthContext>
