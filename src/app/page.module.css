@@ -30,6 +30,7 @@
   line-height: 90px;
   font-weight: 800;
   margin-bottom: var(--g-20);
+  max-width: 740px;
 }
 
 .boxHome  p {
