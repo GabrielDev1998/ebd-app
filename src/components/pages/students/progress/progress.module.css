@@ -30,6 +30,7 @@
   height: auto !important;
   padding: var(--g-20) !important;
   min-width: 220px; 
+  
 }
 
 .boxNav  button .months {
@@ -39,7 +40,6 @@
 .boxNav  button span{
   display: inline-block;
   margin-left: var(--g-5);
-  color: var(--textColor-2);
   font-size: var(--fs-10);
   font-weight: 400;
   text-transform: uppercase;
@@ -59,7 +59,9 @@
 }
 
 .boxNav button.active{
-  background-color: var(--bgButton-2);
+  background: transparent;
+  color: var(--primary);
+  border-color: currentColor !important;
 }
 
 .containerProfileStudent {

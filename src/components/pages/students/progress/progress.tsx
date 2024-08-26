@@ -182,7 +182,7 @@ const Progress = () => {
             {dataLesson.map((item) => (
               <button
                 key={item.quarter}
-                className={`button-2 transparent ${
+                className={`button-2 ${
                   item.quarter === buttonNav && styles.active
                 }`}
                 onClick={() => {
