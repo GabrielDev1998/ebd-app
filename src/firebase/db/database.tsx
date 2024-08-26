@@ -89,7 +89,7 @@ function DataBase<T extends DocumentData>(path: string) {
       Swal.fire({
         icon: 'warning',
         title: 'Tem certeza que deseja excluir?',
-        text: 'Se você excluir, não poderá mais ter acesso ao dado.',
+        text: 'Não será possível reverter.',
         confirmButtonText: 'Sim',
         cancelButtonText: 'Não',
         showCancelButton: true,
