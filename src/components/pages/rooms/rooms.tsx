@@ -158,6 +158,16 @@ const Rooms = () => {
     }
   }
 
+  function handleClickOnOrOff(room: RoomType) {
+    room.status = room.status === 'Ativada' ? 'Desativada' : 'Ativada';
+    updateData(room.id, room, () => {
+      alertNotification(
+        'success',
+        `Sala ${room.status.toLowerCase()} com sucesso.`,
+      );
+    });
+  }
+
   return (
     <GlobalLayout title="Salas" description="Salas ativas na EBD">
       <AlertNotification />
@@ -262,6 +272,22 @@ const Rooms = () => {
                           <Link href={`/students/${room.id}`}>
                             <Icon icon="solar:users-group-rounded-bold-duotone" />
                             Visualizar alunos
+                          </Link>
+                          <Link
+                            href="#"
+                            onClick={() => handleClickOnOrOff(room)}
+                          >
+                            {room.status === 'Ativada' ? (
+                              <>
+                                <Icon icon="mingcute:toggle-right-fill" />
+                                Desativar
+                              </>
+                            ) : (
+                              <>
+                                <Icon icon="mingcute:toggle-left-fill" />
+                                Ativar
+                              </>
+                            )}
                           </Link>
                         </TableOptions>
                       </TableCell>
