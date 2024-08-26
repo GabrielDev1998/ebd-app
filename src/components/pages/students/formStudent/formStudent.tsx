@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './formStudent.module.css';
 
 import Form from '@/components/form/form';
@@ -77,7 +77,7 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
     resolver: zodResolver(schemaFormStudent),
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     watch(({ fullName }) => {
       if (fullName) {
         setDataProfile({
@@ -96,7 +96,7 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
     });
   }, [watch]);
 
-  useMemo(() => {
+  React.useEffect(() => {
     const getDataRoom = (type: keyof RoomType, str: String) => {
       const data = dataDocs.find((room) => room[type] === str);
       if (data !== undefined) setRoomCurrent(data);
@@ -106,7 +106,7 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
     if (type === 'Update') getDataRoom('id', params.slug[0]);
   }, [type, dataDocs, selectRooms, params]);
 
-  useMemo(() => {
+  React.useEffect(() => {
     if (type === 'Update') {
       const dataStudent = roomCurrent?.students.find(
         (student) => student.id === Number(params.slug[1]),
@@ -115,7 +115,7 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
     }
   }, [type, roomCurrent, params]);
 
-  useMemo(() => {
+  React.useEffect(() => {
     if (type === 'Update') {
       reset({
         fullName: studentCurrent?.fullName ?? '',
@@ -268,7 +268,9 @@ const FormStudent = ({ type }: { type: 'Create' | 'Update' }) => {
             <CustomSelect
               id="rooms"
               label="Turmas"
-              items={dataDocs.map((room) => room.name_room)}
+              items={dataDocs
+                .filter((room) => room.status === 'Ativada')
+                .map((room) => room.name_room)}
               setValue={setSelectRooms}
               value={selectRooms}
               style={{ backgroundColor: 'var(--bgPrimary)' }}

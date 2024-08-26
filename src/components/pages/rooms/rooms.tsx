@@ -279,12 +279,12 @@ const Rooms = () => {
                           >
                             {room.status === 'Ativada' ? (
                               <>
-                                <Icon icon="mingcute:toggle-right-fill" />
+                                <Icon icon="material-symbols-light:toggle-off" />
                                 Desativar
                               </>
                             ) : (
                               <>
-                                <Icon icon="mingcute:toggle-left-fill" />
+                                <Icon icon="material-symbols-light:toggle-on" />
                                 Ativar
                               </>
                             )}

@@ -271,6 +271,32 @@ const Call = () => {
                     data-id={student.id}
                   />
                 </div>
+                {student.status === 'Inativo' && (
+                  <div className={styles.studentInactive}>
+                    <div>
+                      <h3>{student.fullName}</h3>
+                      <p>Inativo por muitas faltas.</p>
+                    </div>
+                    <button
+                      type="button"
+                      className="button-2"
+                      onClick={() => {
+                        if (roomCurrent) {
+                          updateData(roomCurrent.id, {
+                            ...roomCurrent,
+                            students: roomCurrent.students.map((s) =>
+                              s.id === student.id
+                                ? { ...s, status: 'Ativo' }
+                                : s,
+                            ),
+                          });
+                        }
+                      }}
+                    >
+                      Ativar
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
           </div>

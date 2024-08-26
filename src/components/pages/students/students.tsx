@@ -24,7 +24,7 @@ import Pagination from '@/components/pagination/pagination';
 import { StudentsProps } from './formStudent/formStudent';
 import Global from '@/utils/global';
 
-const { popup } = Global();
+const { popup, alertNotification } = Global();
 
 const Students = () => {
   const { dataDocs, loading, updateData } = DataBase<RoomType>('rooms');
@@ -74,6 +74,13 @@ const Students = () => {
           );
         },
       );
+    }
+  }
+
+  function handleClickOnOrOff(student: StudentsProps) {
+    if (roomCurrent) {
+      student.status = student.status === 'Ativo' ? 'Inativo' : 'Ativo';
+      updateData(roomCurrent.id, roomCurrent);
     }
   }
 
@@ -145,6 +152,22 @@ const Students = () => {
                         <Link href={`/student/progress/${student.id}`}>
                           <Icon icon="solar:cup-star-bold-duotone" />
                           Progresso
+                        </Link>
+                        <Link
+                          href="#"
+                          onClick={() => handleClickOnOrOff(student)}
+                        >
+                          {student.status === 'Ativo' ? (
+                            <>
+                              <Icon icon="material-symbols-light:toggle-off" />
+                              Desativar
+                            </>
+                          ) : (
+                            <>
+                              <Icon icon="material-symbols-light:toggle-on" />
+                              Ativar
+                            </>
+                          )}
                         </Link>
                       </TableOptions>
                     </TableCell>
