@@ -47,6 +47,8 @@ const Appearance = () => {
         <ColorOption color={propsColors.color_2.name} />
         <ColorOption color={propsColors.color_3.name} />
         <ColorOption color={propsColors.color_4.name} />
+        <ColorOption color={propsColors.color_5.name} />
+        <ColorOption color={propsColors.color_6.name} />
       </div>
     </div>
   );

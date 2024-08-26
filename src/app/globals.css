@@ -346,6 +346,13 @@ textarea::placeholder {
   background-color: rgb(255, 48, 48,  0.065);
 } 
 
+[data-cor="azul"]{
+  background-color: rgba(7, 141, 238, 0.065);
+} 
+
+[data-cor="amarelo"]{
+  background-color: rgba(253, 169, 45, 0.065);
+} 
 
 [data-cor] span {
   position: relative;
@@ -378,6 +385,20 @@ textarea::placeholder {
 } 
 [data-cor="vermelho"] span::before{
   background-color: rgb(255, 48, 48);
+} 
+
+[data-cor="azul"] span{
+  background-color: rgba(7, 141, 238, 0.40) !important;
+} 
+[data-cor="azul"] span::before{
+  background-color: #078dee;
+} 
+
+[data-cor="amarelo"] span{
+  background-color: rgba(253, 169, 45, 0.40) !important;
+} 
+[data-cor="amarelo"] span::before{
+  background-color: rgb(253, 169, 45);
 } 
 
 [data-cor] span::before {

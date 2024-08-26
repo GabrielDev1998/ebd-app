@@ -20,6 +20,14 @@ export const themeColors = {
     name: 'vermelho',
     hexP: '#FF3030',
   },
+  color_5: {
+    name: 'azul',
+    hexP: '#078DEE',
+  },
+  color_6: {
+    name: 'amarelo',
+    hexP: '#FDA92D',
+  },
 };
 
 const ThemeProvider = createContext<{
