@@ -354,6 +354,10 @@ textarea::placeholder {
   background-color: rgba(253, 169, 45, 0.065);
 } 
 
+[data-cor="verde"]{
+  background-color: rgba(0, 167, 111, 0.065);
+} 
+
 [data-cor] span {
   position: relative;
   overflow: hidden;
@@ -399,6 +403,13 @@ textarea::placeholder {
 } 
 [data-cor="amarelo"] span::before{
   background-color: rgb(253, 169, 45);
+} 
+
+[data-cor="verde"] span{
+  background-color: rgba(0, 167, 111, 0.40) !important;
+} 
+[data-cor="verde"] span::before{
+  background-color: rgb(0, 167, 111);
 } 
 
 [data-cor] span::before {

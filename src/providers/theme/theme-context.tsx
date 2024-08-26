@@ -28,6 +28,10 @@ export const themeColors = {
     name: 'amarelo',
     hexP: '#FDA92D',
   },
+  color_7: {
+    name: 'verde',
+    hexP: '#00A76F',
+  },
 };
 
 const ThemeProvider = createContext<{
