@@ -9,11 +9,15 @@ type textAreaProps = {
 };
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, textAreaProps>(
-  function Input(myProps, ref) {
-    const { ...props } = myProps;
+  function textarea({ id, placeholder, ...props }, ref) {
     return (
       <div className={styles.boxInput}>
-        <textarea ref={ref} {...props}></textarea>
+        <textarea
+          ref={ref}
+          id={id}
+          placeholder={placeholder}
+          {...props}
+        ></textarea>
       </div>
     );
   },

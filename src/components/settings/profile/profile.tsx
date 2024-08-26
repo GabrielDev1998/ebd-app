@@ -12,6 +12,7 @@ import { AuthUser } from '@/firebase/auth/authProvider';
 import ProfileCustom from '@/components/profileCustom/profileCustom';
 import DataBase from '@/firebase/db/database';
 import { UsersSettings } from '../settings';
+import { Loader } from '@/components/loader/loader';
 
 const schemaProfile = z.object({
   name: z.string().min(5).max(100),
@@ -31,7 +32,8 @@ const Profile = () => {
     resolver: zodResolver(schemaProfile),
   });
   const { userCurrent, updateDataUser } = AuthUser();
-  const { createDocument } = DataBase<UsersSettings>('users');
+  const { dataDocs, createDocumentWithId, loading } =
+    DataBase<UsersSettings>('users');
 
   React.useEffect(() => {
     if (userCurrent) {
@@ -42,8 +44,29 @@ const Profile = () => {
     }
   }, [userCurrent, reset]);
 
+  React.useEffect(() => {
+    const dataUser = dataDocs.find((data) => data.uid === userCurrent?.uid);
+    if (dataUser) {
+      reset({
+        bio: dataUser.bio,
+      });
+    }
+  }, [reset, dataDocs, userCurrent]);
+
+  function handleClickProfile({ name, bio }: FormDataProfile) {
+    if (name) updateDataUser(name);
+    if (bio && userCurrent) {
+      createDocumentWithId(userCurrent.uid, {
+        uid: userCurrent.uid,
+        user: userCurrent.displayName ?? '',
+        bio,
+      });
+    }
+  }
+
   return (
     <div className={styles.boxForm}>
+      {loading && <Loader />}
       {userCurrent && (
         <div className={styles.boxProfile}>
           <ProfileCustom
@@ -56,11 +79,7 @@ const Profile = () => {
       )}
       <Form
         className={`${styles.form} animaLeft`}
-        onSubmit={handleSubmit(({ name, bio }) => {
-          if (name) {
-            updateDataUser(name);
-          }
-        })}
+        onSubmit={handleSubmit(handleClickProfile)}
       >
         <Input
           id="name"

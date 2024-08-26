@@ -13,7 +13,7 @@ type InputComponent = React.ComponentProps<'input'> & {
   error?: FieldError;
 };
 
-const Input = React.forwardRef<HTMLInputElement, InputComponent>(function Input(
+const Input = React.forwardRef<HTMLInputElement, InputComponent>(function input(
   myProps,
   ref,
 ) {

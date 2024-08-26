@@ -13,6 +13,8 @@ import { usePathname } from 'next/navigation';
 import AlertNotification from '../alertNotification/alertNotification';
 
 export type UsersSettings = {
+  user: string;
+  uid: string;
   bio: string;
 };
 

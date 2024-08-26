@@ -11,6 +11,7 @@ import {
   getDocs,
   updateDoc,
   deleteDoc,
+  setDoc,
 } from 'firebase/firestore';
 import { appInitialize } from '../settings';
 import { useEffect, useState } from 'react';
@@ -26,7 +27,7 @@ function DataBase<T extends DocumentData>(path: string) {
   const [dataDocs, setDataDocs] = useState<T[]>([]);
   const [errorBase, setErrorBase] = useState<string | null>(null);
 
-  // Criar docs WithFieldValue
+  // Criar docs
   const createDocument = async (data: T, cb?: () => void) => {
     try {
       setLoading(true);
@@ -46,6 +47,22 @@ function DataBase<T extends DocumentData>(path: string) {
     } catch (err) {
       console.error('Error creating document:', err);
     }
+  };
+
+  const createDocumentWithId = async (id: string, data: T, cb?: () => void) => {
+    await setDoc(doc(db, path, id), data)
+      .then(() => {
+        if (cb) cb();
+        setErrorBase(null);
+      })
+      .catch((error) => {
+        if (error instanceof FirebaseError) {
+          console.log('Algum erro ocorreu ' + error.message);
+          setErrorBase(error.message);
+          alertNotification('error', error.message);
+        }
+      })
+      .finally(() => setLoading(false));
   };
 
   // Atualizar os documentos
@@ -179,6 +196,7 @@ function DataBase<T extends DocumentData>(path: string) {
 
   return {
     createDocument,
+    createDocumentWithId,
     updateData,
     deleteDocument,
     dataDocs,
