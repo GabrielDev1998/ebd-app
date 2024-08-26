@@ -66,9 +66,6 @@ const Login = () => {
           {...register('email')}
           error={errors.email}
         />
-        <div className={stylesForm.boxForgot}>
-          <Link href="/auth/forgot">Esqueceu a senha?</Link>
-        </div>
         <Input
           id="password"
           type="password"
@@ -83,7 +80,9 @@ const Login = () => {
           loading={loading}
           disabled={loading}
         />
-
+        <div className={stylesForm.boxForgot}>
+          <Link href="/auth/forgot">Esqueceu a senha?</Link>
+        </div>
         <div className={styles.boxLoginSocial}>
           <Link href="#" onClick={() => loginSocialNetwork('Google')}>
             <Icon icon="flat-color-icons:google" />
