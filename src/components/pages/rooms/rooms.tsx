@@ -221,11 +221,11 @@ const Rooms = () => {
             </TableHead>
             <TableBody>
               {errorBase ? (
-                <TableNotFound colSpan={5} text="Você não tem acesso" />
+                <TableNotFound colSpan={6} text="Você não tem acesso" />
               ) : (
                 !dataDocs.length && (
                   <TableNotFound
-                    colSpan={5}
+                    colSpan={6}
                     text="Não tem dados para mostrar"
                   />
                 )
