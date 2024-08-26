@@ -12,6 +12,10 @@ import Appearance from './appearance/appearance';
 import { usePathname } from 'next/navigation';
 import AlertNotification from '../alertNotification/alertNotification';
 
+export type UsersSettings = {
+  bio: string;
+};
+
 const Settings = () => {
   const pathname = usePathname();
 

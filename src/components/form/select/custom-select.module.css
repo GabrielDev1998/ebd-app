@@ -81,7 +81,7 @@
   visibility: hidden;
   opacity: 0;
   transition: .3s;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-2);
 
   color: var(--textColor-2);
   border: 1px solid var(--borderColor);

@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import styles from './aulas.module.css';
 import GlobalLayout from '@/components/globalLayout/globalLayout';
 import Calendar from './calendar/calendar';
 import AlertNotification from '@/components/alertNotification/alertNotification';

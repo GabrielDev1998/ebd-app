@@ -50,10 +50,10 @@ const AsideNav = () => {
             <li>
               <LinkIcon
                 className={`${styles.linkMenu} ${
-                  pathname.includes('aulas') && styles.active
+                  pathname.includes('calendar') && styles.active
                 }`}
-                href="/aulas"
-                text="Aulas"
+                href="/calendar"
+                text="Calendário"
                 icon="solar:diploma-bold-duotone"
               />
             </li>
