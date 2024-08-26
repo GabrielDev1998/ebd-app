@@ -7,8 +7,6 @@ import DataBase from '@/firebase/db/database';
 import ProfileCustom from '@/components/profileCustom/profileCustom';
 import ProgressBar from '@/components/progress-bar/progress-bar';
 import NoData from '@/components/noData/no-data';
-import usePagination from '@/components/pagination/usePagination';
-import Pagination from '@/components/pagination/pagination';
 
 import { RoomType } from '../../rooms/rooms';
 import { useParams } from 'next/navigation';
@@ -49,7 +47,6 @@ const Progress = () => {
   const [buttonNav, setButtonNav] = React.useState(
     dataLesson[monthsToQuarters(new Date().getMonth())].quarter,
   );
-  const dataPagination = usePagination(aulas, 5);
 
   React.useEffect(() => {
     dataDocs.forEach((room) => {
@@ -190,7 +187,6 @@ const Progress = () => {
                 }`}
                 onClick={() => {
                   setButtonNav(item.quarter);
-                  dataPagination.setCurrentPage(0);
                 }}
               >
                 <div className={styles.months}>

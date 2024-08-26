@@ -331,31 +331,38 @@ textarea::placeholder {
 }
 
 [data-cor="roxo"]{
-  background-color: rgba(130, 87, 229, 0.065);
+ color: rgb(130, 87, 229) !important;
+  background-color: rgba(130, 87, 229, 0.065) !important;
 } 
 
 [data-cor="laranja"]{
-  background-color: rgba(248, 115, 89, 0.065);
+  color: rgb(248, 115, 89) !important;
+  background-color: rgba(248, 115, 89, 0.065) !important;
 } 
 
 [data-cor="rosa"]{
-  background-color: rgba(248, 89, 168, 0.065);
+  color: rgb(248, 89, 168) !important;
+  background-color: rgba(248, 89, 168, 0.065) !important;
 } 
 
 [data-cor="vermelho"]{
-  background-color: rgb(255, 48, 48,  0.065);
+  color: rgb(255, 48, 48) !important;
+  background-color: rgb(255, 48, 48,  0.065) !important;
 } 
 
 [data-cor="azul"]{
-  background-color: rgba(7, 141, 238, 0.065);
+  color: rgb(7, 141, 238) !important;
+  background-color: rgba(7, 141, 238, 0.065) !important;
 } 
 
 [data-cor="amarelo"]{
-  background-color: rgba(253, 169, 45, 0.065);
+  color: rgb(253, 169, 45) !important;
+  background-color: rgba(253, 169, 45, 0.065) !important;
 } 
 
 [data-cor="verde"]{
-  background-color: rgba(0, 167, 111, 0.065);
+  color: rgb(0, 167, 111) !important;
+  background-color: rgba(0, 167, 111, 0.065) !important;
 } 
 
 [data-cor] span {
@@ -395,7 +402,7 @@ textarea::placeholder {
   background-color: rgba(7, 141, 238, 0.40) !important;
 } 
 [data-cor="azul"] span::before{
-  background-color: #078dee;
+  background-color: rgb(7, 141, 238);
 } 
 
 [data-cor="amarelo"] span{
