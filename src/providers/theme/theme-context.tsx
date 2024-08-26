@@ -5,32 +5,35 @@ import React, { createContext, useContext, useEffect } from 'react';
 
 export const themeColors = {
   color_1: {
+    name: 'roxo',
     hexP: '#773EC7',
-    hexS: '#9956F6',
   },
   color_2: {
+    name: 'laranja',
     hexP: '#F87359',
-    hexS: '#f78a74',
   },
   color_3: {
+    name: 'rosa',
     hexP: '#F859A8',
-    hexS: '#f574b4',
+  },
+  color_4: {
+    name: 'vermelho',
+    hexP: '#FF3030',
   },
 };
 
 const ThemeProvider = createContext<{
   themeStorage: ColorsEBD;
   setThemeStorage: React.Dispatch<React.SetStateAction<ColorsEBD>>;
-  setPropertyDoc: (props: { variable: string; prop: string }) => void;
+  setPropertyElement: (props: { variable: string; prop: string }) => void;
 } | null>(null);
 
 export const ThemeContext = ({ children }: { children: React.ReactNode }) => {
   const [themeStorage, setThemeStorage] = React.useState<ColorsEBD>({
-    hexP: themeColors.color_1.hexP,
-    hexS: themeColors.color_1.hexS,
+    color: '#773EC7',
   });
 
-  const setPropertyDoc = ({
+  const setPropertyElement = ({
     variable,
     prop,
   }: {
@@ -43,32 +46,24 @@ export const ThemeContext = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const storageTheme = window.localStorage.getItem('theme');
     if (storageTheme) {
-      const { hexP, hexS }: ColorsEBD = JSON.parse(storageTheme);
+      const { color }: ColorsEBD = JSON.parse(storageTheme);
       setThemeStorage({
-        hexP,
-        hexS,
+        color,
       });
     }
   }, []);
 
   useEffect(() => {
-    const { hexP, hexS } = themeStorage;
-    const { color_2 } = themeColors;
-
-    setPropertyDoc({
+    const { color } = themeStorage;
+    setPropertyElement({
       variable: '--primary',
-      prop: hexP,
-    });
-
-    setPropertyDoc({
-      variable: '--secondary',
-      prop: hexS,
+      prop: color,
     });
   }, [themeStorage]);
 
   return (
     <ThemeProvider.Provider
-      value={{ themeStorage, setThemeStorage, setPropertyDoc }}
+      value={{ themeStorage, setThemeStorage, setPropertyElement }}
     >
       {children}
     </ThemeProvider.Provider>

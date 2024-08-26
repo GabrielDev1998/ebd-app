@@ -5,51 +5,36 @@ import styles from '../settings.module.css';
 import { ThemeEBD, themeColors } from '@/providers/theme/theme-context';
 
 export type ColorsEBD = {
-  hexP: string;
-  hexS: string;
+  color: string;
 };
 
-const { color_1, color_2, color_3 } = themeColors;
+const propsColors = themeColors;
 
-const ColorOption = ({
-  hexP,
-  hexS,
-}: {
-  hexP: string;
-  hexS: string;
-} & ColorsEBD) => {
-  const { setPropertyDoc } = ThemeEBD();
+const ColorOption = (props: ColorsEBD) => {
+  const { setPropertyElement } = ThemeEBD();
 
   const handleClickColor = () => {
-    // Color primary
-    setPropertyDoc({
-      variable: '--primary',
-      prop: hexP,
-    });
+    Object.values(propsColors).forEach(({ name, hexP }) => {
+      if (name.includes(props.color)) {
+        setPropertyElement({
+          variable: '--primary',
+          prop: hexP,
+        });
 
-    // Color secondary
-    setPropertyDoc({
-      variable: '--secondary',
-      prop: hexS,
+        window.localStorage.setItem(
+          'theme',
+          JSON.stringify({
+            color: hexP,
+            name,
+          }),
+        );
+      }
     });
-
-    setPropertyDoc({
-      variable: '--colorTextButton',
-      prop: '#fff',
-    });
-
-    window.localStorage.setItem(
-      'theme',
-      JSON.stringify({
-        hexP,
-        hexS,
-      }),
-    );
   };
 
   return (
-    <div data-cor={hexP} onClick={handleClickColor}>
-      <span style={{ backgroundColor: hexP }}></span>
+    <div data-cor={props.color} onClick={handleClickColor}>
+      <span style={{ backgroundColor: props.color }}></span>
     </div>
   );
 };
@@ -58,9 +43,10 @@ const Appearance = () => {
   return (
     <div className="animaLeft">
       <div className={styles.optionsColor}>
-        <ColorOption hexP={color_1.hexP} hexS={color_1.hexS} />
-        <ColorOption hexP={color_2.hexP} hexS={color_2.hexS} />
-        <ColorOption hexP={color_3.hexP} hexS={color_3.hexS} />
+        <ColorOption color={propsColors.color_1.name} />
+        <ColorOption color={propsColors.color_2.name} />
+        <ColorOption color={propsColors.color_3.name} />
+        <ColorOption color={propsColors.color_4.name} />
       </div>
     </div>
   );
