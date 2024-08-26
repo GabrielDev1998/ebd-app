@@ -9,7 +9,7 @@ export const Loader = ({ text }: { text?: string }) => {
   return (
     <div className={styles.containerLoader}>
       <span>
-        <Icon icon="svg-spinners:3-dots-fade" />
+        <Icon icon="svg-spinners:ring-resize" />
       </span>
       {text && <p>{text}</p>}
     </div>
